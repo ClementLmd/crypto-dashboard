@@ -12,7 +12,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: DB url
+    environment: dev
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
