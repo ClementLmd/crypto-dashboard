@@ -1,0 +1,25 @@
+.button {
+  background: linear-gradient(
+    to right top,
+    #d16ba5,
+    #c777b9,
+    #ba83ca,
+    #aa8fd8,
+    #9a9ae1,
+    #908dcc,
+    #8681b7,
+    #7b75a3,
+    #665473,
+    #4a3748,
+    #291e24,
+    #000000
+  );
+  border-radius: 0.5rem;
+  margin: 1rem;
+  padding: 0.5rem;
+}
+
+.link {
+  color: whitesmoke;
+  text-decoration: none;
+}

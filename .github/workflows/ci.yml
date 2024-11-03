@@ -1,0 +1,42 @@
+name: CI - Tests & build
+
+on:
+  push:
+    branches:
+      - main
+      - 'release/*'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: DB url
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 9.4.0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.15.0'
+          cache: 'pnpm'
+      - name: Install pnpm
+        run: pnpm install -g pnpm
+      - name: Install dependencies
+        run: pnpm install
+      - name: Install front-end dependencies
+        run: pnpm install --prefix front
+      - name: Install back-end dependencies
+        run: pnpm install --prefix back
+      - name: Run tests
+        run: pnpm test
+        env:
+          CONNECTION_STRING_TEST: ${{ secrets.CONNECTION_STRING_TEST }}
+      - name: Build front-end
+        run: pnpm run build --prefix front
+      - name: Build back-end
+        run: pnpm run build --prefix back

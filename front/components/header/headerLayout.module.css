@@ -1,0 +1,28 @@
+.body {
+  @apply bg-dune-deepBlue text-dune-offWhite;
+  width: 100%;
+  height: 5rem;
+  position: relative;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.image {
+  padding: 1rem;
+  margin: 0;
+  box-sizing: initial;
+}
+
+.login {
+  color: beige;
+  text-decoration: none;
+  padding: 1rem;
+}
+
+@media screen and (max-width: 864px) {
+  .login {
+    display: none;
+  }
+}

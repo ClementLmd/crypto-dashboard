@@ -1,0 +1,44 @@
+{
+  "name": "ts-project-1",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"pnpm run back\" \"pnpm run front\"",
+    "back": "pnpm --prefix back run nodemon",
+    "front": "pnpm --prefix front dev",
+    "test": "concurrently \"pnpm run test-front\" \"pnpm run test-back\"",
+    "test-front": "pnpm --prefix front test",
+    "test-back": "pnpm --prefix back test",
+    "build": "concurrently \"pnpm run build-front\" \"pnpm run build-back\"",
+    "build-front": "pnpm --prefix front build",
+    "build-back": "pnpm --prefix back build",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint .",
+    "prepare": "husky"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pnpm lint"
+    }
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.2.0",
+    "concurrently": "^8.2.2",
+    "eslint": "^9.12.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-unused-imports": "^4.1.4",
+    "husky": "^9.1.6",
+    "nodemon": "^3.1.4",
+    "ts-node": "^10.9.2"
+  }
+}
