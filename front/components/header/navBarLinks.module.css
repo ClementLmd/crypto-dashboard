@@ -1,0 +1,61 @@
+.links {
+  padding: 1rem;
+  display: flex;
+  list-style-type: none;
+}
+
+.activeItem {
+  @apply bg-dune-copper;
+  border-radius: 8px;
+  padding: 1rem;
+  width: calc(100% - 2rem);
+  margin: 5px auto;
+}
+
+.title:not(.activeItem):hover {
+  @apply bg-dune-sand text-dune-charcoal;
+  border-radius: 8px;
+}
+
+.title {
+  text-decoration: none;
+  padding: 1rem;
+}
+
+.links ul {
+  display: flex;
+}
+
+.mobile {
+  flex: 1;
+}
+
+.mobile .title {
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  display: block;
+}
+
+.mobile ul {
+  @apply bg-dune-deepBlue;
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  z-index: 1000;
+  top: 5rem;
+  left: 0;
+  text-align: end;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.mobile .active {
+  display: flex;
+}
+
+.mobile .li {
+  margin: 0;
+  list-style-type: none;
+  width: 100%;
+}
