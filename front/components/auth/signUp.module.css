@@ -1,0 +1,29 @@
+.auth {
+  @apply bg-dune-deepBlue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  border-radius: 16px;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  width: 100%;
+  margin: 2rem;
+}
+
+.inputContainer {
+  padding: auto;
+  width: 100%;
+}
+
+.input {
+  @apply bg-dune-sand;
+  @apply text-dune-charcoal;
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 4px;
+  border: none;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
