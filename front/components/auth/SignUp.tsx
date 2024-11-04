@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import styles from './signIn.module.css';
+import styles from './signUp.module.css';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 
