@@ -2,6 +2,7 @@
   padding: 1rem;
   display: flex;
   list-style-type: none;
+  font-family: var(--font-poppins);
 }
 
 .title {
