@@ -5,11 +5,11 @@ import { checkBody } from '../utils/checkBody';
 
 export const createUserController = async (req: Request, res: Response) => {
   try {
-    if (!checkBody(req.body, ['firstname', 'lastname']))
+    if (!checkBody(req.body, ['username', 'password']))
       return res.status(400).json({ error: 'Missing or empty fields' });
     const userData = {
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
+      username: req.body.username,
+      password: req.body.password,
     };
     const newUser = await createUser(userData);
     return res.status(201).json(newUser);

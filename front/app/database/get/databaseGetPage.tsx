@@ -23,14 +23,14 @@ export default function DatabaseGetPage() {
   };
 
   const columns = [
-    { key: 'firstname', label: 'Firstname', sortable: true },
-    { key: 'lastname', label: 'Lastname', sortable: true },
+    { key: 'username', label: 'Username', sortable: true },
+    { key: 'password', label: 'Password', sortable: true },
   ];
 
   const data = users.map((user: User, key: number) => ({
     id: key,
-    firstname: user.firstname,
-    lastname: user.lastname,
+    username: user.username,
+    password: user.password,
   }));
 
   return (

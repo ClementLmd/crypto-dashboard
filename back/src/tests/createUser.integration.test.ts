@@ -19,24 +19,24 @@ describe('UserModel test', () => {
   });
 
   it('should create and save a new user', async () => {
-    const user = { firstname: 'Joe', lastname: 'Doe' };
+    const user = { username: 'Joe', password: 'Doe' };
     const newUser = new UserModel(user);
     const savedUser = await newUser.save();
 
-    expect(savedUser.firstname).toBe(user.firstname);
-    expect(savedUser.lastname).toBe(user.lastname);
+    expect(savedUser.username).toBe(user.username);
+    expect(savedUser.password).toBe(user.password);
   });
 
   it('should send 201 when creating new user', async () => {
-    const user = { firstname: 'John', lastname: 'Doe' };
+    const user = { username: 'John', password: 'Doe' };
     const response = await request(app).post('/users').send(user);
 
     expect(response.status).toBe(201);
-    expect(response.body.firstname).toBe(user.firstname);
-    expect(response.body.lastname).toBe(user.lastname);
+    expect(response.body.username).toBe(user.username);
+    expect(response.body.password).toBe(user.password);
   });
   it('should not create a user with missing fields', async () => {
-    const user = { firstname: '' };
+    const user = { username: '' };
     const response = await request(app).post('/users').send(user);
 
     expect(response.status).toBe(400);
