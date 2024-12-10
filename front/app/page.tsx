@@ -1,9 +1,8 @@
 // Route: /
-
 import type { Metadata } from 'next';
-import RedirectButton from '../components/RedirectButton';
 import styles from '../styles/page.module.css';
-import { routes } from './config/routes';
+import { SignIn } from '../components/auth/SignIn';
+import { SignUp } from '../components/auth/SignUp';
 
 export const metadata: Metadata = {
   title: 'Home - Template Next/Express project',
@@ -16,8 +15,11 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <div className={styles.main}>
-      <RedirectButton route={routes.fetchHelloWorld} buttonName="Hello World" />
-      <RedirectButton route={routes.database.index} buttonName="Database" />
+      <h1>Home page</h1>
+      <div className={styles.authMenu}>
+        <SignIn />
+        <SignUp />
+      </div>
     </div>
   );
 }

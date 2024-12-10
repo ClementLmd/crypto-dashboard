@@ -2,10 +2,16 @@
   padding: 1rem;
   display: flex;
   list-style-type: none;
+  font-family: var(--font-poppins);
+}
+
+.title {
+  @apply text-dune-sand;
+  padding: 1rem;
 }
 
 .activeItem {
-  @apply bg-dune-copper;
+  @apply text-dune-copper;
   border-radius: 8px;
   padding: 1rem;
   width: calc(100% - 2rem);
@@ -13,13 +19,8 @@
 }
 
 .title:not(.activeItem):hover {
-  @apply bg-dune-sand text-dune-charcoal;
+  @apply text-dune-copper;
   border-radius: 8px;
-}
-
-.title {
-  text-decoration: none;
-  padding: 1rem;
 }
 
 .links ul {

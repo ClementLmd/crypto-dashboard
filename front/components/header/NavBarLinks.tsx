@@ -4,7 +4,7 @@ import { routes } from '../../app/config/routes';
 import Link from 'next/link';
 import styles from './navBarLinks.module.css';
 
-export default function MobileNavBar({
+export default function NavBarLinks({
   menuOpen,
   isMobile,
 }: {
@@ -12,7 +12,7 @@ export default function MobileNavBar({
   isMobile?: boolean;
 }) {
   const pathname = usePathname();
-  console.log({ menuOpen });
+
   return (
     <div className={isMobile ? styles.mobile : styles.links}>
       <ul className={menuOpen ? `${styles.active}` : ''}>

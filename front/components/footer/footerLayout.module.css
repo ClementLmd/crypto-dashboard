@@ -1,5 +1,5 @@
 .body {
-  @apply bg-dune-deepBlue text-dune-offWhite;
+  @apply bg-dune-deepBlue border-t-2 border-dune-copper;
   width: 100%;
   height: 4rem;
   position: relative;
@@ -8,6 +8,6 @@
   align-items: center;
 }
 
-.title {
-  color: beige;
+.footerText {
+  @apply text-dune-sand;
 }
