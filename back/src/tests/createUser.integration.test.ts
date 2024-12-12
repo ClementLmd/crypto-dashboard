@@ -3,8 +3,10 @@ import request from 'supertest';
 import app from '../app';
 import mongoose from 'mongoose';
 import { connectToDatabase } from '../models/connection';
+import { errors } from '../utils/errors';
 
-describe('UserModel test', () => {
+describe('UserModel tests connected to database', () => {
+  const user = { username: 'Joe', password: 'Doedoe1' };
   beforeAll(async () => {
     await connectToDatabase();
     await mongoose.connection.db?.dropDatabase();
@@ -19,7 +21,6 @@ describe('UserModel test', () => {
   });
 
   it('should create and save a new user', async () => {
-    const user = { username: 'Joe', password: 'Doe' };
     const newUser = new UserModel(user);
     const savedUser = await newUser.save();
 
@@ -28,17 +29,25 @@ describe('UserModel test', () => {
   });
 
   it('should send 201 when creating new user', async () => {
-    const user = { username: 'John', password: 'Doe' };
     const response = await request(app).post('/users').send(user);
 
     expect(response.status).toBe(201);
     expect(response.body.username).toBe(user.username);
     expect(response.body.password).toBe(user.password);
   });
+
   it('should not create a user with missing fields', async () => {
-    const user = { username: '' };
-    const response = await request(app).post('/users').send(user);
+    const userWithMissingField = { username: '' };
+    const response = await request(app).post('/users').send(userWithMissingField);
 
     expect(response.status).toBe(400);
+    expect(response.body).toStrictEqual({ error: errors.users.incompleteData });
+  });
+
+  it('should not create user if incorrect password format', async () => {
+    const userWithIncorrectPasswordFormat = { username: 'John', password: 'Doe' };
+    const response = await request(app).post('/users').send(userWithIncorrectPasswordFormat);
+    expect(response.status).toBe(400);
+    expect(response.body).toStrictEqual({ error: errors.users.incorrectPasswordFormat });
   });
 });

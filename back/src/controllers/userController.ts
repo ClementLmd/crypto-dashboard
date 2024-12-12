@@ -2,11 +2,19 @@ import { Request, Response } from 'express';
 import { createUser } from '../use-cases/createUser';
 import { getAllUsers, getUserById } from '../use-cases/getUser';
 import { checkBody } from '../utils/checkBody';
+import { validateUserPassword } from '../utils/validateUserPassword';
+import { errors } from '../utils/errors';
 
 export const createUserController = async (req: Request, res: Response) => {
   try {
     if (!checkBody(req.body, ['username', 'password']))
-      return res.status(400).json({ error: 'Missing or empty fields' });
+      return res.status(400).json({ error: errors.users.incompleteData });
+
+    const isPasswordCorrect = validateUserPassword(req.body.password);
+    if (isPasswordCorrect) {
+      return res.status(400).json({ error: isPasswordCorrect });
+    }
+
     const userData = {
       username: req.body.username,
       password: req.body.password,
@@ -14,7 +22,7 @@ export const createUserController = async (req: Request, res: Response) => {
     const newUser = await createUser(userData);
     return res.status(201).json(newUser);
   } catch {
-    return res.status(500).json({ error: 'Internal Server Error' });
+    return res.status(500).json({ error: errors.internal });
   }
 };
 
@@ -23,7 +31,7 @@ export const getAllUsersController = async (req: Request, res: Response) => {
     const users = await getAllUsers();
     res.status(200).json(users);
   } catch {
-    res.status(500).json({ error: 'Internal Server Error' });
+    return res.status(500).json({ error: errors.internal });
   }
 };
 
@@ -33,6 +41,6 @@ export const getUserByIdController = async (req: Request, res: Response) => {
     const user = await getUserById(userId);
     res.status(200).json(user);
   } catch {
-    res.status(500).json({ error: 'Internal Server Error' });
+    return res.status(500).json({ error: errors.internal });
   }
 };
