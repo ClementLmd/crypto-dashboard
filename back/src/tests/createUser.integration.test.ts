@@ -3,7 +3,7 @@ import request from 'supertest';
 import app from '../app';
 import mongoose from 'mongoose';
 import { connectToDatabase } from '../models/connection';
-import { errors } from '../utils/errors';
+import { errors } from '../../../shared/utils/errors';
 
 describe('UserModel tests connected to database', () => {
   const user = { username: 'Joe', password: 'Doedoe1' };

@@ -2,8 +2,8 @@ import { Request, Response } from 'express';
 import { createUser } from '../use-cases/createUser';
 import { getAllUsers, getUserById } from '../use-cases/getUser';
 import { checkBody } from '../utils/checkBody';
-import { validateUserPassword } from '../utils/validateUserPassword';
-import { errors } from '../utils/errors';
+import { validateUserPassword } from '../../../shared/utils/validateUserPassword';
+import { errors } from '../../../shared/utils/errors';
 
 export const createUserController = async (req: Request, res: Response) => {
   try {
