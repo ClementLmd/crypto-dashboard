@@ -1,16 +1,16 @@
 import { UserModel } from '../models/users';
 
 export const createUser = async ({
-  firstname,
-  lastname,
+  username,
+  password,
 }: {
-  firstname: string;
-  lastname: string;
+  username: string;
+  password: string;
 }) => {
-  const newUser = new UserModel({ firstname, lastname });
+  const newUser = new UserModel({ username, password });
   const savedUser = await newUser.save();
   return {
-    firstname: savedUser.firstname,
-    lastname: savedUser.lastname,
+    username: savedUser.username,
+    password: savedUser.password,
   };
 };

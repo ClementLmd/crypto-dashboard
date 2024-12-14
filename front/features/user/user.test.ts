@@ -6,8 +6,8 @@ import type { User } from '@shared/types/user';
 
 describe('User slice', () => {
   const mockUsers: User[] = [
-    { firstname: 'John', lastname: 'Doe' },
-    { firstname: 'Jane', lastname: 'Doe' },
+    { username: 'John', password: 'Doedoe1' },
+    { username: 'Jane', password: 'Doedoe1' },
   ];
 
   const createTestStore = () =>
@@ -34,7 +34,7 @@ describe('User slice', () => {
     mockFetch.mockRestore();
   });
   it('should create a new user in database and store it in redux store', async () => {
-    const newUser: User = { firstname: 'Jack', lastname: 'Black' };
+    const newUser: User = { username: 'Jack', password: 'Blackk1' };
 
     const mockFetch = jest.spyOn(global, 'fetch').mockResolvedValue({
       json: async () => newUser,
@@ -60,7 +60,7 @@ describe('User slice', () => {
     mockFetch.mockRestore();
   });
   it('should not dispatch if status 400 is received', async () => {
-    const emptyUser: User = { lastname: '', firstname: 'John' };
+    const emptyUser: User = { password: '', username: 'John' };
 
     const mockFetch = jest.spyOn(global, 'fetch').mockResolvedValue({
       ok: false,

@@ -1,11 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createUser, fetchUsers } from './user.thunks';
+import type { User } from '@shared/types/user';
 
 interface UserState {
-  users: {
-    firstname: string;
-    lastname: string;
-  }[];
+  users: User[];
   isLoading: boolean;
 }
 

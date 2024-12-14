@@ -1,6 +1,6 @@
 // Route: /
 import type { Metadata } from 'next';
-import styles from '../styles/page.module.css';
+import styles from './page.module.css';
 import { SignIn } from '../components/auth/SignIn';
 import { SignUp } from '../components/auth/SignUp';
 

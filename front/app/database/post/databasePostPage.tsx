@@ -10,20 +10,20 @@ import { Button } from '../../../components/ui/button';
 export default function DatabasePostPage() {
   const dispatch = useAppDispatch();
 
-  const [userFirstname, setUserFirstname] = useState<string>('');
-  const [userLastname, setUserLastname] = useState<string>('');
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
 
   const handleSubmitNewUser = async () => {
-    if (userFirstname.trim() === '' || userLastname.trim() === '') {
+    if (username.trim() === '' || password.trim() === '') {
       setFeedbackMessage('Firstname and lastname are required.');
       return;
     }
     try {
-      await dispatch(createUser({ firstname: userFirstname, lastname: userLastname })).unwrap();
+      await dispatch(createUser({ username, password })).unwrap();
       setFeedbackMessage('User created successfully!');
-      setUserFirstname('');
-      setUserLastname('');
+      setUsername('');
+      setPassword('');
     } catch (error) {
       setFeedbackMessage(`Error : ${error}`);
     }
@@ -36,16 +36,16 @@ export default function DatabasePostPage() {
         <div className="flex-col items-center justify-between my-2">
           <Input
             name="firstname"
-            value={userFirstname}
+            value={username}
             placeholder="User's firstname"
-            onChange={(e) => setUserFirstname(e.target.value)}
+            onChange={(e) => setUsername(e.target.value)}
             className="my-2"
           />
           <Input
             name="lastname"
-            value={userLastname}
+            value={password}
             placeholder="User's lastname"
-            onChange={(e) => setUserLastname(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
             className="my-2"
           />
           {feedbackMessage && <div>{feedbackMessage}</div>}
