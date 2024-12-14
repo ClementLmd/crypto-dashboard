@@ -50,4 +50,12 @@ describe('UserModel tests connected to database', () => {
     expect(response.status).toBe(400);
     expect(response.body).toStrictEqual({ error: errors.users.incorrectPasswordFormat });
   });
+  it('should not create user if username already exists in database', async () => {
+    const response = await request(app).post('/users').send(user);
+    expect(response.status).toBe(201);
+    expect(response.body.username).toBe(user.username);
+
+    const responseWithSameUsername = await request(app).post('/users').send(user);
+    expect(responseWithSameUsername.status).toBe(400);
+  });
 });

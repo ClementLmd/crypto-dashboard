@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { createUser } from '../use-cases/createUser';
-import { getAllUsers, getUserById } from '../use-cases/getUser';
+import { getAllUsers, getUserById, getUserByUsername } from '../use-cases/getUser';
 import { checkBody } from '../utils/checkBody';
 import { validateUserPassword } from '../../../shared/utils/validateUserPassword';
 import { errors } from '../../../shared/utils/errors';
@@ -10,10 +10,14 @@ export const createUserController = async (req: Request, res: Response) => {
     if (!checkBody(req.body, ['username', 'password']))
       return res.status(400).json({ error: errors.users.incompleteData });
 
-    const isPasswordCorrect = validateUserPassword(req.body.password);
-    if (isPasswordCorrect) {
-      return res.status(400).json({ error: isPasswordCorrect });
+    const isPasswordValid = validateUserPassword(req.body.password);
+    if (isPasswordValid) {
+      return res.status(400).json({ error: isPasswordValid });
     }
+
+    const isUsernameValid = await getUserByUsername(req.body.username);
+    if (isUsernameValid !== null)
+      return res.status(400).json({ error: errors.users.duplicatedUsername });
 
     const userData = {
       username: req.body.username,
