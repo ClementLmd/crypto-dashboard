@@ -4,6 +4,7 @@ import { getAllUsers, getUserById, getUserByUsername } from '../use-cases/getUse
 import { checkBody } from '../utils/checkBody';
 import { validateUserPassword } from '../../../shared/utils/validateUserPassword';
 import { errors } from '../../../shared/utils/errors';
+import { hashPassword } from '../utils/password';
 
 export const createUserController = async (req: Request, res: Response) => {
   try {
@@ -19,9 +20,11 @@ export const createUserController = async (req: Request, res: Response) => {
     if (isUsernameValid !== null)
       return res.status(400).json({ error: errors.users.duplicatedUsername });
 
+    const hashedPassword = await hashPassword(req.body.password);
+
     const userData = {
       username: req.body.username,
-      password: req.body.password,
+      password: hashedPassword,
     };
     const newUser = await createUser(userData);
     return res.status(201).json(newUser);

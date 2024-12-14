@@ -25,7 +25,6 @@ describe('UserModel tests connected to database', () => {
     const savedUser = await newUser.save();
 
     expect(savedUser.username).toBe(user.username);
-    expect(savedUser.password).toBe(user.password);
   });
 
   it('should send 201 when creating new user', async () => {
@@ -33,7 +32,6 @@ describe('UserModel tests connected to database', () => {
 
     expect(response.status).toBe(201);
     expect(response.body.username).toBe(user.username);
-    expect(response.body.password).toBe(user.password);
   });
 
   it('should not create a user with missing fields', async () => {
