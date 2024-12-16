@@ -42,7 +42,7 @@ export const signInController = async (req: Request, res: Response) => {
       return res.status(400).json({ error: errors.users.incompleteData });
 
     const signInResponse = await signIn({ username, password });
-    if (!signInResponse) return res.status(400).json({ error: errors.users.wrongPassword });
+    if (typeof signInResponse === 'string') return res.status(400).json({ error: signInResponse });
     const userSignedIn = { username: signInResponse.username };
     return res.status(200).json(userSignedIn);
   } catch {

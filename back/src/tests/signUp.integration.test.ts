@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 import { connectToDatabase } from '../models/connection';
 import { errors } from '../../../shared/utils/errors';
 
-describe('UserModel tests connected to database', () => {
+describe('User sign up tests', () => {
   const user = { username: 'Joe', password: 'Doedoe1' };
   beforeAll(async () => {
     await connectToDatabase();
