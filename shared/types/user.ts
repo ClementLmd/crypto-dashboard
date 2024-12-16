@@ -3,6 +3,6 @@ export interface User {
   password: string;
 }
 
-export interface connectedUser {
+export interface ConnectedUser {
   username: string;
 }

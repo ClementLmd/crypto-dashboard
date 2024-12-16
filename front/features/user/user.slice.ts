@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { signUp, fetchUsers, signIn } from './user.thunks';
-import type { connectedUser } from '@shared/types/user';
+import type { ConnectedUser } from '@shared/types/user';
 
 interface UserState {
-  users: connectedUser[];
+  users: ConnectedUser[];
   isLoading: boolean;
 }
 

@@ -6,7 +6,7 @@ import styles from './databaseGetPage.module.css';
 import { selectUserIsLoading, selectUsers } from '../../../features/user/user.selectors';
 import { fetchUsers } from '../../../features/user/user.thunks';
 import CustomTable from '../../../components/ui/custom-table';
-import type { User } from '@shared/types/user';
+import type { ConnectedUser } from '@shared/types/user';
 import { useState } from 'react';
 import { Button } from '../../../components/ui/button';
 
@@ -27,10 +27,9 @@ export default function DatabaseGetPage() {
     { key: 'password', label: 'Password', sortable: true },
   ];
 
-  const data = users.map((user: User, key: number) => ({
+  const data = users.map((user: ConnectedUser, key: number) => ({
     id: key,
     username: user.username,
-    password: user.password,
   }));
 
   return (
