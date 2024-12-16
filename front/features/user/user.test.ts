@@ -72,11 +72,19 @@ describe('User slice', () => {
   it('should sign in user', async () => {
     const signedInUser = { username: mockUsers[0].username };
 
+    const mockFetch = jest.spyOn(global, 'fetch').mockResolvedValue({
+      json: async () => await signedInUser,
+      status: 200,
+    } as Response);
+
     const store = createTestStore();
     await store.dispatch(signIn(mockUsers[0]));
 
     const users = selectUsers(store.getState());
     expect(users).toEqual([signedInUser]);
+
+    expect(mockFetch).toHaveBeenCalledTimes(1);
+    mockFetch.mockRestore();
   });
   it('should not sign in user if wrong password', async () => {
     const userWithWrongPassword: User = {
@@ -92,6 +100,12 @@ describe('User slice', () => {
   });
   it('should disconnect user when clicking disconnect', async () => {
     const signedInUser = { username: mockUsers[0].username };
+
+    const mockFetch = jest.spyOn(global, 'fetch').mockResolvedValue({
+      json: async () => await signedInUser,
+      status: 200,
+    } as Response);
+
     const store = createTestStore();
     await store.dispatch(signIn(mockUsers[0]));
 
@@ -101,5 +115,8 @@ describe('User slice', () => {
     await store.dispatch(logout());
     const usersAfterLogout = selectUsers(store.getState());
     expect(usersAfterLogout).toEqual([]);
+
+    expect(mockFetch).toHaveBeenCalledTimes(1);
+    mockFetch.mockRestore();
   });
 });
