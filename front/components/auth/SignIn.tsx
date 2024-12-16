@@ -3,9 +3,8 @@ import { useState } from 'react';
 import styles from './signIn.module.css';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-import { createUser } from '../../features/user/user.thunks';
+import { signIn } from '../../features/user/user.thunks';
 import { useAppDispatch } from '../../hooks/hooks';
-import { validateUserPassword } from '@shared/utils/validateUserPassword';
 import { errors } from '@shared/utils/errors';
 
 export function SignIn() {
@@ -17,16 +16,12 @@ export function SignIn() {
 
   const handleSignIn = async () => {
     if (username.trim() === '' || password.trim() === '') {
-      setFeedbackMessage('Username and password are required.');
-      return;
-    }
-    if (validateUserPassword(password)) {
-      setFeedbackMessage(errors.users.incorrectPasswordFormat);
+      setFeedbackMessage(errors.users.incompleteData);
       return;
     }
     try {
-      await dispatch(createUser({ username, password })).unwrap();
-      setFeedbackMessage('User created successfully!');
+      await dispatch(signIn({ username, password })).unwrap();
+      setFeedbackMessage('User signed in');
       setUsername('');
       setPassword('');
       // eslint-disable-next-line @typescript-eslint/no-unused-vars

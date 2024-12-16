@@ -5,10 +5,13 @@ import { routes } from '../../app/config/routes';
 import DesktopNavBar from './DesktopNavBar';
 import MobileNavBar from './MobileNavBar';
 import { useEffect, useState } from 'react';
+import { useAppSelector } from '../../hooks/hooks';
 
 export default function HeaderLayout() {
   const [isBrowser, setIsBrowser] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
+
+  const connectedUser = useAppSelector((state) => state.users.users);
 
   useEffect(() => {
     setIsBrowser(true);
@@ -38,7 +41,11 @@ export default function HeaderLayout() {
         </Link>
       </div>
       <div id="headerLinks">{isBrowser && (isDesktop ? <DesktopNavBar /> : <MobileNavBar />)} </div>
-      <div className={styles.login}>Connexion</div>
+      {connectedUser.length > 0 ? (
+        <div className={styles.login}>Username: {connectedUser[0].username}</div>
+      ) : (
+        <div className={styles.login}>Login</div>
+      )}
     </div>
   );
 }

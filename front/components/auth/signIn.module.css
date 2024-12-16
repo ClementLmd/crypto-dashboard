@@ -29,5 +29,5 @@
   @apply text-dune-offWhite;
   font-size: 0.8rem;
   margin-bottom: 0.5rem;
-  max-width: 250px; /* S'assure que le feedback ne dépasse pas le conteneur */
+  max-width: 250px;
 }

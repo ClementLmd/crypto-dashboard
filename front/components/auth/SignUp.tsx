@@ -3,12 +3,37 @@ import { useState } from 'react';
 import styles from './signUp.module.css';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
+import { signUp } from '../../features/user/user.thunks';
+import { useAppDispatch } from '../../hooks/hooks';
+import { validateUserPassword } from '@shared/utils/validateUserPassword';
+import { errors } from '@shared/utils/errors';
 
 export function SignUp() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const dispatch = useAppDispatch();
 
-  const handleSignIn = () => {};
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
+
+  const handleSignUp = async () => {
+    if (username.trim() === '' || password.trim() === '') {
+      setFeedbackMessage(errors.users.incompleteData);
+      return;
+    }
+    if (validateUserPassword(password)) {
+      setFeedbackMessage(errors.users.incorrectPasswordFormat);
+      return;
+    }
+    try {
+      await dispatch(signUp({ username, password })).unwrap();
+      setFeedbackMessage('User created successfully!');
+      setUsername('');
+      setPassword('');
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (error) {
+      setFeedbackMessage('Sign up error');
+    }
+  };
 
   return (
     <div className={styles.auth}>
@@ -16,21 +41,30 @@ export function SignUp() {
         <Input
           type="text"
           className={styles.input}
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e) => {
+            setFeedbackMessage(null);
+            setUsername(e.target.value);
+          }}
           value={username}
           placeholder="Username"
+          name="username"
         />
       </div>
       <div className={styles.inputContainer}>
         <Input
           type="password"
           className={styles.input}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => {
+            setFeedbackMessage(null);
+            setPassword(e.target.value);
+          }}
           value={password}
           placeholder="Password"
+          name="password"
         />
       </div>
-      <Button onClick={handleSignIn}>Sign up</Button>
+      {feedbackMessage && <div className={styles.feedback}>{feedbackMessage}</div>}
+      <Button onClick={handleSignUp}>Sign up</Button>
     </div>
   );
 }

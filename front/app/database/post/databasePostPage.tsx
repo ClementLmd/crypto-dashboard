@@ -1,7 +1,7 @@
 'use client';
 // Route: /database/post
 import { useState } from 'react';
-import { createUser } from '../../../features/user/user.thunks';
+import { signUp } from '../../../features/user/user.thunks';
 import { useAppDispatch } from '../../../hooks/hooks';
 import styles from './databasePostPage.module.css';
 import { Input } from '../../../components/ui/input';
@@ -20,7 +20,7 @@ export default function DatabasePostPage() {
       return;
     }
     try {
-      await dispatch(createUser({ username, password })).unwrap();
+      await dispatch(signUp({ username, password })).unwrap();
       setFeedbackMessage('User created successfully!');
       setUsername('');
       setPassword('');

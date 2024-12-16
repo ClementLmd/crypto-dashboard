@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { createUser, fetchUsers } from './user.thunks';
-import type { User } from '@shared/types/user';
+import { signUp, fetchUsers, signIn } from './user.thunks';
+import type { ConnectedUser } from '@shared/types/user';
 
 interface UserState {
-  users: User[];
+  users: ConnectedUser[];
   isLoading: boolean;
 }
 
@@ -25,10 +25,17 @@ export const userSlice = createSlice({
         state.isLoading = false;
         state.users = action.payload;
       })
-      .addCase(createUser.pending, (state) => {
+      .addCase(signUp.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(createUser.fulfilled, (state, action) => {
+      .addCase(signUp.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.users.push(action.payload);
+      })
+      .addCase(signIn.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(signIn.fulfilled, (state, action) => {
         state.isLoading = false;
         state.users.push(action.payload);
       });

@@ -2,10 +2,13 @@ import mongoose from 'mongoose';
 
 let databaseEnvironment: 'test' | 'production';
 const defineConnectionString = () => {
+  const testSuffix = process.env.JEST_WORKER_ID ? `_${process.env.JEST_WORKER_ID}` : '';
+
   if (process.env.NODE_ENV === 'test') {
     databaseEnvironment = 'test';
-    return process.env.CONNECTION_STRING_TEST;
+    return `${process.env.CONNECTION_STRING_TEST}${testSuffix}`;
   }
+
   databaseEnvironment = 'production';
   return process.env.CONNECTION_STRING;
 };
