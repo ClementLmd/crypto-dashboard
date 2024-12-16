@@ -6,19 +6,36 @@ export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
   return fetchedUsers;
 });
 
-export const createUser = createAsyncThunk(
-  'users/createUser',
+export const signUp = createAsyncThunk(
+  'users/signup',
   async (newUser: { username: string; password: string }) => {
-    const response = await fetch('http://localhost:3001/users', {
+    const response = await fetch('http://localhost:3001/users/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newUser),
     });
     if (response.status !== 201) {
-      const userCreationFailed = await response.json();
-      throw new Error(`Error ${response.status}: ${userCreationFailed.error}`);
+      const userSignUpFailed = await response.json();
+      throw new Error(`Error ${response.status}: ${userSignUpFailed.error}`);
     }
     const savedUser = await response.json();
     return savedUser;
+  },
+);
+
+export const signIn = createAsyncThunk(
+  'users/signin',
+  async (signingInUser: { username: string; password: string }) => {
+    const response = await fetch('http://localhost:3001/users/signin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(signingInUser),
+    });
+    if (response.status !== 200) {
+      const userSignInFailed = await response.json();
+      throw new Error(`Error ${response.status}: ${userSignInFailed.error}`);
+    }
+    const signedInUser = await response.json();
+    return signedInUser;
   },
 );

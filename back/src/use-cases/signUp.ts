@@ -5,6 +5,5 @@ export const signUp = async ({ username, password }: { username: string; passwor
   const savedUser = await newUser.save();
   return {
     username: savedUser.username,
-    password: savedUser.password,
   };
 };
