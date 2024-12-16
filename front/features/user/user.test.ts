@@ -1,9 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { userReducer } from './user.slice';
+import { logout, userReducer } from './user.slice';
 import { signUp, fetchUsers, signIn } from './user.thunks';
 import { selectUsers } from './user.selectors';
 import type { User } from '@shared/types/user';
-import { errors } from '@shared/utils/errors';
 
 describe('User slice', () => {
   const mockUsers: User[] = [
@@ -38,7 +37,7 @@ describe('User slice', () => {
     const newUser: User = { username: 'Jack', password: 'Blackk1' };
 
     const mockFetch = jest.spyOn(global, 'fetch').mockResolvedValue({
-      json: async () => newUser,
+      json: async () => await { username: newUser.username },
       status: 201,
     } as Response);
 
@@ -48,8 +47,8 @@ describe('User slice', () => {
 
     await store.dispatch(signUp(newUser));
 
-    const usersAfterAdd = selectUsers(store.getState());
-    expect(usersAfterAdd).toEqual([newUser]);
+    const usersAfterAdd = await selectUsers(store.getState());
+    expect(usersAfterAdd).toEqual([{ username: newUser.username }]);
 
     expect(mockFetch).toHaveBeenCalledTimes(1);
     expect(mockFetch).toHaveBeenCalledWith('http://localhost:3001/users/signup', {
@@ -63,36 +62,21 @@ describe('User slice', () => {
   it('should not dispatch if status 400 is received', async () => {
     const emptyUser: User = { username: '', password: '' };
 
-    const mockFetch = jest.spyOn(global, 'fetch').mockResolvedValue({
-      ok: false,
-      status: 400,
-      json: async () => ({ error: 'Missing or empty fields' }),
-    } as Response);
-
     const store = createTestStore();
     await store.dispatch(signUp(emptyUser));
 
     const users = selectUsers(store.getState());
     expect(users).toEqual([]);
-
-    mockFetch.mockRestore();
   });
 
   it('should sign in user', async () => {
     const signedInUser = { username: mockUsers[0].username };
-
-    const mockFetch = jest.spyOn(global, 'fetch').mockResolvedValue({
-      json: async () => await signedInUser,
-      status: 200,
-    } as Response);
 
     const store = createTestStore();
     await store.dispatch(signIn(mockUsers[0]));
 
     const users = selectUsers(store.getState());
     expect(users).toEqual([signedInUser]);
-
-    mockFetch.mockRestore();
   });
   it('should not sign in user if wrong password', async () => {
     const userWithWrongPassword: User = {
@@ -100,17 +84,22 @@ describe('User slice', () => {
       password: 'wrongPassword',
     };
 
-    const mockFetch = jest.spyOn(global, 'fetch').mockResolvedValue({
-      json: async () => ({ error: errors.users.wrongPassword }),
-      status: 400,
-    } as Response);
-
     const store = createTestStore();
     await store.dispatch(signIn(userWithWrongPassword));
 
     const users = selectUsers(store.getState());
     expect(users).toEqual([]);
+  });
+  it('should disconnect user when clicking disconnect', async () => {
+    const signedInUser = { username: mockUsers[0].username };
+    const store = createTestStore();
+    await store.dispatch(signIn(mockUsers[0]));
 
-    mockFetch.mockRestore();
+    const users = selectUsers(store.getState());
+    expect(users).toEqual([signedInUser]);
+
+    await store.dispatch(logout());
+    const usersAfterLogout = selectUsers(store.getState());
+    expect(usersAfterLogout).toEqual([]);
   });
 });

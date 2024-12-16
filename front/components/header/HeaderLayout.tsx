@@ -5,9 +5,12 @@ import { routes } from '../../app/config/routes';
 import DesktopNavBar from './DesktopNavBar';
 import MobileNavBar from './MobileNavBar';
 import { useEffect, useState } from 'react';
-import { useAppSelector } from '../../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { Button } from '../ui/button';
+import { logout } from '../../features/user/user.slice';
 
 export default function HeaderLayout() {
+  const dispatch = useAppDispatch();
   const [isBrowser, setIsBrowser] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
 
@@ -26,6 +29,10 @@ export default function HeaderLayout() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
   return (
     <div className={styles.body}>
       <div id="headerLogo">
@@ -41,11 +48,7 @@ export default function HeaderLayout() {
         </Link>
       </div>
       <div id="headerLinks">{isBrowser && (isDesktop ? <DesktopNavBar /> : <MobileNavBar />)} </div>
-      {connectedUser.length > 0 ? (
-        <div className={styles.login}>Username: {connectedUser[0].username}</div>
-      ) : (
-        <div className={styles.login}>Login</div>
-      )}
+      {connectedUser.length > 0 ? <Button onClick={handleLogout}>Disconnect</Button> : <div></div>}
     </div>
   );
 }

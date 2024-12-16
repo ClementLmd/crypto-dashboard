@@ -18,8 +18,8 @@ export const signUp = createAsyncThunk(
       const userSignUpFailed = await response.json();
       throw new Error(`Error ${response.status}: ${userSignUpFailed.error}`);
     }
-    const savedUser = await response.json();
-    return savedUser;
+    const signedUpUser = await response.json();
+    return signedUpUser;
   },
 );
 
