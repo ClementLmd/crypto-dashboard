@@ -1,5 +1,4 @@
-import type { UserDocument } from '@shared/types/user';
-import { UserModel } from '../../models/users';
+import { UserModel, type UserDocument } from '../../models/users';
 
 export const getAllUsers = async (): Promise<UserDocument[] | null> => await UserModel.find();
 

@@ -1,7 +1,9 @@
-import mongoose from 'mongoose';
-import type { Address, AddressContent } from '@shared/types/address';
-import { blockchains } from '@shared/types/blockchain';
-import type { Cryptocurrency } from '@shared/types/cryptocurrency';
+import mongoose, { type Document } from 'mongoose';
+import type { Address, AddressContent } from '../../../shared/types/address';
+import { blockchains } from '../../../shared/types/blockchain';
+import type { Cryptocurrency } from '../../../shared/types/cryptocurrency';
+
+export interface AddressDocument extends Address, Document {}
 
 const cryptocurrencySchema = new mongoose.Schema<Cryptocurrency>({
   cryptoName: { type: String, required: true },
@@ -13,11 +15,11 @@ const addressContentSchema = new mongoose.Schema<AddressContent>({
   quantity: { type: Number, required: true },
 });
 
-const addressSchema = new mongoose.Schema<Address>({
+const addressSchema = new mongoose.Schema<AddressDocument>({
   address: { type: String, required: true },
-  addressContent: { type: [addressContentSchema], required: true },
+  addressContent: { type: [addressContentSchema] },
   addressName: { type: String },
   blockchain: { type: String, enum: blockchains, required: true },
 });
 
-export const AddressModel = mongoose.model('Address', addressSchema);
+export const AddressModel = mongoose.model<AddressDocument>('Address', addressSchema);
