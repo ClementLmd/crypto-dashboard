@@ -1,4 +1,8 @@
 export const errors = {
+  addresses: {
+    incompleteData: 'Missing or empty fields.',
+  },
+  internal: 'Internal server error.',
   users: {
     incompleteData: 'Missing or empty fields.',
     incorrectPasswordFormat:
@@ -7,5 +11,4 @@ export const errors = {
     wrongPassword: 'Wrong password.',
     userNotFound: 'User not found.',
   },
-  internal: 'Internal server error.',
 };

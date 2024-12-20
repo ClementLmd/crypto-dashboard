@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
-import { signUp } from '../use-cases/signUp';
-import { getAllUsers, getUserById, getUserByUsername } from '../use-cases/getUser';
+import { signUp } from '../use-cases/user/signUp';
+import { getAllUsers, getUserById, getUserByUsername } from '../use-cases/user/getUser';
 import { checkBody } from '../utils/checkBody';
 import { validateUserPassword } from '../../../shared/utils/validateUserPassword';
 import { errors } from '../../../shared/utils/errors';
 import { hashPassword } from '../utils/password';
-import { signIn } from '../use-cases/signIn';
+import { signIn } from '../use-cases//user/signIn';
 
 export const signUpController = async (req: Request, res: Response) => {
   const { username, password } = req.body;

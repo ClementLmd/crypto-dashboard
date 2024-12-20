@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { userReducer } from '../features/user/user.slice';
+import { addressReducer } from '../features/addresses/addresses.slice';
 
 export const store = configureStore({
   reducer: {
     users: userReducer,
+    addresses: addressReducer,
   },
 });
 
