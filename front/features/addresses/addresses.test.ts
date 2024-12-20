@@ -21,13 +21,21 @@ describe('User slice', () => {
       },
     });
   it('should add an address in database and store it in redux store', async () => {
+    const mockFetch = jest.spyOn(global, 'fetch').mockResolvedValue({
+      json: async () => await mockAddress,
+      status: 201,
+    } as Response);
+
     const store = createTestStore();
-    const addressesBeforeAdd = await selectAddresses(store.getState());
+    const addressesBeforeAdd = selectAddresses(store.getState());
     expect(addressesBeforeAdd).toEqual([]);
 
     await store.dispatch(addAddress(mockAddress));
 
-    const addressesAfterAdd = await selectAddresses(store.getState());
+    const addressesAfterAdd = selectAddresses(store.getState());
     expect(addressesAfterAdd).toEqual([mockAddress]);
+
+    expect(mockFetch).toHaveBeenCalledTimes(1);
+    mockFetch.mockRestore();
   });
 });
