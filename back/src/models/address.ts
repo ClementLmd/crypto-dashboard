@@ -18,7 +18,7 @@ const addressContentSchema = new mongoose.Schema<AddressContent>({
 const addressSchema = new mongoose.Schema<AddressDocument>({
   address: { type: String, required: true },
   addressContent: { type: [addressContentSchema] },
-  addressName: { type: String },
+  addressName: { type: String, default: null },
   blockchain: { type: String, enum: blockchains, required: true },
 });
 

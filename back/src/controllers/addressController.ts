@@ -14,6 +14,7 @@ export const addAddressController = async (req: Request, res: Response) => {
     const addressData: Address = { address, blockchain, addressContent, addressName };
 
     const newAddress = await addAddress(addressData);
+    console.log({ newAddress });
     return res.status(201).json(newAddress);
   } catch {
     return res.status(500).json({ error: errors.internal });
