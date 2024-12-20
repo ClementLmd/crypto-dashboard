@@ -1,13 +1,14 @@
 // Route: /addresses
 
-import { AddressForm } from '../../components/form/addressForm';
+import { AddAddress } from '../../components/form/addAddress';
 import styles from './addresses.module.css';
 
 export default function AddressesPage() {
   return (
-    <div>
-      <div className={styles.main}>Addresses</div>
-      <AddressForm />
+    <div className={styles.main}>
+      <AddAddress blockchain="Bitcoin" />
+      <AddAddress blockchain="Ethereum" />
+      <AddAddress blockchain="Solana" />
     </div>
   );
 }
