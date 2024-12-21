@@ -57,14 +57,27 @@ describe('User slice', () => {
   });
 
   it('should delete an address from db and redux store', async () => {
+    const mockFetchAddAddress = jest.spyOn(global, 'fetch').mockResolvedValue({
+      json: async () => mockAddress,
+      status: 201,
+    } as Response);
+
     const store = createTestStore();
 
     await store.dispatch(addAddress(mockAddress));
     const addressesAfterAdd = selectAddresses(store.getState());
     expect(addressesAfterAdd).toEqual([mockAddress]);
 
+    mockFetchAddAddress.mockRestore();
+
+    const mockFetchDeleteAddress = jest.spyOn(global, 'fetch').mockResolvedValue({
+      status: 200,
+    } as Response);
+
     await store.dispatch(deleteAddress(mockAddress));
     const addressesAfterDelete = selectAddresses(store.getState());
     expect(addressesAfterDelete).toEqual([]);
+
+    mockFetchDeleteAddress.mockRestore();
   });
 });
