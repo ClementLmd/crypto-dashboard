@@ -42,4 +42,39 @@ describe('Address integration tests', () => {
     expect(response.status).toBe(400);
     expect(response.body).toStrictEqual({ error: errors.addresses.incompleteData });
   });
+  it('should delete an address', async () => {
+    const responseAddAddress = await request(app)
+      .post('/addresses/addAddress')
+      .send(addressWithRequiredFields);
+    expect(responseAddAddress.status).toBe(201);
+
+    const responseDeleteAddress = await request(app)
+      .delete('/addresses/deleteAddress')
+      .send(addressWithRequiredFields);
+
+    expect(responseDeleteAddress.status).toBe(200);
+  });
+  it('should not delete an address if missing field', async () => {
+    const incompleteAddress = { address: 'incomplete-address' };
+
+    const responseAddAddress = await request(app)
+      .post('/addresses/addAddress')
+      .send(addressWithRequiredFields);
+    expect(responseAddAddress.status).toBe(201);
+
+    const responseDeleteAddress = await request(app)
+      .delete('/addresses/deleteAddress')
+      .send(incompleteAddress);
+
+    expect(responseDeleteAddress.status).toBe(400);
+    expect(responseDeleteAddress.body).toStrictEqual({ error: errors.addresses.incompleteData });
+  });
+  it('should not delete an address if the address is not in db', async () => {
+    const responseDeleteAddress = await request(app)
+      .delete('/addresses/deleteAddress')
+      .send(addressWithRequiredFields);
+
+    expect(responseDeleteAddress.status).toBe(400);
+    expect(responseDeleteAddress.body).toStrictEqual({ error: errors.addresses.failedDelete });
+  });
 });

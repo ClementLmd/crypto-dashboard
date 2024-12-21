@@ -7,8 +7,11 @@ import CustomTable from '../../components/ui/custom-table';
 import styles from './addresses.module.css';
 import { selectAddresses } from '../../features/addresses/addresses.selectors';
 import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../../hooks/hooks';
+import { deleteAddress } from '../../features/addresses/addresses.thunks';
 
 export default function AddressesPage() {
+  const dispatch = useAppDispatch();
   const addresses: Address[] = useSelector(selectAddresses);
   console.log(addresses);
 
@@ -25,6 +28,10 @@ export default function AddressesPage() {
     addressName: address.addressName,
   }));
 
+  const handleDelete = (row: Address) => {
+    dispatch(deleteAddress(row));
+  };
+
   return (
     <div className={styles.main}>
       <div className={styles.addAddress}>
@@ -32,7 +39,7 @@ export default function AddressesPage() {
         <AddAddress blockchain="Ethereum" />
         <AddAddress blockchain="Solana" />
       </div>
-      <CustomTable columns={columns} data={data} itemsPerPage={10} />
+      <CustomTable columns={columns} data={data} itemsPerPage={10} onDelete={handleDelete} />
     </div>
   );
 }

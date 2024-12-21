@@ -1,6 +1,7 @@
 export const errors = {
   addresses: {
     incompleteData: 'Missing or empty fields.',
+    failedDelete: 'Failed address delete.',
   },
   internal: 'Internal server error.',
   users: {
