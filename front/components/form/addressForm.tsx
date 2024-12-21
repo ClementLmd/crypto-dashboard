@@ -19,21 +19,34 @@ import { useAppDispatch } from '../../hooks/hooks';
 import { addAddress } from '../../features/addresses/addresses.thunks';
 import { Blockchain } from '@shared/types/blockchain';
 import { useState } from 'react';
+import { errors } from '@shared/utils/errors';
+import { Address } from '@shared/types/address';
 
 export function AddressForm({ blockchain }: { blockchain: Blockchain }) {
   const dispatch = useAppDispatch();
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
 
+  const formDefaultAddressValues: Address = {
+    address: '',
+    blockchain,
+    addressContent: [],
+    addressName: '',
+  };
+
   const form = useForm<z.infer<typeof addressFormSchema>>({
     resolver: zodResolver(addressFormSchema),
-    defaultValues: { address: '', blockchain, addressContent: [], addressName: '' },
+    defaultValues: formDefaultAddressValues,
   });
 
   async function onSubmit(values: z.infer<typeof addressFormSchema>) {
     try {
+      if (values.address.trim() === '') {
+        setFeedbackMessage(errors.addresses.incompleteData);
+        return;
+      }
       await dispatch(addAddress(values));
       setFeedbackMessage('Address added');
-      form.reset({ address: '', addressName: '' });
+      form.reset(formDefaultAddressValues);
     } catch {
       setFeedbackMessage('Address not added');
     }
@@ -49,7 +62,14 @@ export function AddressForm({ blockchain }: { blockchain: Blockchain }) {
             <FormItem>
               <FormLabel>Add address</FormLabel>
               <FormControl>
-                <Input placeholder="Address" {...field} />
+                <Input
+                  placeholder="Address"
+                  {...field}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    setFeedbackMessage(null);
+                  }}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

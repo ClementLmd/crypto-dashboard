@@ -75,6 +75,10 @@ export default function CustomTable({ columns, data, itemsPerPage = 10 }: Custom
     setCurrentPage(1);
   }, []);
 
+  const handleDelete = () => {
+    console.log('delete this address');
+  };
+
   return (
     <div className="space-y-6 ">
       {/* Recherche */}
@@ -145,6 +149,7 @@ export default function CustomTable({ columns, data, itemsPerPage = 10 }: Custom
                       <DropdownMenuSeparator />
                       <DropdownMenuItem>Voir les détails</DropdownMenuItem>
                       <DropdownMenuItem>Modifier</DropdownMenuItem>
+                      <DropdownMenuItem onClick={handleDelete}>Supprimer</DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </TableCell>
