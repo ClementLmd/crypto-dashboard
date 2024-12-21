@@ -13,6 +13,7 @@ import {
 import { Button } from './button';
 import { Input } from './input';
 import { ChevronDown, ChevronUp, MoreHorizontal, Search } from 'lucide-react';
+import { Address } from '@shared/types/address';
 
 interface Column {
   key: string;
@@ -25,9 +26,16 @@ interface CustomTableProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: Record<string, any>[];
   itemsPerPage?: number;
+  // eslint-disable-next-line no-unused-vars
+  onDelete?: (_row: Address) => void;
 }
 
-export default function CustomTable({ columns, data, itemsPerPage = 10 }: CustomTableProps) {
+export default function CustomTable({
+  columns,
+  data,
+  itemsPerPage = 10,
+  onDelete,
+}: CustomTableProps) {
   const [sortConfig, setSortConfig] = useState<{ key: string; direction: 'asc' | 'desc' } | null>(
     null,
   );
@@ -74,10 +82,6 @@ export default function CustomTable({ columns, data, itemsPerPage = 10 }: Custom
     setSearchTerm(e.target.value);
     setCurrentPage(1);
   }, []);
-
-  const handleDelete = () => {
-    console.log('delete this address');
-  };
 
   return (
     <div className="space-y-6 ">
@@ -147,9 +151,15 @@ export default function CustomTable({ columns, data, itemsPerPage = 10 }: Custom
                     <DropdownMenuContent align="end" className="text-sm">
                       <DropdownMenuLabel className="text-gray-700">Actions</DropdownMenuLabel>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem>Voir les détails</DropdownMenuItem>
-                      <DropdownMenuItem>Modifier</DropdownMenuItem>
-                      <DropdownMenuItem onClick={handleDelete}>Supprimer</DropdownMenuItem>
+                      {onDelete && (
+                        <DropdownMenuItem
+                          onClick={() =>
+                            onDelete({ address: row.address, blockchain: row.blockchain })
+                          }
+                        >
+                          Delete
+                        </DropdownMenuItem>
+                      )}
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </TableCell>
