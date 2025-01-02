@@ -4,7 +4,7 @@ export interface SigningUpUser {
 }
 
 export interface User extends SigningUpUser {
-  _id?: string;
+  _id: string;
   email?: string;
   createdAt: Date;
 }

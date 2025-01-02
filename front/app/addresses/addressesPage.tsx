@@ -13,7 +13,6 @@ import { deleteAddress } from '../../features/addresses/addresses.thunks';
 export default function AddressesPage() {
   const dispatch = useAppDispatch();
   const addresses: Address[] = useSelector(selectAddresses);
-  console.log(addresses);
 
   const columns = [
     { key: 'blockchain', label: 'Blockchain', sortable: true },

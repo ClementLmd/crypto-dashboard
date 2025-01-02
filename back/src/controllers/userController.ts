@@ -6,6 +6,7 @@ import { validateUserPassword } from '../../../shared/utils/validateUserPassword
 import { errors } from '../../../shared/utils/errors';
 import { hashPassword } from '../utils/password';
 import { signIn } from '../use-cases//user/signIn';
+import { SigningUpUser } from '@shared/types/user';
 
 export const signUpController = async (req: Request, res: Response) => {
   const { username, password } = req.body;
@@ -24,7 +25,7 @@ export const signUpController = async (req: Request, res: Response) => {
 
     const hashedPassword = await hashPassword(password);
 
-    const userData = {
+    const userData: SigningUpUser = {
       username: username,
       password: hashedPassword,
     };

@@ -11,7 +11,9 @@
     "rootDir": "../",
     "paths": {
       "@shared/*": ["../shared/*"]
-    }
+    },
+    "typeRoots": ["./src/@types", "./node_modules/@types"],
+    "types": ["express", "node", "jest"]
   },
   "include": ["src/**/*.ts", "../shared/**/*"],
   "exclude": ["node_modules"]

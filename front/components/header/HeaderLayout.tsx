@@ -29,8 +29,16 @@ export default function HeaderLayout() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const handleLogout = () => {
-    dispatch(logout());
+  const handleLogout = async () => {
+    try {
+      await fetch('http://localhost:3001/auth/logout', {
+        method: 'POST',
+        credentials: 'include',
+      });
+      dispatch(logout());
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
   };
 
   return (

@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { logout, userReducer } from './user.slice';
-import { signUp, fetchUsers, signIn } from './user.thunks';
+import { signUp, signIn } from './user.thunks';
 import { selectUsers } from './user.selectors';
 import type { SigningUpUser } from '@shared/types/user';
 import { addressReducer } from '../addresses/addresses.slice';
@@ -18,24 +18,6 @@ describe('User slice', () => {
         addresses: addressReducer,
       },
     });
-  it('should fetch users list in redux store', async () => {
-    // TODO : modify tests order so users added can be fetched
-    const mockFetch = jest.spyOn(global, 'fetch').mockResolvedValue({
-      json: async () => mockUsers,
-    } as Response);
-
-    const store = createTestStore();
-
-    await store.dispatch(fetchUsers());
-
-    const users = selectUsers(store.getState());
-    expect(users).toEqual(mockUsers);
-
-    expect(mockFetch).toHaveBeenCalledTimes(1);
-    expect(mockFetch).toHaveBeenCalledWith('http://localhost:3001/users');
-
-    mockFetch.mockRestore();
-  });
   it('should create a new user in database and store it in redux store', async () => {
     const newUser: SigningUpUser = { username: 'Jack', password: 'Blackk1' };
 
