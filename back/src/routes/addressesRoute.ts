@@ -5,6 +5,6 @@ import { validateSession } from '../middleware/validateSession';
 const router = Router();
 
 router.post('/addAddress', validateSession, addAddressController);
-router.delete('/deleteAddress', deleteAddressController);
+router.delete('/deleteAddress', validateSession, deleteAddressController);
 
 export default router;

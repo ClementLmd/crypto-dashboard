@@ -1,5 +1,5 @@
-import { encodeBase32LowerCaseNoPadding, encodeHexLowerCase } from './encode';
-import { sha256 } from '@oslojs/crypto/sha2';
+import { encodeBase32LowerCaseNoPadding } from './encode';
+import { createHash } from 'crypto';
 import { UserSession } from '@shared/types/session';
 import { UserSessionModel } from '../models/userSession';
 
@@ -11,13 +11,10 @@ export function generateSessionToken(): string {
 }
 
 export async function createSession(token: string, userId: string): Promise<UserSession> {
-  const sessionId = encodeHexLowerCase(sha256(new TextEncoder().encode(token)));
+  const sessionId = createHash('sha256').update(token).digest('hex');
   const expiresAt = new Date(Date.now() + 1000 * 60 * 60 * 24 * 30);
 
-  // Find and delete any existing sessions for this user
   await UserSessionModel.deleteMany({ userId });
-
-  // Create new session
   const session = new UserSessionModel({ id: sessionId, userId, expiresAt });
   await session.save();
 
@@ -26,7 +23,7 @@ export async function createSession(token: string, userId: string): Promise<User
 
 export async function validateSessionToken(token: string): Promise<UserSession | null> {
   try {
-    const sessionId = encodeHexLowerCase(sha256(new TextEncoder().encode(token)));
+    const sessionId = createHash('sha256').update(token).digest('hex');
     const session = await UserSessionModel.findOne({ id: sessionId }).exec();
 
     if (!session || Date.now() >= session.expiresAt.getTime()) {
