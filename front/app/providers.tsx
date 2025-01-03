@@ -1,10 +1,10 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState } from 'react';
-import { checkSession } from '../utils/auth/checkSession';
 import { User } from '@shared/types/user';
 import { useAppDispatch } from '../hooks/hooks';
-import { signIn } from '../features/user/user.thunks';
+import { signInWithSession } from '../features/user/user.thunks';
+import { useRouter } from 'next/navigation';
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -23,28 +23,29 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   useEffect(() => {
     const initAuth = async () => {
       try {
-        const userData = await checkSession();
-        setUser(userData.user);
+        const result = await dispatch(signInWithSession()).unwrap();
+        setUser(result);
         setIsAuthenticated(true);
-        // TODO : signin with good credentials
-        dispatch(signIn(userData.user));
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error) {
         setUser(null);
         setIsAuthenticated(false);
+        router.push('/');
       } finally {
         setLoading(false);
       }
     };
 
     initAuth();
-  }, [dispatch]);
+  }, [dispatch, router]);
 
   if (loading) {
-    return <div>Loading...</div>; // Or your loading component
+    return null;
   }
 
   return (

@@ -14,9 +14,8 @@ export default function HeaderLayout() {
   const dispatch = useAppDispatch();
   const [isBrowser, setIsBrowser] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
-  const { user, loading } = useAuth();
+  const { user } = useAuth();
   console.log({ user });
-  console.log({ loading });
 
   const connectedUser = useAppSelector((state) => state.users.users);
 

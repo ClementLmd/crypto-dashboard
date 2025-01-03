@@ -65,22 +65,22 @@ export const invalidateSessionController = async (req: Request, res: Response) =
 
 export const checkSessionController = async (req: Request, res: Response) => {
   const sessionToken = req.cookies.session;
-  console.log('sessiontoken from cookies', sessionToken);
+
   if (!sessionToken) {
     return res.status(401).json({ error: 'No session found' });
   }
 
   try {
     const session = await validateSessionToken(sessionToken);
-    console.log('session from validateSessionToken', session);
+
     if (!session) {
       return res.status(401).json({ error: 'Invalid session' });
     }
 
     const user = await getUserBySessionId(sessionToken);
     return res.status(200).json({ user });
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
-    console.error('[CheckSession] Error:', error);
     return res.status(500).json({ error: 'Internal server error' });
   }
 };

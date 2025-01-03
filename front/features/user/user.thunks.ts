@@ -45,3 +45,16 @@ export const signIn = createAsyncThunk(
     return signedInUser;
   },
 );
+
+export const signInWithSession = createAsyncThunk('users/signInWithSession', async () => {
+  const response = await fetch('http://localhost:3001/auth/check', {
+    credentials: 'include',
+  });
+
+  if (!response.ok) {
+    throw new Error('Session invalid');
+  }
+
+  const { user } = await response.json();
+  return user;
+});

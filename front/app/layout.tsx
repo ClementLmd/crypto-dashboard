@@ -26,15 +26,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Provider store={store}>
-        <AuthProvider>
-          <body className={`${inter.variable} ${poppins.variable}`}>
+      <body className={`${inter.variable} ${poppins.variable}`}>
+        <Provider store={store}>
+          <AuthProvider>
             <HeaderLayout />
             <div className="container">{children}</div>
             <FooterLayout />
-          </body>
-        </AuthProvider>
-      </Provider>
+          </AuthProvider>
+        </Provider>
+      </body>
     </html>
   );
 }
