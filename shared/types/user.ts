@@ -1,6 +1,12 @@
-export interface User {
+export interface SigningUpUser {
   username: string;
   password: string;
+}
+
+export interface User extends SigningUpUser {
+  _id: string;
+  email?: string;
+  createdAt: Date;
 }
 
 export interface ConnectedUser {

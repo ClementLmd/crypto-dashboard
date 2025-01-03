@@ -3,10 +3,10 @@ import app from '../app';
 import mongoose from 'mongoose';
 import { connectToDatabase } from '../models/connection';
 import { errors } from '../../../shared/utils/errors';
-import type { User } from '@shared/types/user';
+import type { SigningUpUser } from '@shared/types/user';
 
 describe('User sign in tests', () => {
-  const user = { username: 'Joe', password: 'Doedoe1' };
+  const user: SigningUpUser = { username: 'Joe', password: 'Doedoe1' };
   beforeAll(async () => {
     await connectToDatabase();
     await mongoose.connection.db?.dropDatabase();
@@ -47,7 +47,7 @@ describe('User sign in tests', () => {
     expect(response.body).toStrictEqual({ error: errors.users.wrongPassword });
   });
   it('should not sign in if username not found', async () => {
-    const fakeUser: User = { username: 'Fake', password: 'User' };
+    const fakeUser: SigningUpUser = { username: 'Fake', password: 'User' };
     const response = await request(app).post('/users/signin').send(fakeUser);
     expect(response.status).toBe(400);
     expect(response.body).toStrictEqual({ error: errors.users.userNotFound });

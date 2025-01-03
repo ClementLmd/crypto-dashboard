@@ -5,6 +5,7 @@ import FooterLayout from '../components/footer/FooterLayout';
 import { Provider } from 'react-redux';
 import { store } from '../redux/store';
 import { Inter, Poppins } from 'next/font/google';
+import { AuthProvider } from './providers';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -25,13 +26,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Provider store={store}>
-        <body className={`${inter.variable} ${poppins.variable}`}>
-          <HeaderLayout />
-          <div className="container">{children}</div>
-          <FooterLayout />
-        </body>
-      </Provider>
+      <body className={`${inter.variable} ${poppins.variable}`}>
+        <Provider store={store}>
+          <AuthProvider>
+            <HeaderLayout />
+            <div className="container">{children}</div>
+            <FooterLayout />
+          </AuthProvider>
+        </Provider>
+      </body>
     </html>
   );
 }

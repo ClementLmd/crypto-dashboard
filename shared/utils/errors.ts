@@ -11,5 +11,7 @@ export const errors = {
     duplicatedUsername: 'Username already exists.',
     wrongPassword: 'Wrong password.',
     userNotFound: 'User not found.',
+    unauthorized: 'User is not authenticated',
+    invalidSession: 'Invalid or expired session',
   },
 };

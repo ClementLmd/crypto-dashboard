@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { signUp, fetchUsers, signIn } from './user.thunks';
+import { signUp, fetchUsers, signIn, signInWithSession } from './user.thunks';
 import type { ConnectedUser } from '@shared/types/user';
 
 interface UserState {
@@ -42,6 +42,17 @@ export const userSlice = createSlice({
       .addCase(signIn.fulfilled, (state, action) => {
         state.isLoading = false;
         state.users.push(action.payload);
+      })
+      .addCase(signInWithSession.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(signInWithSession.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.users = [action.payload];
+      })
+      .addCase(signInWithSession.rejected, (state) => {
+        state.isLoading = false;
+        state.users = [];
       });
   },
 });

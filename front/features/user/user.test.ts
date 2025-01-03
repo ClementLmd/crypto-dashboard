@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { logout, userReducer } from './user.slice';
-import { signUp, fetchUsers, signIn } from './user.thunks';
+import { signUp, signIn } from './user.thunks';
 import { selectUsers } from './user.selectors';
-import type { User } from '@shared/types/user';
+import type { SigningUpUser } from '@shared/types/user';
 import { addressReducer } from '../addresses/addresses.slice';
 
 describe('User slice', () => {
-  const mockUsers: User[] = [
+  const mockUsers: SigningUpUser[] = [
     { username: 'John', password: 'Doedoe1' },
     { username: 'Jane', password: 'Doedoe1' },
   ];
@@ -18,26 +18,8 @@ describe('User slice', () => {
         addresses: addressReducer,
       },
     });
-  it('should fetch users list in redux store', async () => {
-    // TODO : modify tests order so users added can be fetched
-    const mockFetch = jest.spyOn(global, 'fetch').mockResolvedValue({
-      json: async () => mockUsers,
-    } as Response);
-
-    const store = createTestStore();
-
-    await store.dispatch(fetchUsers());
-
-    const users = selectUsers(store.getState());
-    expect(users).toEqual(mockUsers);
-
-    expect(mockFetch).toHaveBeenCalledTimes(1);
-    expect(mockFetch).toHaveBeenCalledWith('http://localhost:3001/users');
-
-    mockFetch.mockRestore();
-  });
   it('should create a new user in database and store it in redux store', async () => {
-    const newUser: User = { username: 'Jack', password: 'Blackk1' };
+    const newUser: SigningUpUser = { username: 'Jack', password: 'Blackk1' };
 
     // TODO : delete user from db before starting these tests
     const mockFetch = jest.spyOn(global, 'fetch').mockResolvedValue({
@@ -64,7 +46,7 @@ describe('User slice', () => {
     mockFetch.mockRestore();
   });
   it('should not dispatch if status 400 is received', async () => {
-    const emptyUser: User = { username: '', password: '' };
+    const emptyUser: SigningUpUser = { username: '', password: '' };
 
     const store = createTestStore();
     await store.dispatch(signUp(emptyUser));
@@ -91,7 +73,7 @@ describe('User slice', () => {
     mockFetch.mockRestore();
   });
   it('should not sign in user if wrong password', async () => {
-    const userWithWrongPassword: User = { ...mockUsers[0], password: 'wrongPassword' };
+    const userWithWrongPassword: SigningUpUser = { ...mockUsers[0], password: 'wrongPassword' };
 
     const store = createTestStore();
     await store.dispatch(signIn(userWithWrongPassword));

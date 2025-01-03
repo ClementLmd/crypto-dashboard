@@ -8,11 +8,14 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { Button } from '../ui/button';
 import { logout } from '../../features/user/user.slice';
+import { useAuth } from '../../app/providers';
 
 export default function HeaderLayout() {
   const dispatch = useAppDispatch();
   const [isBrowser, setIsBrowser] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
+  const { user } = useAuth();
+  console.log({ user });
 
   const connectedUser = useAppSelector((state) => state.users.users);
 
@@ -29,8 +32,16 @@ export default function HeaderLayout() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const handleLogout = () => {
-    dispatch(logout());
+  const handleLogout = async () => {
+    try {
+      await fetch('http://localhost:3001/auth/logout', {
+        method: 'POST',
+        credentials: 'include',
+      });
+      dispatch(logout());
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
   };
 
   return (
