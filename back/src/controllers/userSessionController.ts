@@ -1,7 +1,13 @@
 import type { Request, Response } from 'express';
 import { verifyPassword } from '../utils/password';
 import { getUserByUsername } from '../use-cases/user/getUser';
-import { createSession, generateSessionToken, invalidateSession } from '../utils/session';
+import {
+  createSession,
+  generateSessionToken,
+  invalidateSession,
+  validateSessionToken,
+  getUserBySessionId,
+} from '../utils/session';
 
 export const createSessionController = async (req: Request, res: Response) => {
   const { username, password } = req.body;
@@ -53,6 +59,28 @@ export const invalidateSessionController = async (req: Request, res: Response) =
     res.clearCookie('session', { path: '/' });
     return res.status(200).end();
   } catch {
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+export const checkSessionController = async (req: Request, res: Response) => {
+  const sessionToken = req.cookies.session;
+  console.log('sessiontoken from cookies', sessionToken);
+  if (!sessionToken) {
+    return res.status(401).json({ error: 'No session found' });
+  }
+
+  try {
+    const session = await validateSessionToken(sessionToken);
+    console.log('session from validateSessionToken', session);
+    if (!session) {
+      return res.status(401).json({ error: 'Invalid session' });
+    }
+
+    const user = await getUserBySessionId(sessionToken);
+    return res.status(200).json({ user });
+  } catch (error) {
+    console.error('[CheckSession] Error:', error);
     return res.status(500).json({ error: 'Internal server error' });
   }
 };

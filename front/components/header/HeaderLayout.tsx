@@ -8,11 +8,15 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { Button } from '../ui/button';
 import { logout } from '../../features/user/user.slice';
+import { useAuth } from '../../app/providers';
 
 export default function HeaderLayout() {
   const dispatch = useAppDispatch();
   const [isBrowser, setIsBrowser] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
+  const { user, loading } = useAuth();
+  console.log({ user });
+  console.log({ loading });
 
   const connectedUser = useAppSelector((state) => state.users.users);
 
