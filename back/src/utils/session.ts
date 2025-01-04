@@ -74,8 +74,5 @@ export async function getUserBySessionId(token: string) {
     throw new Error('User not found');
   }
 
-  return {
-    id: user._id,
-    username: user.username,
-  };
+  return user;
 }

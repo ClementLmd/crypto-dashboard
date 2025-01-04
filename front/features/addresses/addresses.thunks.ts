@@ -25,6 +25,7 @@ export const deleteAddress = createAsyncThunk(
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(addressToDelete),
     });
+    console.log('response front delete', response);
     if (response.status !== 200) {
       const deleteAddressFailed = await response.json();
       throw new Error(`Error ${response.status}: ${deleteAddressFailed.error}`);
