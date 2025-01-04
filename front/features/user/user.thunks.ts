@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { errors } from '@shared/utils/errors';
 
 export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
   const response = await fetch('http://localhost:3001/users', {
@@ -52,7 +53,7 @@ export const signInWithSession = createAsyncThunk('users/signInWithSession', asy
   });
 
   if (!response.ok) {
-    throw new Error('Session invalid');
+    throw new Error(errors.session.invalidSession);
   }
 
   const { user } = await response.json();
