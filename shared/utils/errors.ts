@@ -12,6 +12,9 @@ export const errors = {
     wrongPassword: 'Wrong password.',
     userNotFound: 'User not found.',
     unauthorized: 'User is not authenticated',
+  },
+  session: {
     invalidSession: 'Invalid or expired session',
+    invalidCredentials: 'Invalid credentials',
   },
 };

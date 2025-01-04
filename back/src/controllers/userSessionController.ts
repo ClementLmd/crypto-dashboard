@@ -8,6 +8,7 @@ import {
   validateSessionToken,
   getUserBySessionId,
 } from '../utils/session';
+import { errors } from '../../../shared/utils/errors';
 
 export const createSessionController = async (req: Request, res: Response) => {
   const { username, password } = req.body;
@@ -15,12 +16,12 @@ export const createSessionController = async (req: Request, res: Response) => {
   try {
     const existingUser = await getUserByUsername(username);
     if (!existingUser) {
-      return res.status(400).json({ error: 'Invalid credentials' });
+      return res.status(400).json({ error: errors.session.invalidCredentials });
     }
 
     const validPassword = await verifyPassword(password, existingUser.password);
     if (!validPassword) {
-      return res.status(400).json({ error: 'Invalid credentials' });
+      return res.status(400).json({ error: errors.session.invalidCredentials });
     }
 
     const sessionToken = generateSessionToken();
