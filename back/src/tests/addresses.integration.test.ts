@@ -121,4 +121,33 @@ describe('Address integration tests', () => {
       expect(responseDelete.body).toStrictEqual({ error: errors.addresses.incompleteData });
     });
   });
+
+  describe('Getting addresses', () => {
+    it('should return user addresses', async () => {
+      // First add an address
+      const responseAdd = await request(app)
+        .post('/addresses/addAddress')
+        .set('Cookie', [sessionCookie])
+        .send(addressWithRequiredFields);
+
+      expect(responseAdd.status).toBe(201);
+
+      // Get addresses
+      const responseGet = await request(app)
+        .get('/addresses/getAddresses')
+        .set('Cookie', [sessionCookie]);
+
+      expect(responseGet.status).toBe(200);
+      expect(responseGet.body).toStrictEqual([addressWithRequiredFields]);
+    });
+
+    it('should return empty array when user has no addresses', async () => {
+      const response = await request(app)
+        .get('/addresses/getAddresses')
+        .set('Cookie', [sessionCookie]);
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual([]);
+    });
+  });
 });

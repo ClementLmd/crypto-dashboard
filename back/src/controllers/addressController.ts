@@ -6,6 +6,7 @@ import { addAddress } from '../use-cases/address/addAddress';
 import { deleteAddress } from '../use-cases/address/deleteAddress';
 import { User } from '../../../shared/types/user';
 import { UserModel } from '../models/users';
+import { getUserAddresses } from '../use-cases/address/getUserAddresses';
 
 export const addAddressController = async (req: Request & { user?: User }, res: Response) => {
   const { address, blockchain, addressContent, addressName }: Address = req.body;
@@ -13,7 +14,6 @@ export const addAddressController = async (req: Request & { user?: User }, res: 
   try {
     if (!checkBody(req.body, ['address', 'blockchain']))
       return res.status(400).json({ error: errors.addresses.incompleteData });
-    console.log('req.user', req.user);
 
     if (!req.user) return res.status(401).json({ error: errors.users.unauthorized });
 
@@ -40,7 +40,6 @@ export const deleteAddressController = async (req: Request & { user?: User }, re
   try {
     if (!checkBody(req.body, ['address', 'blockchain']))
       return res.status(400).json({ error: errors.addresses.incompleteData });
-    console.log('req.user delete', req.user);
 
     if (!req.user) return res.status(401).json({ error: errors.users.unauthorized });
 
@@ -59,6 +58,17 @@ export const deleteAddressController = async (req: Request & { user?: User }, re
     );
 
     return res.status(200).json();
+  } catch {
+    return res.status(500).json({ error: errors.internal });
+  }
+};
+
+export const getUserAddressesController = async (req: Request & { user?: User }, res: Response) => {
+  try {
+    if (!req.user) return res.status(401).json({ error: errors.users.unauthorized });
+
+    const addresses = await getUserAddresses(req.user._id);
+    return res.status(200).json(addresses);
   } catch {
     return res.status(500).json({ error: errors.internal });
   }

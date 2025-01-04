@@ -3,7 +3,7 @@ import type { Cryptocurrency } from './cryptocurrency';
 
 export interface Address {
   _id?: string;
-  addressName?: string;
+  addressName?: string | null;
   address: string;
   addressContent?: AddressContent[];
   blockchain: Blockchain;

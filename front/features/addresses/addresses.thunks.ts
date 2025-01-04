@@ -25,7 +25,6 @@ export const deleteAddress = createAsyncThunk(
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(addressToDelete),
     });
-    console.log('response front delete', response);
     if (response.status !== 200) {
       const deleteAddressFailed = await response.json();
       throw new Error(`Error ${response.status}: ${deleteAddressFailed.error}`);
@@ -33,3 +32,18 @@ export const deleteAddress = createAsyncThunk(
     return addressToDelete;
   },
 );
+
+export const getAddresses = createAsyncThunk('addresses/getAddresses', async (userId: string) => {
+  const response = await fetch('http://localhost:3001/addresses/getAddresses', {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(userId),
+    credentials: 'include',
+  });
+  if (response.status !== 200) {
+    const getAddressesFailed = await response.json();
+    throw new Error(`Error ${response.status}: ${getAddressesFailed.error}`);
+  }
+  const addresses = await response.json();
+  return addresses;
+});
