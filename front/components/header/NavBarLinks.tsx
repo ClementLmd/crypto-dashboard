@@ -3,7 +3,7 @@ import { isMenuItemActive } from '../../utils/isMenuItemActive';
 import { routes } from '../../app/config/routes';
 import Link from 'next/link';
 import styles from './navBarLinks.module.css';
-import { useAuth } from '../../app/providers';
+import { useAppSelector } from '../../hooks/hooks';
 
 export default function NavBarLinks({
   menuOpen,
@@ -12,7 +12,8 @@ export default function NavBarLinks({
   menuOpen?: boolean;
   isMobile?: boolean;
 }) {
-  const { isAuthenticated } = useAuth();
+  const user = useAppSelector((state) => state.users.users);
+  const isAuthenticated = user.length > 0;
 
   const pathname = usePathname();
 

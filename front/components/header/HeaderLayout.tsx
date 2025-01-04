@@ -8,14 +8,14 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { Button } from '../ui/button';
 import { logout } from '../../features/user/user.slice';
-import { useAuth } from '../../app/providers';
+import { useRouter } from 'next/navigation';
 
 export default function HeaderLayout() {
   const dispatch = useAppDispatch();
+  const router = useRouter();
+
   const [isBrowser, setIsBrowser] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
-  const { user } = useAuth();
-  console.log({ user });
 
   const connectedUser = useAppSelector((state) => state.users.users);
 
@@ -39,6 +39,7 @@ export default function HeaderLayout() {
         credentials: 'include',
       });
       dispatch(logout());
+      router.push(routes.home);
     } catch (error) {
       console.error('Logout failed:', error);
     }
