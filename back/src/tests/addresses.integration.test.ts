@@ -134,7 +134,7 @@ describe('Address integration tests', () => {
 
       // Get addresses
       const responseGet = await request(app)
-        .get('/addresses/getAddresses')
+        .get('/addresses/getUserAddresses')
         .set('Cookie', [sessionCookie]);
 
       expect(responseGet.status).toBe(200);
@@ -143,7 +143,7 @@ describe('Address integration tests', () => {
 
     it('should return empty array when user has no addresses', async () => {
       const response = await request(app)
-        .get('/addresses/getAddresses')
+        .get('/addresses/getUserAddresses')
         .set('Cookie', [sessionCookie]);
 
       expect(response.status).toBe(200);

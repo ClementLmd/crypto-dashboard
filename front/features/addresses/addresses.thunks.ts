@@ -24,6 +24,7 @@ export const deleteAddress = createAsyncThunk(
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(addressToDelete),
+      credentials: 'include',
     });
     if (response.status !== 200) {
       const deleteAddressFailed = await response.json();
@@ -33,11 +34,10 @@ export const deleteAddress = createAsyncThunk(
   },
 );
 
-export const getAddresses = createAsyncThunk('addresses/getAddresses', async (userId: string) => {
-  const response = await fetch('http://localhost:3001/addresses/getAddresses', {
+export const getUserAddresses = createAsyncThunk('addresses/getUserAddresses', async () => {
+  const response = await fetch('http://localhost:3001/addresses/getUserAddresses', {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(userId),
     credentials: 'include',
   });
   if (response.status !== 200) {

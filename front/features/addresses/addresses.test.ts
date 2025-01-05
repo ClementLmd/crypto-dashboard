@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { Address } from '@shared/types/address';
 import { addressReducer } from './addresses.slice';
-import { addAddress, deleteAddress } from './addresses.thunks';
+import { addAddress, deleteAddress, getUserAddresses } from './addresses.thunks';
 import { selectAddresses } from './addresses.selectors';
 import { userReducer } from '../user/user.slice';
 
@@ -79,5 +79,41 @@ describe('User slice', () => {
     expect(addressesAfterDelete).toEqual([]);
 
     mockFetchDeleteAddress.mockRestore();
+  });
+  it('should get user addresses and store them in redux store', async () => {
+    const mockFetch = jest.spyOn(global, 'fetch').mockResolvedValue({
+      json: async () => [mockAddress],
+      status: 200,
+    } as Response);
+
+    const store = createTestStore();
+    const addressesBeforeGet = selectAddresses(store.getState());
+    expect(addressesBeforeGet).toEqual([]);
+
+    await store.dispatch(getUserAddresses());
+
+    const addressesAfterGet = selectAddresses(store.getState());
+    expect(addressesAfterGet).toEqual([mockAddress]);
+
+    expect(mockFetch).toHaveBeenCalledTimes(1);
+    mockFetch.mockRestore();
+  });
+
+  it('should not store addresses in redux store if getting them failed', async () => {
+    const mockFetch = jest.spyOn(global, 'fetch').mockResolvedValue({
+      status: 401,
+    } as Response);
+
+    const store = createTestStore();
+    const addressesBeforeGet = selectAddresses(store.getState());
+    expect(addressesBeforeGet).toEqual([]);
+
+    await store.dispatch(getUserAddresses());
+
+    const addressesAfterGet = selectAddresses(store.getState());
+    expect(addressesAfterGet).toEqual([]);
+
+    expect(mockFetch).toHaveBeenCalledTimes(1);
+    mockFetch.mockRestore();
   });
 });

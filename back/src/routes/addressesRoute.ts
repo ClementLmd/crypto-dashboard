@@ -10,6 +10,6 @@ const router = Router();
 
 router.post('/addAddress', validateSession, addAddressController);
 router.delete('/deleteAddress', validateSession, deleteAddressController);
-router.get('/getAddresses', validateSession, getUserAddressesController);
+router.get('/getUserAddresses', validateSession, getUserAddressesController);
 
 export default router;

@@ -21,7 +21,7 @@ interface Column {
   sortable?: boolean;
 }
 
-interface CustomTableProps {
+interface AddressesTableProps {
   columns: Column[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: Record<string, any>[];
@@ -30,12 +30,12 @@ interface CustomTableProps {
   onDelete?: (_row: Address) => void;
 }
 
-export default function CustomTable({
+export default function AddressesTable({
   columns,
   data,
   itemsPerPage = 10,
   onDelete,
-}: CustomTableProps) {
+}: AddressesTableProps) {
   const [sortConfig, setSortConfig] = useState<{ key: string; direction: 'asc' | 'desc' } | null>(
     null,
   );
