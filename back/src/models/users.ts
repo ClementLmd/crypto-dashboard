@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 import { User } from '@shared/types/user';
-
+import { Address } from '@shared/types/address';
 export interface UserDocument extends User, Document {
-  addresses: mongoose.Types.ObjectId[]; // Array of Address references
+  addresses: Address[];
 }
 
 const userSchema = new mongoose.Schema<UserDocument>({

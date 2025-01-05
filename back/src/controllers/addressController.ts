@@ -40,7 +40,7 @@ export const deleteAddressController = async (req: Request & { user?: User }, re
   try {
     if (!checkBody(req.body, ['address', 'blockchain']))
       return res.status(400).json({ error: errors.addresses.incompleteData });
-    console.log('req.user', req.user);
+
     if (!req.user) return res.status(401).json({ error: errors.users.unauthorized });
 
     const addressToDelete: Address = { address, blockchain };

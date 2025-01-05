@@ -1,4 +1,3 @@
-import { Types } from 'mongoose';
 import { Address } from './address';
 
 export interface SigningUpUser {
@@ -10,7 +9,7 @@ export interface User extends SigningUpUser {
   _id: string;
   email?: string;
   createdAt: Date;
-  addresses: Address[] | Types.ObjectId[];
+  addresses: Address[];
 }
 
 export interface ConnectedUser {
