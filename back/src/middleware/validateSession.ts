@@ -1,21 +1,19 @@
 import { Request, Response, NextFunction } from 'express';
-import { validateSessionToken } from '../utils/session';
+import { validateSessionToken, getUserBySessionId } from '../utils/session';
 import { errors } from '../../../shared/utils/errors';
 import { UserSession } from '@shared/types/session';
+import { User } from '@shared/types/user';
 
-interface RequestWithSession extends Request {
+interface RequestWithAuth extends Request {
   session?: UserSession;
+  user?: User;
 }
 
-export const validateSession = async (
-  req: RequestWithSession,
-  res: Response,
-  next: NextFunction,
-) => {
+export const validateSession = async (req: RequestWithAuth, res: Response, next: NextFunction) => {
   const sessionToken = req.cookies.session;
 
   if (!sessionToken) {
-    return res.status(401).json({ error: errors.users.unauthorized });
+    return res.status(401).json({ error: errors.session.invalidSession });
   }
 
   try {
@@ -25,7 +23,11 @@ export const validateSession = async (
       return res.status(401).json({ error: errors.users.unauthorized });
     }
 
+    const user = await getUserBySessionId(sessionToken);
+
     req.session = session;
+    req.user = user;
+
     next();
   } catch (error) {
     console.error('[ValidateSession] Error:', error);

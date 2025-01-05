@@ -11,5 +11,5 @@ export const addressFormSchema: z.Schema<Address> = z.object({
   address: z.string(),
   blockchain: z.enum(['Bitcoin', 'Ethereum', 'Solana']),
   addressContent: z.array(addressContentSchema).optional(),
-  addressName: z.string().optional(),
+  addressName: z.string().nullable().default(null),
 });

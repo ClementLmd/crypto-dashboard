@@ -6,9 +6,11 @@ import { Input } from '../ui/input';
 import { signIn } from '../../features/user/user.thunks';
 import { useAppDispatch } from '../../hooks/hooks';
 import { errors } from '@shared/utils/errors';
-
+import { routes } from '../../app/config/routes';
+import { useRouter } from 'next/navigation';
 export function SignIn() {
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -24,6 +26,7 @@ export function SignIn() {
       setFeedbackMessage('User signed in');
       setUsername('');
       setPassword('');
+      router.push(routes.addresses);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       setFeedbackMessage('Sign in error');

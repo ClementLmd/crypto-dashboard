@@ -82,7 +82,7 @@ export function AddressForm({ blockchain }: { blockchain: Blockchain }) {
             <FormItem>
               <FormLabel>Address name (optional)</FormLabel>
               <FormControl>
-                <Input placeholder="Main address" {...field} />
+                <Input placeholder="Main address" {...field} value={field.value || ''} />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -5,7 +5,7 @@ import { useAppDispatch } from '../../../hooks/hooks';
 import styles from './databaseGetPage.module.css';
 import { selectUserIsLoading, selectUsers } from '../../../features/user/user.selectors';
 import { fetchUsers } from '../../../features/user/user.thunks';
-import CustomTable from '../../../components/ui/custom-table';
+import AddressesTable from '../../../components/ui/addresses-table';
 import type { ConnectedUser } from '@shared/types/user';
 import { useState } from 'react';
 import { Button } from '../../../components/ui/button';
@@ -38,7 +38,7 @@ export default function DatabaseGetPage() {
       <Button onClick={handleFetchUsers} className="m-3">
         Fetch users
       </Button>
-      {showTable && <CustomTable columns={columns} data={data} itemsPerPage={8} />}
+      {showTable && <AddressesTable columns={columns} data={data} itemsPerPage={8} />}
     </div>
   );
 }

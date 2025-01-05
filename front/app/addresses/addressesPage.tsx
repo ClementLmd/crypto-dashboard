@@ -3,16 +3,21 @@
 
 import { Address } from '@shared/types/address';
 import { AddAddress } from '../../components/form/addAddress';
-import CustomTable from '../../components/ui/custom-table';
+import AddressesTable from '../../components/ui/addresses-table';
 import styles from './addresses.module.css';
 import { selectAddresses } from '../../features/addresses/addresses.selectors';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../hooks/hooks';
-import { deleteAddress } from '../../features/addresses/addresses.thunks';
+import { deleteAddress, getUserAddresses } from '../../features/addresses/addresses.thunks';
+import { useEffect } from 'react';
 
 export default function AddressesPage() {
   const dispatch = useAppDispatch();
   const addresses: Address[] = useSelector(selectAddresses);
+
+  useEffect(() => {
+    dispatch(getUserAddresses());
+  }, [dispatch]);
 
   const columns = [
     { key: 'blockchain', label: 'Blockchain', sortable: true },
@@ -38,7 +43,7 @@ export default function AddressesPage() {
         <AddAddress blockchain="Ethereum" />
         <AddAddress blockchain="Solana" />
       </div>
-      <CustomTable columns={columns} data={data} itemsPerPage={10} onDelete={handleDelete} />
+      <AddressesTable columns={columns} data={data} itemsPerPage={10} onDelete={handleDelete} />
     </div>
   );
 }

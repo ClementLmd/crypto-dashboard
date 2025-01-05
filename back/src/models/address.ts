@@ -3,7 +3,9 @@ import type { Address, AddressContent } from '../../../shared/types/address';
 import { blockchains } from '../../../shared/types/blockchain';
 import type { Cryptocurrency } from '../../../shared/types/cryptocurrency';
 
-export interface AddressDocument extends Address, Document {}
+export interface AddressDocument extends Address, Document {
+  _id: string;
+}
 
 const cryptocurrencySchema = new mongoose.Schema<Cryptocurrency>({
   cryptoName: { type: String, required: true },
