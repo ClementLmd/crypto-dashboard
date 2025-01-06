@@ -7,6 +7,7 @@ import { deleteAddress } from '../use-cases/address/deleteAddress';
 import { User } from '../../../shared/types/user';
 import { UserModel } from '../models/users';
 import { getUserAddresses } from '../use-cases/address/getUserAddresses';
+import { isValidSolanaAddress } from '../utils/isValidAddress';
 
 export const addAddressController = async (req: Request & { user?: User }, res: Response) => {
   const { address, blockchain, addressContent, addressName }: Address = req.body;
@@ -69,6 +70,37 @@ export const getUserAddressesController = async (req: Request & { user?: User },
 
     const addresses = await getUserAddresses(req.user);
     return res.status(200).json(addresses);
+  } catch {
+    return res.status(500).json({ error: errors.internal });
+  }
+};
+
+export const addSolanaAddressController = async (req: Request & { user?: User }, res: Response) => {
+  const { address, addressName }: Address = req.body;
+
+  try {
+    if (!isValidSolanaAddress(address)) {
+      return res.status(400).json({ error: errors.addresses.invalidSolanaAddress });
+    }
+
+    if (!req.user) return res.status(401).json({ error: errors.users.unauthorized });
+
+    const addressData: Address = {
+      address,
+      blockchain: 'Solana',
+      addressContent: [],
+      addressName: addressName,
+    };
+
+    const newAddress = await addAddress(addressData);
+
+    await UserModel.findByIdAndUpdate(
+      req.user._id,
+      { $push: { addresses: newAddress._id } },
+      { new: true },
+    );
+
+    return res.status(201).json(newAddress);
   } catch {
     return res.status(500).json({ error: errors.internal });
   }

@@ -2,6 +2,7 @@ export const errors = {
   addresses: {
     incompleteData: 'Missing or empty fields.',
     failedDelete: 'Failed address delete.',
+    invalidSolanaAddress: 'Invalid Solana address.',
   },
   internal: 'Internal server error.',
   users: {

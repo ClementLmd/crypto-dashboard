@@ -81,6 +81,32 @@ describe('Address integration tests', () => {
       expect(response.status).toBe(400);
       expect(response.body).toStrictEqual({ error: errors.addresses.incompleteData });
     });
+    it('should add an address if valid Solana address', async () => {
+      const validAddress = {
+        address: '6NvQ7xJZmi48jVdL8nzvEKcgXGwJPBs9aDjHPrnooRL8',
+        addressName: 'valid-address',
+      };
+      const response = await request(app)
+        .post('/addresses/addAddress/solana')
+        .set('Cookie', [sessionCookie])
+        .send(validAddress);
+
+      expect(response.status).toBe(201);
+      expect(response.body.address).toBe(validAddress.address);
+      expect(response.body.blockchain).toBe('Solana');
+      expect(response.body.addressContent).toStrictEqual([]);
+      expect(response.body.addressName).toBe(validAddress.addressName);
+    });
+    it('should not add an address if invalid Solana address', async () => {
+      const invalidAddress = { address: 'invalid-address', addressName: 'invalid-address' };
+      const response = await request(app)
+        .post('/addresses/addAddress/solana')
+        .set('Cookie', [sessionCookie])
+        .send(invalidAddress);
+
+      expect(response.status).toBe(400);
+      expect(response.body).toStrictEqual({ error: errors.addresses.invalidSolanaAddress });
+    });
   });
 
   describe('Deleting addresses', () => {
