@@ -17,6 +17,24 @@ export const addAddress = createAsyncThunk('addresses/addAddress', async (newAdd
   return addedAddress;
 });
 
+export const addSolanaAddress = createAsyncThunk(
+  'addresses/addSolanaAddress',
+  async (newAddress: Address) => {
+    const response = await fetch('http://localhost:3001/addresses/addAddress/solana', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newAddress),
+      credentials: 'include',
+    });
+    if (response.status !== 201) {
+      const addressAddFailed = await response.json();
+      throw new Error(`Error ${response.status}: ${addressAddFailed.error}`);
+    }
+    const addedAddress = await response.json();
+    return addedAddress;
+  },
+);
+
 export const deleteAddress = createAsyncThunk(
   'addresses/deleteAddress',
   async (addressToDelete: { address: string; blockchain: Blockchain }) => {

@@ -7,7 +7,7 @@ import { deleteAddress } from '../use-cases/address/deleteAddress';
 import { User } from '../../../shared/types/user';
 import { UserModel } from '../models/users';
 import { getUserAddresses } from '../use-cases/address/getUserAddresses';
-import { isValidSolanaAddress } from '../utils/isValidAddress';
+import { isValidSolanaAddress } from '../../../shared/utils/isValidAddress';
 
 export const addAddressController = async (req: Request & { user?: User }, res: Response) => {
   const { address, blockchain, addressContent, addressName }: Address = req.body;

@@ -16,11 +16,12 @@ import {
 import { Input } from '../../components/ui/input';
 import { addressFormSchema } from '@shared/schema/addressForm.schema';
 import { useAppDispatch } from '../../hooks/hooks';
-import { addAddress } from '../../features/addresses/addresses.thunks';
+import { addAddress, addSolanaAddress } from '../../features/addresses/addresses.thunks';
 import { Blockchain } from '@shared/types/blockchain';
 import { useState } from 'react';
 import { errors } from '@shared/utils/errors';
 import { Address } from '@shared/types/address';
+import { isValidSolanaAddress } from '@shared/utils/isValidAddress';
 
 export function AddressForm({ blockchain }: { blockchain: Blockchain }) {
   const dispatch = useAppDispatch();
@@ -44,7 +45,15 @@ export function AddressForm({ blockchain }: { blockchain: Blockchain }) {
         setFeedbackMessage(errors.addresses.incompleteData);
         return;
       }
-      await dispatch(addAddress(values));
+      if (blockchain === 'Solana') {
+        if (!isValidSolanaAddress(values.address)) {
+          setFeedbackMessage(errors.addresses.invalidSolanaAddress);
+          return;
+        }
+        await dispatch(addSolanaAddress(values));
+      } else {
+        await dispatch(addAddress(values));
+      }
       setFeedbackMessage('Address added');
       form.reset(formDefaultAddressValues);
     } catch {
