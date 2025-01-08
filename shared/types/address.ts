@@ -1,15 +1,23 @@
 import type { Blockchain } from './blockchain';
-import type { Cryptocurrency } from './cryptocurrency';
 
 export interface Address {
   _id?: string;
   addressName?: string | null;
   address: string;
-  addressContent?: AddressContent[];
   blockchain: Blockchain;
+  addressContent?: AddressContent[];
 }
 
-export type AddressContent = {
-  crypto: Cryptocurrency;
-  quantity: number;
-};
+export interface AddressContent {
+  tokenSymbol: string;
+  tokenName: string;
+  amount: string;
+  usdValue: string;
+  mintAddress?: string | null;
+  lastUpdated: Date;
+}
+
+export interface SolanaAddress extends Address {
+  sol: number;
+  solUsdValue: number;
+}

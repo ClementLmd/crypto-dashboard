@@ -1,10 +1,19 @@
 import { createSolanaRpc, address } from '@solana/web3.js';
 import { AddressContent } from '@shared/types/address';
 
+interface TokenMetadata {
+  symbol: string;
+  name: string;
+  decimals: number;
+  address: string; // mint address
+}
+
 export async function getSolanaTokens(walletAddress: string): Promise<AddressContent[]> {
   const rpc = createSolanaRpc('https://api.mainnet-beta.solana.com');
 
   try {
+    const solBalance = await rpc.getBalance(address(walletAddress)).send();
+
     // Get token accounts with parsed data
     const tokenAccounts = await rpc
       .getTokenAccountsByOwner(
@@ -18,7 +27,7 @@ export async function getSolanaTokens(walletAddress: string): Promise<AddressCon
 
     // Get token metadata from Jupiter API
     const tokenListResponse = await fetch('https://token.jup.ag/strict');
-    const tokenList = await tokenListResponse.json();
+    const tokenList: Record<string, TokenMetadata> = await tokenListResponse.json();
 
     // Map to AddressContent format
     const tokens = tokenAccounts.value
@@ -30,13 +39,20 @@ export async function getSolanaTokens(walletAddress: string): Promise<AddressCon
 
         return {
           tokenSymbol: metadata.symbol || 'Unknown',
+          tokenName: metadata.name || 'Unknown Token',
           amount: tokenInfo.tokenAmount.uiAmount.toString(),
-          usdValue: '0', // You'll need to implement price fetching
+          usdValue: '0', // TODO: Implement price fetching
+          mintAddress: tokenInfo.mint,
+          decimals: tokenInfo.tokenAmount.decimals,
+          lastUpdated: new Date(),
         };
       })
       .filter((token): token is AddressContent => token !== null);
 
-    return tokens;
+    return {
+      sol: Number(solBalance.value) / 1e9,
+      tokens: tokens.filter((t) => t.uiAmount && t.uiAmount > 0), // Only show tokens with balance
+    };
   } catch (error) {
     console.error('Error:', error);
     throw error;
