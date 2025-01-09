@@ -4,8 +4,9 @@ import { Address, AddressContent } from '../types/address';
 export const addressContentSchema: z.Schema<AddressContent> = z.object({
   tokenSymbol: z.string(),
   tokenName: z.string(),
-  amount: z.string(),
-  usdValue: z.string(),
+  amount: z.number(),
+  usdValue: z.number(),
+  totalUsdValue: z.number(),
   mintAddress: z.string().nullable().optional(),
   lastUpdated: z.date(),
 });

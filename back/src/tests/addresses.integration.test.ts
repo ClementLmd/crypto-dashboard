@@ -7,14 +7,17 @@ import { errors } from '../../../shared/utils/errors';
 import { generateSessionToken, createSession } from '../utils/session';
 import { UserModel } from '../models/users';
 import { User } from '@shared/types/user';
+import { AddressModel } from '../models/address';
 
 describe('Address integration tests', () => {
   const addressWithRequiredFields: Address = {
-    address: 'address-example',
+    address: 'CpsUdHzAbmyvqf29AvT8cFEzW9AcyHdSDUi4pPGbykQg',
     blockchain: 'Solana',
   };
   let sessionCookie: string;
-  let testUser: User;
+  let testUserWithoutAddresses: User;
+
+  jest.setTimeout(15000);
 
   beforeAll(async () => {
     await connectToDatabase();
@@ -24,7 +27,7 @@ describe('Address integration tests', () => {
     await mongoose.connection.db?.dropDatabase();
 
     // Create test user
-    testUser = await UserModel.create({
+    testUserWithoutAddresses = await UserModel.create({
       _id: '67768b410e746af3be8594fa',
       username: 'test-user',
       password: 'test-password',
@@ -33,7 +36,7 @@ describe('Address integration tests', () => {
 
     const sessionToken = generateSessionToken();
     sessionCookie = `session=${sessionToken}; Path=/; HttpOnly`;
-    await createSession(sessionToken, testUser._id);
+    await createSession(sessionToken, testUserWithoutAddresses._id);
   });
 
   afterAll(async () => {
@@ -66,7 +69,7 @@ describe('Address integration tests', () => {
       expect(response.body.addressName).toBe(null);
 
       // Verify the address is in user's addresses array
-      const user = await UserModel.findOne({ _id: testUser._id });
+      const user = await UserModel.findOne({ _id: testUserWithoutAddresses._id });
       expect(user?.addresses).toHaveLength(1);
       expect(user?.addresses[0].toString()).toBe(response.body._id);
     });
@@ -120,7 +123,7 @@ describe('Address integration tests', () => {
       expect(responseAdd.status).toBe(201);
 
       // Verify address was added to user
-      const userBefore = await UserModel.findOne({ _id: testUser._id });
+      const userBefore = await UserModel.findOne({ _id: testUserWithoutAddresses._id });
       expect(userBefore?.addresses).toHaveLength(1);
 
       // Delete the address
@@ -132,7 +135,7 @@ describe('Address integration tests', () => {
       expect(responseDelete.status).toBe(200);
 
       // Verify address was removed from user
-      const userAfter = await UserModel.findOne({ _id: testUser._id });
+      const userAfter = await UserModel.findOne({ _id: testUserWithoutAddresses._id });
       expect(userAfter?.addresses).toHaveLength(0);
     });
 
@@ -158,14 +161,30 @@ describe('Address integration tests', () => {
 
       expect(responseAdd.status).toBe(201);
 
-      // Get addresses
-      const responseGet = await request(app)
-        .get('/addresses/getUserAddresses')
-        .set('Cookie', [sessionCookie]);
+      // Add delay to avoid rate limiting
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      expect(responseGet.status).toBe(200);
-      expect(responseGet.body).toStrictEqual([addressWithRequiredFields]);
-    });
+      // Get addresses with retry logic
+      const maxRetries = 3;
+      let responseGet;
+
+      for (let i = 0; i < maxRetries; i++) {
+        responseGet = await request(app)
+          .get('/addresses/getUserAddresses')
+          .set('Cookie', [sessionCookie]);
+
+        if (responseGet.status === 200) break;
+
+        // Wait longer between retries
+        await new Promise((resolve) => setTimeout(resolve, 2000 * (i + 1)));
+      }
+
+      expect(responseGet?.status).toBe(200);
+      expect(responseGet?.body[0].addressContent).toBeDefined();
+
+      const addressAfter = await AddressModel.findOne({ _id: responseGet?.body[0]._id });
+      expect(addressAfter?.addressContent).toBeDefined();
+    }, 20000); // Increased timeout
 
     it('should return empty array when user has no addresses', async () => {
       const response = await request(app)

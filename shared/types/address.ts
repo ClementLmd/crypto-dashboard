@@ -11,13 +11,8 @@ export interface Address {
 export interface AddressContent {
   tokenSymbol: string;
   tokenName: string;
-  amount: string;
-  usdValue: string;
-  mintAddress?: string | null;
+  amount: number;
+  usdValue: number;
+  totalUsdValue: number;
   lastUpdated: Date;
-}
-
-export interface SolanaAddress extends Address {
-  sol: number;
-  solUsdValue: number;
 }
