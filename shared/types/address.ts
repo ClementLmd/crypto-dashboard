@@ -15,5 +15,5 @@ export interface AddressContent {
   usdValue: number;
   totalUsdValue: number;
   lastUpdated: Date;
-  mintAddress: string;
+  mintAddress: string | null;
 }

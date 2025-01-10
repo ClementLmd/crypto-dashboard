@@ -7,7 +7,7 @@ export const addressContentSchema: z.Schema<AddressContent> = z.object({
   amount: z.number(),
   usdValue: z.number(),
   totalUsdValue: z.number(),
-  mintAddress: z.string().nullable().optional(),
+  mintAddress: z.string().nullable(),
   lastUpdated: z.date(),
 });
 
