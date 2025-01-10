@@ -28,6 +28,7 @@ interface TokenTableData {
   usdValue: number;
   totalUsdValue: number;
   lastUpdated: Date;
+  mintAddress: string;
   [key: string]: string | number | Date; // Add index signature
 }
 
@@ -45,7 +46,8 @@ export default function TokenBalancesTable({
     { key: 'addressName', label: 'Wallet', sortable: true },
     { key: 'tokenSymbol', label: 'Token', sortable: true },
     { key: 'amount', label: 'Balance', sortable: true },
-    { key: 'usdValue', label: 'USD Value', sortable: true },
+    { key: 'usdPrice', label: 'Price', sortable: true },
+    { key: 'totalUsdValue', label: 'Total Value', sortable: true },
   ];
 
   // Flatten addresses and their tokens into a single array
@@ -163,10 +165,13 @@ export default function TokenBalancesTable({
                   {token.tokenSymbol}
                 </TableCell>
                 <TableCell className="py-3 px-4 text-sm text-gray-800">
-                  {token.amount.toLocaleString()}
+                  {token.amount.toFixed(2)}
                 </TableCell>
                 <TableCell className="py-3 px-4 text-sm text-gray-800">
-                  ${token.usdValue.toLocaleString()}
+                  ${token.usdValue.toFixed(2)}
+                </TableCell>
+                <TableCell className="py-3 px-4 text-sm text-gray-800">
+                  ${token.totalUsdValue.toFixed(2)}
                 </TableCell>
               </TableRow>
             ))}
