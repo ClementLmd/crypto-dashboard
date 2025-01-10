@@ -10,6 +10,7 @@ import cookieParser from 'cookie-parser';
 import usersRoute from './routes/usersRoute';
 import addressesRoute from './routes/addressesRoute';
 import userSessionRoute from './routes/userSessionRoute';
+import tokenRoute from './routes/tokenRoute';
 
 const app = express();
 
@@ -28,5 +29,6 @@ app.use(morgan('dev'));
 app.use('/users', usersRoute);
 app.use('/addresses', addressesRoute);
 app.use('/auth', userSessionRoute);
+app.use('/tokens', tokenRoute);
 
 export default app;

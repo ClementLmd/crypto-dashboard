@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { getUserAddresses } from '../../features/addresses/addresses.thunks';
 import { selectAddresses } from '../../features/addresses/addresses.selectors';
 import TokenBalancesTable from '../../components/ui/token-balances-table';
+import styles from './dashboard.module.css';
 
 export default function Dashboard() {
   const dispatch = useAppDispatch();
@@ -16,7 +17,7 @@ export default function Dashboard() {
   }, [dispatch]);
 
   return (
-    <div className="container mx-auto py-10">
+    <div className={styles.main}>
       <h1 className="text-2xl font-bold mb-6">Token Balances</h1>
       <TokenBalancesTable addresses={addresses} />
     </div>
