@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { Address } from '@shared/types/address';
 import { addressReducer } from './addresses.slice';
-import { addAddress, deleteAddress, getUserAddresses } from './addresses.thunks';
+import { addAddress, addSolanaAddress, deleteAddress, getUserAddresses } from './addresses.thunks';
 import { selectAddresses } from './addresses.selectors';
 import { userReducer } from '../user/user.slice';
 
-describe('User slice', () => {
+describe('Addresses slice', () => {
   const mockAddress: Address = {
     address: 'address-example',
     blockchain: 'Solana',
@@ -112,6 +112,24 @@ describe('User slice', () => {
 
     const addressesAfterGet = selectAddresses(store.getState());
     expect(addressesAfterGet).toEqual([]);
+
+    expect(mockFetch).toHaveBeenCalledTimes(1);
+    mockFetch.mockRestore();
+  });
+  it('should add a Solana address to the database and store it in the redux store', async () => {
+    const mockFetch = jest.spyOn(global, 'fetch').mockResolvedValue({
+      json: async () => mockAddress,
+      status: 201,
+    } as Response);
+
+    const store = createTestStore();
+    const addressesBeforeAdd = selectAddresses(store.getState());
+    expect(addressesBeforeAdd).toEqual([]);
+
+    await store.dispatch(addSolanaAddress(mockAddress));
+
+    const addressesAfterAdd = selectAddresses(store.getState());
+    expect(addressesAfterAdd).toEqual([mockAddress]);
 
     expect(mockFetch).toHaveBeenCalledTimes(1);
     mockFetch.mockRestore();

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Address } from '@shared/types/address';
-import { addAddress, deleteAddress, getUserAddresses } from './addresses.thunks';
+import { addAddress, addSolanaAddress, deleteAddress, getUserAddresses } from './addresses.thunks';
 
 interface AddressState {
   addresses: Address[];
@@ -22,6 +22,13 @@ export const addressSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(addAddress.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.addresses.push(action.payload);
+      })
+      .addCase(addSolanaAddress.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(addSolanaAddress.fulfilled, (state, action) => {
         state.isLoading = false;
         state.addresses.push(action.payload);
       })

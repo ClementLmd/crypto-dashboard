@@ -1,10 +1,14 @@
 import { z } from 'zod';
 import { Address, AddressContent } from '../types/address';
-import { cryptocurrencySchema } from './cryptocurrency.schema';
 
 export const addressContentSchema: z.Schema<AddressContent> = z.object({
-  crypto: cryptocurrencySchema,
-  quantity: z.number(),
+  tokenSymbol: z.string(),
+  tokenName: z.string(),
+  amount: z.number(),
+  usdValue: z.number(),
+  totalUsdValue: z.number(),
+  mintAddress: z.string().nullable().optional(),
+  lastUpdated: z.date(),
 });
 
 export const addressFormSchema: z.Schema<Address> = z.object({
