@@ -9,6 +9,49 @@ import { UserModel } from '../models/users';
 import { User } from '@shared/types/user';
 import { AddressModel } from '../models/address';
 
+// Mock Solana RPC calls
+jest.mock('@solana/web3.js', () => ({
+  createSolanaRpc: jest.fn(() => ({
+    getBalance: jest.fn().mockReturnValue({
+      send: jest.fn().mockResolvedValue({ value: 1000000000n }), // 1 SOL
+    }),
+    getTokenAccountsByOwner: jest.fn().mockReturnValue({
+      send: jest.fn().mockResolvedValue({
+        value: [
+          {
+            account: {
+              data: {
+                parsed: {
+                  info: {
+                    mint: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
+                    tokenAmount: {
+                      amount: '100000000',
+                      decimals: 6,
+                      uiAmount: 100,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        ],
+      }),
+    }),
+  })),
+  address: jest.fn((addr) => addr),
+}));
+
+// Mock Jupiter API
+global.fetch = jest.fn().mockResolvedValue({
+  json: jest.fn().mockResolvedValue({
+    EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v: {
+      symbol: 'USDC',
+      name: 'USD Coin',
+      address: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
+      decimals: 6,
+    },
+  }),
+});
 describe('Address integration tests', () => {
   const addressWithRequiredFields: Address = {
     address: 'CpsUdHzAbmyvqf29AvT8cFEzW9AcyHdSDUi4pPGbykQg',
@@ -152,47 +195,46 @@ describe('Address integration tests', () => {
   });
 
   describe('Getting addresses', () => {
-    it('should return user addresses', async () => {
-      // First add an address
-      const responseAdd = await request(app)
-        .post('/addresses/addAddress')
-        .set('Cookie', [sessionCookie])
-        .send(addressWithRequiredFields);
+    describe('Getting addresses', () => {
+      it('should return user addresses', async () => {
+        // First add an address
+        const responseAdd = await request(app)
+          .post('/addresses/addAddress')
+          .set('Cookie', [sessionCookie])
+          .send(addressWithRequiredFields);
 
-      expect(responseAdd.status).toBe(201);
+        expect(responseAdd.status).toBe(201);
 
-      // Add delay to avoid rate limiting
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Get addresses with retry logic
-      const maxRetries = 3;
-      let responseGet;
-
-      for (let i = 0; i < maxRetries; i++) {
-        responseGet = await request(app)
+        const responseGet = await request(app)
           .get('/addresses/getUserAddresses')
           .set('Cookie', [sessionCookie]);
 
-        if (responseGet.status === 200) break;
+        expect(responseGet.status).toBe(200);
+        expect(responseGet.body[0].addressContent).toBeDefined();
+        expect(responseGet.body[0].addressContent).toHaveLength(2); // SOL + USDC
+        expect(responseGet.body[0].addressContent[0]).toMatchObject({
+          tokenSymbol: 'SOL',
+          tokenName: 'Solana',
+          amount: 1, // 1 SOL
+        });
+        expect(responseGet.body[0].addressContent[1]).toMatchObject({
+          tokenSymbol: 'USDC',
+          tokenName: 'USD Coin',
+          amount: 100, // 100 USDC
+        });
 
-        // Wait longer between retries
-        await new Promise((resolve) => setTimeout(resolve, 2000 * (i + 1)));
-      }
+        const addressAfter = await AddressModel.findOne({ _id: responseGet.body[0]._id });
+        expect(addressAfter?.addressContent).toBeDefined();
+      });
 
-      expect(responseGet?.status).toBe(200);
-      expect(responseGet?.body[0].addressContent).toBeDefined();
+      it('should return empty array when user has no addresses', async () => {
+        const response = await request(app)
+          .get('/addresses/getUserAddresses')
+          .set('Cookie', [sessionCookie]);
 
-      const addressAfter = await AddressModel.findOne({ _id: responseGet?.body[0]._id });
-      expect(addressAfter?.addressContent).toBeDefined();
-    }, 20000); // Increased timeout
-
-    it('should return empty array when user has no addresses', async () => {
-      const response = await request(app)
-        .get('/addresses/getUserAddresses')
-        .set('Cookie', [sessionCookie]);
-
-      expect(response.status).toBe(200);
-      expect(response.body).toEqual([]);
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual([]);
+      });
     });
   });
 });
