@@ -75,11 +75,17 @@ export const checkSessionController = async (req: Request, res: Response) => {
     const session = await validateSessionToken(sessionToken);
 
     if (!session) {
-      return res.status(401).json({ error: 'Invalid session' });
+      return res.status(401).json({
+        redirectUrl: 'http://localhost:3000/',
+        error: 'Invalid session',
+      });
     }
 
     const user = await getUserBySessionId(sessionToken);
-    return res.status(200).json({ user });
+    return res.status(200).json({
+      user,
+      redirectUrl: 'http://localhost:3000/addresses',
+    });
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     return res.status(500).json({ error: 'Internal server error' });

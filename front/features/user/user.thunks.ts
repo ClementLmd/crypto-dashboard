@@ -52,10 +52,16 @@ export const signInWithSession = createAsyncThunk('users/signInWithSession', asy
     credentials: 'include',
   });
 
+  const data = await response.json();
+
+  if (data.redirectUrl) {
+    window.location.href = data.redirectUrl;
+    return null;
+  }
+
   if (!response.ok) {
     throw new Error(errors.session.invalidSession);
   }
-
-  const { user } = await response.json();
-  return user;
+  console.log('data', data);
+  return data.user;
 });
