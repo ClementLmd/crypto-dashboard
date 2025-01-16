@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { userReducer } from '../user/user.slice';
-import { signInWithSession } from '../user/user.thunks';
+import { userReducer } from './user.slice';
+import { checkSession } from './user.thunks';
 import { errors } from '@shared/utils/errors';
 
 describe('Auth features', () => {
@@ -9,23 +9,23 @@ describe('Auth features', () => {
   const createTestStore = () =>
     configureStore({
       reducer: {
-        users: userReducer,
+        user: userReducer,
       },
     });
 
   it('should restore session and store user in redux store', async () => {
     const mockFetch = jest.spyOn(global, 'fetch').mockResolvedValue({
-      json: async () => ({ user: mockUser }),
+      json: async () => ({ user: mockUser, authenticated: true }),
       ok: true,
       status: 200,
     } as Response);
 
     const store = createTestStore();
-    await store.dispatch(signInWithSession());
+    await store.dispatch(checkSession());
 
     const state = store.getState();
-    expect(state.users.users).toEqual([mockUser]);
-
+    expect(state.user.user).toEqual(mockUser);
+    expect(state.user.isAuthenticated).toBe(true);
     expect(mockFetch).toHaveBeenCalledTimes(1);
     expect(mockFetch).toHaveBeenCalledWith(
       'http://localhost:3001/auth/check',
@@ -38,19 +38,20 @@ describe('Auth features', () => {
 
   it('should not restore invalid session', async () => {
     const mockFetch = jest.spyOn(global, 'fetch').mockResolvedValue({
+      json: async () => ({ error: errors.session.invalidSession }),
       ok: false,
       status: 401,
     } as Response);
 
     const store = createTestStore();
 
-    await expect(store.dispatch(signInWithSession()).unwrap()).rejects.toMatchObject({
+    await expect(store.dispatch(checkSession()).unwrap()).rejects.toStrictEqual({
       message: errors.session.invalidSession,
     });
 
     const state = store.getState();
-    expect(state.users.users).toEqual([]);
-
+    expect(state.user.user).toEqual(null);
+    expect(state.user.isAuthenticated).toBe(false);
     mockFetch.mockRestore();
   });
 });

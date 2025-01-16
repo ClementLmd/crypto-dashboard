@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { logout, userReducer } from './user.slice';
 import { signUp, signIn } from './user.thunks';
-import { selectUsers } from './user.selectors';
+import { selectIsAuthenticated, selectUser } from './user.selectors';
 import type { SigningUpUser } from '@shared/types/user';
 import { addressReducer } from '../addresses/addresses.slice';
 
@@ -14,7 +14,7 @@ describe('User slice', () => {
   const createTestStore = () =>
     configureStore({
       reducer: {
-        users: userReducer,
+        user: userReducer,
         addresses: addressReducer,
       },
     });
@@ -23,18 +23,18 @@ describe('User slice', () => {
 
     // TODO : delete user from db before starting these tests
     const mockFetch = jest.spyOn(global, 'fetch').mockResolvedValue({
-      json: async () => await { username: newUser.username },
+      json: async () => ({ user: { username: newUser.username }, authenticated: true }),
       status: 201,
     } as Response);
 
     const store = createTestStore();
-    const usersBeforeAdd = selectUsers(store.getState());
-    expect(usersBeforeAdd).toEqual([]);
+    const userBeforeAdd = selectUser(store.getState());
+    expect(userBeforeAdd).toEqual(null);
 
     await store.dispatch(signUp(newUser));
 
-    const usersAfterAdd = await selectUsers(store.getState());
-    expect(usersAfterAdd).toEqual([{ username: newUser.username }]);
+    const userAfterAdd = selectUser(store.getState());
+    expect(userAfterAdd).toEqual({ username: newUser.username });
 
     expect(mockFetch).toHaveBeenCalledTimes(1);
     expect(mockFetch).toHaveBeenCalledWith('http://localhost:3001/users/signup', {
@@ -51,23 +51,23 @@ describe('User slice', () => {
     const store = createTestStore();
     await store.dispatch(signUp(emptyUser));
 
-    const users = selectUsers(store.getState());
-    expect(users).toEqual([]);
+    const user = selectUser(store.getState());
+    expect(user).toEqual(null);
   });
 
   it('should sign in user', async () => {
     const signedInUser = { username: mockUsers[0].username };
 
     const mockFetch = jest.spyOn(global, 'fetch').mockResolvedValue({
-      json: async () => await signedInUser,
+      json: async () => ({ user: signedInUser, authenticated: true }),
       status: 200,
     } as Response);
 
     const store = createTestStore();
     await store.dispatch(signIn(mockUsers[0]));
 
-    const users = selectUsers(store.getState());
-    expect(users).toEqual([signedInUser]);
+    const user = selectUser(store.getState());
+    expect(user).toEqual({ username: signedInUser.username });
 
     expect(mockFetch).toHaveBeenCalledTimes(1);
     mockFetch.mockRestore();
@@ -78,26 +78,31 @@ describe('User slice', () => {
     const store = createTestStore();
     await store.dispatch(signIn(userWithWrongPassword));
 
-    const users = selectUsers(store.getState());
-    expect(users).toEqual([]);
+    const user = selectUser(store.getState());
+    expect(user).toEqual(null);
   });
   it('should disconnect user when clicking disconnect', async () => {
     const signedInUser = { username: mockUsers[0].username };
 
     const mockFetch = jest.spyOn(global, 'fetch').mockResolvedValue({
-      json: async () => await signedInUser,
+      json: async () => ({ user: signedInUser, authenticated: true }),
       status: 200,
     } as Response);
 
     const store = createTestStore();
     await store.dispatch(signIn(mockUsers[0]));
 
-    const users = selectUsers(store.getState());
-    expect(users).toEqual([signedInUser]);
+    const isAuthenticated = selectIsAuthenticated(store.getState());
+    const user = selectUser(store.getState());
+    expect(user).toEqual({ username: signedInUser.username });
+    expect(isAuthenticated).toBe(true);
 
-    await store.dispatch(logout());
-    const usersAfterLogout = selectUsers(store.getState());
-    expect(usersAfterLogout).toEqual([]);
+    store.dispatch(logout());
+
+    const isAuthenticatedAfterLogout = selectIsAuthenticated(store.getState());
+    const userAfterLogout = selectUser(store.getState());
+    expect(userAfterLogout).toEqual(null);
+    expect(isAuthenticatedAfterLogout).toBe(false);
 
     expect(mockFetch).toHaveBeenCalledTimes(1);
     mockFetch.mockRestore();

@@ -4,7 +4,7 @@ import app from '../app';
 import { connectToDatabase } from '../models/connection';
 import { UserModel } from '../models/users';
 import { UserSessionModel } from '../models/userSession';
-import { generateSessionToken } from '../utils/session';
+import { generateSessionToken } from '../use-cases/session/generateSessionToken';
 import { errors } from '../../../shared/utils/errors';
 import { createHash } from 'crypto';
 
@@ -77,8 +77,7 @@ describe('Auth integration tests', () => {
         .set('Cookie', [`session=${token}`]);
 
       expect(response.status).toBe(200);
-      expect(response.body.user).toBeDefined();
-      expect(response.body.user.username).toBe(testUser.username);
+      expect(response.body.authenticated).toBe(true);
     });
 
     it('should return 401 with invalid session', async () => {
@@ -87,12 +86,14 @@ describe('Auth integration tests', () => {
         .set('Cookie', ['session=invalidsession']);
 
       expect(response.status).toBe(401);
+      expect(response.body.authenticated).toBe(false);
     });
 
     it('should return 401 with no session', async () => {
       const response = await request(app).get('/auth/check');
 
       expect(response.status).toBe(401);
+      expect(response.body.authenticated).toBe(false);
     });
   });
 
@@ -149,6 +150,7 @@ describe('Auth integration tests', () => {
         .set('Cookie', [`session=${token}`]);
 
       expect(response.status).toBe(401);
+      expect(response.body.error).toBe(errors.session.invalidSession);
     });
   });
 });

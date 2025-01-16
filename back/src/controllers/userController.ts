@@ -5,8 +5,9 @@ import { checkBody } from '../utils/checkBody';
 import { validateUserPassword } from '../../../shared/utils/validateUserPassword';
 import { errors } from '../../../shared/utils/errors';
 import { hashPassword } from '../utils/password';
-import { signIn } from '../use-cases//user/signIn';
 import { SigningUpUser } from '@shared/types/user';
+import { createSession } from '../use-cases/session/createSession';
+import { generateSessionToken } from '../use-cases/session/generateSessionToken';
 
 export const signUpController = async (req: Request, res: Response) => {
   const { username, password } = req.body;
@@ -24,28 +25,30 @@ export const signUpController = async (req: Request, res: Response) => {
       return res.status(400).json({ error: errors.users.duplicatedUsername });
 
     const hashedPassword = await hashPassword(password);
-
     const userData: SigningUpUser = {
       username: username,
       password: hashedPassword,
     };
     const newUser = await signUp(userData);
-    return res.status(201).json(newUser);
-  } catch {
-    return res.status(500).json({ error: errors.internal });
-  }
-};
 
-export const signInController = async (req: Request, res: Response) => {
-  const { username, password } = req.body;
-  try {
-    if (!checkBody(req.body, ['username', 'password']))
-      return res.status(400).json({ error: errors.users.incompleteData });
+    const sessionToken = generateSessionToken();
+    await createSession(sessionToken, newUser._id);
 
-    const signInResponse = await signIn({ username, password });
-    if (typeof signInResponse === 'string') return res.status(400).json({ error: signInResponse });
-    const userSignedIn = { username: signInResponse.username };
-    return res.status(200).json(userSignedIn);
+    res.cookie('session', sessionToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 60 * 60 * 24 * 30 * 1000, // 30 days
+      path: '/',
+      domain: 'localhost',
+    });
+
+    return res.status(201).json({
+      user: {
+        username: newUser.username,
+      },
+      authenticated: true,
+    });
   } catch {
     return res.status(500).json({ error: errors.internal });
   }
@@ -69,3 +72,6 @@ export const getUserByIdController = async (req: Request, res: Response) => {
     return res.status(500).json({ error: errors.internal });
   }
 };
+
+// TODO: add update user
+// TODO: add delete user

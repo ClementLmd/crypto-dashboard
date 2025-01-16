@@ -3,7 +3,8 @@ import { isMenuItemActive } from '../../utils/isMenuItemActive';
 import { routes } from '../../app/config/routes';
 import Link from 'next/link';
 import styles from './navBarLinks.module.css';
-import { useAppSelector } from '../../hooks/hooks';
+import { selectIsAuthenticated } from '../../features/user/user.selectors';
+import { store } from '../../redux/store';
 
 export default function NavBarLinks({
   menuOpen,
@@ -12,8 +13,7 @@ export default function NavBarLinks({
   menuOpen?: boolean;
   isMobile?: boolean;
 }) {
-  const user = useAppSelector((state) => state.users.users);
-  const isAuthenticated = user.length > 0;
+  const isAuthenticated = selectIsAuthenticated(store.getState());
 
   const pathname = usePathname();
 

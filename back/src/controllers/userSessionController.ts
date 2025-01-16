@@ -1,14 +1,11 @@
 import type { Request, Response } from 'express';
 import { verifyPassword } from '../utils/password';
-import { getUserByUsername } from '../use-cases/user/getUser';
-import {
-  createSession,
-  generateSessionToken,
-  invalidateSession,
-  validateSessionToken,
-  getUserBySessionId,
-} from '../utils/session';
+import { getUserById, getUserByUsername } from '../use-cases/user/getUser';
 import { errors } from '../../../shared/utils/errors';
+import { createSession } from '../use-cases/session/createSession';
+import { generateSessionToken } from '../use-cases/session/generateSessionToken';
+import { invalidateSession } from '../use-cases/session/invalidateSession';
+import { validateSessionToken } from '../use-cases/session/validateSessionToken';
 
 export const createSessionController = async (req: Request, res: Response) => {
   const { username, password } = req.body;
@@ -40,11 +37,11 @@ export const createSessionController = async (req: Request, res: Response) => {
       user: {
         username: existingUser.username,
       },
+      authenticated: true,
     });
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     console.error('[CreateSession] Error:', error);
-    return res.status(500).json({ error: 'Internal server error' });
+    return res.status(500).json({ error: errors.internal });
   }
 };
 
@@ -52,7 +49,7 @@ export const invalidateSessionController = async (req: Request, res: Response) =
   const sessionId = req.cookies.session;
 
   if (!sessionId) {
-    return res.status(401).json({ error: 'Unauthorized' });
+    return res.status(401).json({ error: errors.session.invalidSession });
   }
 
   try {
@@ -60,7 +57,7 @@ export const invalidateSessionController = async (req: Request, res: Response) =
     res.clearCookie('session', { path: '/' });
     return res.status(200).end();
   } catch {
-    return res.status(500).json({ error: 'Internal server error' });
+    return res.status(500).json({ error: errors.internal });
   }
 };
 
@@ -68,20 +65,28 @@ export const checkSessionController = async (req: Request, res: Response) => {
   const sessionToken = req.cookies.session;
 
   if (!sessionToken) {
-    return res.status(401).json({ error: 'No session found' });
+    return res.status(401).json({ authenticated: false, error: errors.session.noSession });
   }
 
   try {
     const session = await validateSessionToken(sessionToken);
 
     if (!session) {
-      return res.status(401).json({ error: 'Invalid session' });
+      return res.status(401).json({
+        authenticated: false,
+        error: errors.session.invalidSession,
+      });
     }
+    const user = await getUserById(session.userId);
 
-    const user = await getUserBySessionId(sessionToken);
-    return res.status(200).json({ user });
+    return res.status(200).json({
+      authenticated: true,
+      user: {
+        username: user?.username || null,
+      },
+    });
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
-    return res.status(500).json({ error: 'Internal server error' });
+    return res.status(500).json({ error: errors.internal });
   }
 };

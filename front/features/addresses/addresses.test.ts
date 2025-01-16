@@ -16,7 +16,7 @@ describe('Addresses slice', () => {
   const createTestStore = () =>
     configureStore({
       reducer: {
-        users: userReducer,
+        user: userReducer,
         addresses: addressReducer,
       },
     });

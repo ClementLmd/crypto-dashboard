@@ -4,7 +4,7 @@ import { addressReducer } from '../features/addresses/addresses.slice';
 
 export const store = configureStore({
   reducer: {
-    users: userReducer,
+    user: userReducer,
     addresses: addressReducer,
   },
 });

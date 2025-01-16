@@ -1,15 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { signUp, fetchUsers, signIn, signInWithSession } from './user.thunks';
+import { signUp, signIn, checkSession } from './user.thunks';
 import type { ConnectedUser } from '@shared/types/user';
 
 interface UserState {
-  users: ConnectedUser[];
+  user: ConnectedUser | null;
   isLoading: boolean;
+  isAuthenticated: boolean;
 }
 
 const initialState: UserState = {
+  user: null,
   isLoading: false,
-  users: [],
+  isAuthenticated: false,
 };
 
 export const userSlice = createSlice({
@@ -17,42 +19,42 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      state.users = [];
+      state.user = null;
+      state.isAuthenticated = false;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchUsers.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(fetchUsers.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.users = action.payload;
-      })
       .addCase(signUp.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(signUp.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.users.push(action.payload);
+        state.user = action.payload.user;
+        state.isAuthenticated = action.payload.authenticated;
       })
       .addCase(signIn.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(signIn.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.users.push(action.payload);
+        state.user = action.payload.user;
+        state.isAuthenticated = action.payload.authenticated;
       })
-      .addCase(signInWithSession.pending, (state) => {
+      .addCase(checkSession.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(signInWithSession.fulfilled, (state, action) => {
+      .addCase(checkSession.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.users = [action.payload];
+        state.isAuthenticated = action.payload.authenticated;
+        if (action.payload.user) {
+          state.user = action.payload.user;
+        }
       })
-      .addCase(signInWithSession.rejected, (state) => {
+      .addCase(checkSession.rejected, (state) => {
         state.isLoading = false;
-        state.users = [];
+        state.user = null;
+        state.isAuthenticated = false;
       });
   },
 });

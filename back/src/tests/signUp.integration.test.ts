@@ -31,7 +31,7 @@ describe('User sign up tests', () => {
     const response = await request(app).post('/users/signup').send(user);
 
     expect(response.status).toBe(201);
-    expect(response.body.username).toBe(user.username);
+    expect(response.body.user.username).toBe(user.username);
   });
 
   it('should not create a user with missing fields', async () => {
@@ -41,7 +41,6 @@ describe('User sign up tests', () => {
     expect(response.status).toBe(400);
     expect(response.body).toStrictEqual({ error: errors.users.incompleteData });
   });
-
   it('should not create user if incorrect password format', async () => {
     const userWithIncorrectPasswordFormat = { username: 'John', password: 'Doe' };
     const response = await request(app).post('/users/signup').send(userWithIncorrectPasswordFormat);
@@ -51,9 +50,10 @@ describe('User sign up tests', () => {
   it('should not create user if username already exists in database', async () => {
     const response = await request(app).post('/users/signup').send(user);
     expect(response.status).toBe(201);
-    expect(response.body.username).toBe(user.username);
+    expect(response.body.user.username).toBe(user.username);
 
     const responseWithSameUsername = await request(app).post('/users/signup').send(user);
     expect(responseWithSameUsername.status).toBe(400);
+    expect(responseWithSameUsername.body.error).toBe(errors.users.duplicatedUsername);
   });
 });

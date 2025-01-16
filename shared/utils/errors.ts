@@ -15,6 +15,7 @@ export const errors = {
     unauthorized: 'User is not authenticated',
   },
   session: {
+    noSession: 'No session found',
     invalidSession: 'Invalid or expired session',
     invalidCredentials: 'Invalid credentials',
   },

@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { Button } from '../ui/button';
 import { logout } from '../../features/user/user.slice';
 import { useRouter } from 'next/navigation';
+import { selectIsAuthenticated } from '../../features/user/user.selectors';
 
 export default function HeaderLayout() {
   const dispatch = useAppDispatch();
@@ -17,7 +18,7 @@ export default function HeaderLayout() {
   const [isBrowser, setIsBrowser] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
 
-  const connectedUser = useAppSelector((state) => state.users.users);
+  const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
   useEffect(() => {
     setIsBrowser(true);
@@ -60,7 +61,7 @@ export default function HeaderLayout() {
         </Link>
       </div>
       <div id="headerLinks">{isBrowser && (isDesktop ? <DesktopNavBar /> : <MobileNavBar />)} </div>
-      {connectedUser.length > 0 ? <Button onClick={handleLogout}>Disconnect</Button> : <div></div>}
+      {isAuthenticated ? <Button onClick={handleLogout}>Disconnect</Button> : <div></div>}
     </div>
   );
 }
