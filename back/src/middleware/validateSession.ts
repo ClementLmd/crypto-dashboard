@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { validateSessionToken, getUserBySessionId } from '../utils/session';
+import { validateSessionToken } from '../use-cases/session/validateSessionToken';
+import { getUserBySessionId } from '../use-cases/session/getUserBySessionId';
 import { errors } from '../../../shared/utils/errors';
 import { UserSession } from '@shared/types/session';
 import { User } from '@shared/types/user';

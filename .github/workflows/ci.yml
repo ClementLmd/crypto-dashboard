@@ -33,7 +33,7 @@ jobs:
       - name: Install back-end dependencies
         run: pnpm install --prefix back
       - name: Run tests
-        run: pnpm test -- --testPathIgnorePatterns="solana.unit.test.ts" --testPathIgnorePatterns="addresses.integration.test.ts"
+        run: pnpm test
         env:
           CONNECTION_STRING_TEST: ${{ secrets.CONNECTION_STRING_TEST }}
       - name: Build front-end

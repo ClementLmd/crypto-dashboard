@@ -1,16 +1,4 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { errors } from '@shared/utils/errors';
-
-export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
-  const response = await fetch('http://localhost:3001/users', {
-    credentials: 'include',
-  });
-  if (!response.ok) {
-    throw new Error('Failed to fetch users');
-  }
-  const fetchedUsers = await response.json();
-  return fetchedUsers;
-});
 
 export const signUp = createAsyncThunk(
   'users/signup',
@@ -47,21 +35,13 @@ export const signIn = createAsyncThunk(
   },
 );
 
-export const signInWithSession = createAsyncThunk('users/signInWithSession', async () => {
+export const checkSession = createAsyncThunk('users/checkSession', async () => {
   const response = await fetch('http://localhost:3001/auth/check', {
     credentials: 'include',
   });
-
   const data = await response.json();
-
-  if (data.redirectUrl) {
-    window.location.href = data.redirectUrl;
-    return null;
-  }
-
   if (!response.ok) {
-    throw new Error(errors.session.invalidSession);
+    throw data.error;
   }
-  console.log('data', data);
-  return data.user;
+  return data;
 });

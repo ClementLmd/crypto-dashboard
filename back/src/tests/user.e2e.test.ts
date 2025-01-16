@@ -21,10 +21,10 @@ describe('User e2e', () => {
     const signUpResponse = await request(app).post('/users/signup').send(user);
 
     expect(signUpResponse.status).toBe(201);
-    expect(signUpResponse.body.username).toBe(user.username);
+    expect(signUpResponse.body.user.username).toBe(user.username);
 
-    const signInResponse = await request(app).post('/users/signin').send(user);
+    const signInResponse = await request(app).post('/auth/login').send(user);
     expect(signInResponse.status).toBe(200);
-    expect(signInResponse.body.username).toBe(user.username);
+    expect(signInResponse.body.user.username).toBe(user.username);
   });
 });

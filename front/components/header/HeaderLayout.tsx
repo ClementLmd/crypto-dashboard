@@ -5,10 +5,12 @@ import { routes } from '../../app/config/routes';
 import DesktopNavBar from './DesktopNavBar';
 import MobileNavBar from './MobileNavBar';
 import { useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { useAppDispatch } from '../../hooks/hooks';
 import { Button } from '../ui/button';
 import { logout } from '../../features/user/user.slice';
 import { useRouter } from 'next/navigation';
+import { selectUser } from '../../features/user/user.selectors';
+import { store } from '../../redux/store';
 
 export default function HeaderLayout() {
   const dispatch = useAppDispatch();
@@ -17,7 +19,7 @@ export default function HeaderLayout() {
   const [isBrowser, setIsBrowser] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
 
-  const connectedUser = useAppSelector((state) => state.users.users);
+  const connectedUser = selectUser(store.getState());
 
   useEffect(() => {
     setIsBrowser(true);
@@ -60,7 +62,7 @@ export default function HeaderLayout() {
         </Link>
       </div>
       <div id="headerLinks">{isBrowser && (isDesktop ? <DesktopNavBar /> : <MobileNavBar />)} </div>
-      {connectedUser.length > 0 ? <Button onClick={handleLogout}>Disconnect</Button> : <div></div>}
+      {connectedUser ? <Button onClick={handleLogout}>Disconnect</Button> : <div></div>}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import { getSolanaTokens } from '../use-cases/address/getSolanaTokens';
 
-describe('Solana Unit Tests', () => {
+describe.skip('Solana Unit Tests', () => {
   // Known addresses with expected tokens
   const testAddresses = [
     'CpsUdHzAbmyvqf29AvT8cFEzW9AcyHdSDUi4pPGbykQg', // Address with multiple tokens

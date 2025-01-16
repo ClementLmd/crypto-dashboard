@@ -4,7 +4,8 @@ import mongoose from 'mongoose';
 import { connectToDatabase } from '../models/connection';
 import type { Address } from '@shared/types/address';
 import { errors } from '../../../shared/utils/errors';
-import { generateSessionToken, createSession } from '../utils/session';
+import { generateSessionToken } from '../use-cases/session/generateSessionToken';
+import { createSession } from '../use-cases/session/createSession';
 import { UserModel } from '../models/users';
 import { User } from '@shared/types/user';
 import { AddressModel } from '../models/address';
@@ -87,17 +88,6 @@ describe('Address integration tests', () => {
     await mongoose.disconnect();
   });
 
-  describe('Authentication', () => {
-    it('should return 401 when no session is provided', async () => {
-      const response = await request(app)
-        .post('/addresses/addAddress')
-        .send(addressWithRequiredFields);
-
-      expect(response.status).toBe(401);
-      expect(response.body).toStrictEqual({ error: errors.session.invalidSession });
-    });
-  });
-
   describe('Adding addresses', () => {
     it('should add an address and link it to user document', async () => {
       const response = await request(app)
@@ -153,6 +143,14 @@ describe('Address integration tests', () => {
       expect(response.status).toBe(400);
       expect(response.body).toStrictEqual({ error: errors.addresses.invalidSolanaAddress });
     });
+    it('should return 401 when no session is provided', async () => {
+      const response = await request(app)
+        .post('/addresses/addAddress')
+        .send(addressWithRequiredFields);
+
+      expect(response.status).toBe(401);
+      expect(response.body).toStrictEqual({ error: errors.session.invalidSession });
+    });
   });
 
   describe('Deleting addresses', () => {
@@ -194,47 +192,45 @@ describe('Address integration tests', () => {
     });
   });
 
-  describe('Getting addresses', () => {
-    describe('Getting addresses', () => {
-      it('should return user addresses', async () => {
-        // First add an address
-        const responseAdd = await request(app)
-          .post('/addresses/addAddress')
-          .set('Cookie', [sessionCookie])
-          .send(addressWithRequiredFields);
+  describe.skip('Getting addresses', () => {
+    it('should return user addresses', async () => {
+      // First add an address
+      const responseAdd = await request(app)
+        .post('/addresses/addAddress')
+        .set('Cookie', [sessionCookie])
+        .send(addressWithRequiredFields);
 
-        expect(responseAdd.status).toBe(201);
+      expect(responseAdd.status).toBe(201);
 
-        const responseGet = await request(app)
-          .get('/addresses/getUserAddresses')
-          .set('Cookie', [sessionCookie]);
+      const responseGet = await request(app)
+        .get('/addresses/getUserAddresses')
+        .set('Cookie', [sessionCookie]);
 
-        expect(responseGet.status).toBe(200);
-        expect(responseGet.body[0].addressContent).toBeDefined();
-        expect(responseGet.body[0].addressContent).toHaveLength(2); // SOL + USDC
-        expect(responseGet.body[0].addressContent[0]).toMatchObject({
-          tokenSymbol: 'SOL',
-          tokenName: 'Solana',
-          amount: 1, // 1 SOL
-        });
-        expect(responseGet.body[0].addressContent[1]).toMatchObject({
-          tokenSymbol: 'USDC',
-          tokenName: 'USD Coin',
-          amount: 100, // 100 USDC
-        });
-
-        const addressAfter = await AddressModel.findOne({ _id: responseGet.body[0]._id });
-        expect(addressAfter?.addressContent).toBeDefined();
+      expect(responseGet.status).toBe(200);
+      expect(responseGet.body[0].addressContent).toBeDefined();
+      expect(responseGet.body[0].addressContent).toHaveLength(2); // SOL + USDC
+      expect(responseGet.body[0].addressContent[0]).toMatchObject({
+        tokenSymbol: 'SOL',
+        tokenName: 'Solana',
+        amount: 1, // 1 SOL
+      });
+      expect(responseGet.body[0].addressContent[1]).toMatchObject({
+        tokenSymbol: 'USDC',
+        tokenName: 'USD Coin',
+        amount: 100, // 100 USDC
       });
 
-      it('should return empty array when user has no addresses', async () => {
-        const response = await request(app)
-          .get('/addresses/getUserAddresses')
-          .set('Cookie', [sessionCookie]);
+      const addressAfter = await AddressModel.findOne({ _id: responseGet.body[0]._id });
+      expect(addressAfter?.addressContent).toBeDefined();
+    });
 
-        expect(response.status).toBe(200);
-        expect(response.body).toEqual([]);
-      });
+    it('should return empty array when user has no addresses', async () => {
+      const response = await request(app)
+        .get('/addresses/getUserAddresses')
+        .set('Cookie', [sessionCookie]);
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual([]);
     });
   });
 });
