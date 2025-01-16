@@ -5,12 +5,11 @@ import { routes } from '../../app/config/routes';
 import DesktopNavBar from './DesktopNavBar';
 import MobileNavBar from './MobileNavBar';
 import { useEffect, useState } from 'react';
-import { useAppDispatch } from '../../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { Button } from '../ui/button';
 import { logout } from '../../features/user/user.slice';
 import { useRouter } from 'next/navigation';
-import { selectUser } from '../../features/user/user.selectors';
-import { store } from '../../redux/store';
+import { selectIsAuthenticated } from '../../features/user/user.selectors';
 
 export default function HeaderLayout() {
   const dispatch = useAppDispatch();
@@ -19,7 +18,7 @@ export default function HeaderLayout() {
   const [isBrowser, setIsBrowser] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
 
-  const connectedUser = selectUser(store.getState());
+  const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
   useEffect(() => {
     setIsBrowser(true);
@@ -62,7 +61,7 @@ export default function HeaderLayout() {
         </Link>
       </div>
       <div id="headerLinks">{isBrowser && (isDesktop ? <DesktopNavBar /> : <MobileNavBar />)} </div>
-      {connectedUser ? <Button onClick={handleLogout}>Disconnect</Button> : <div></div>}
+      {isAuthenticated ? <Button onClick={handleLogout}>Disconnect</Button> : <div></div>}
     </div>
   );
 }

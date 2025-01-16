@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { logout, userReducer } from './user.slice';
 import { signUp, signIn } from './user.thunks';
-import { selectUser } from './user.selectors';
+import { selectIsAuthenticated, selectUser } from './user.selectors';
 import type { SigningUpUser } from '@shared/types/user';
 import { addressReducer } from '../addresses/addresses.slice';
 
@@ -92,12 +92,17 @@ describe('User slice', () => {
     const store = createTestStore();
     await store.dispatch(signIn(mockUsers[0]));
 
+    const isAuthenticated = selectIsAuthenticated(store.getState());
     const user = selectUser(store.getState());
     expect(user).toEqual({ username: signedInUser.username });
+    expect(isAuthenticated).toBe(true);
 
     store.dispatch(logout());
+
+    const isAuthenticatedAfterLogout = selectIsAuthenticated(store.getState());
     const userAfterLogout = selectUser(store.getState());
     expect(userAfterLogout).toEqual(null);
+    expect(isAuthenticatedAfterLogout).toBe(false);
 
     expect(mockFetch).toHaveBeenCalledTimes(1);
     mockFetch.mockRestore();
