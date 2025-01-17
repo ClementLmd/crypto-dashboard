@@ -1,5 +1,5 @@
 import { getUserByUsername } from './getUser';
-import { errors } from '../../../../shared/utils/errors';
+import { errors } from 'crypto-dashboard-shared';
 import { verifyPassword } from '../../utils/password';
 
 export const signIn = async ({ username, password }: { username: string; password: string }) => {

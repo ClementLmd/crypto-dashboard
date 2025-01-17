@@ -13,7 +13,7 @@ import {
 import { Button } from './button';
 import { Input } from './input';
 import { ChevronDown, ChevronUp, MoreHorizontal, Search } from 'lucide-react';
-import { Address } from '@shared/types/address';
+import { Address } from 'crypto-dashboard-shared';
 
 interface Column {
   key: string;

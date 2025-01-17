@@ -1,4 +1,4 @@
-import { UserSession } from '@shared/types/session';
+import { UserSession } from 'crypto-dashboard-shared';
 
 declare module 'express-serve-static-core' {
   interface Request {

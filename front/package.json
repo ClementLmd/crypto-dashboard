@@ -34,7 +34,8 @@
     "recharts": "^2.13.0",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.24.1"
+    "zod": "^3.24.1",
+    "crypto-dashboard-shared": "file:../shared"
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",

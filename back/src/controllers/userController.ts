@@ -2,10 +2,8 @@ import { Request, Response } from 'express';
 import { signUp } from '../use-cases/user/signUp';
 import { getAllUsers, getUserById, getUserByUsername } from '../use-cases/user/getUser';
 import { checkBody } from '../utils/checkBody';
-import { validateUserPassword } from '../../../shared/utils/validateUserPassword';
-import { errors } from '../../../shared/utils/errors';
 import { hashPassword } from '../utils/password';
-import { SigningUpUser } from '@shared/types/user';
+import { errors, SigningUpUser, validateUserPassword } from 'crypto-dashboard-shared';
 import { createSession } from '../use-cases/session/createSession';
 import { generateSessionToken } from '../use-cases/session/generateSessionToken';
 

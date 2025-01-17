@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { userReducer } from './user.slice';
 import { checkSession } from './user.thunks';
-import { errors } from '@shared/utils/errors';
+import { errors } from 'crypto-dashboard-shared';
 
 describe('Auth features', () => {
   const mockUser = { username: 'testuser' };

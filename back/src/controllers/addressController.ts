@@ -1,13 +1,10 @@
 import { Request, Response } from 'express';
-import type { Address } from '../../../shared/types/address';
+import { Address, errors, isValidSolanaAddress, User } from 'crypto-dashboard-shared';
 import { checkBody } from '../utils/checkBody';
-import { errors } from '../../../shared/utils/errors';
 import { addAddress } from '../use-cases/address/addAddress';
 import { deleteAddress } from '../use-cases/address/deleteAddress';
-import { User } from '../../../shared/types/user';
 import { UserModel } from '../models/users';
 import { getUserAddresses } from '../use-cases/address/getUserAddresses';
-import { isValidSolanaAddress } from '../../../shared/utils/isValidAddress';
 
 export const addAddressController = async (req: Request & { user?: User }, res: Response) => {
   const { address, blockchain, addressContent, addressName }: Address = req.body;
