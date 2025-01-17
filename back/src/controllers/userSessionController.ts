@@ -27,10 +27,10 @@ export const createSessionController = async (req: Request, res: Response) => {
     res.cookie('session', sessionToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
       maxAge: 60 * 60 * 24 * 30 * 1000, // 30 days
       path: '/',
-      domain: 'localhost',
+      domain: process.env.NODE_ENV === 'production' ? process.env.COOKIE_DOMAIN : 'localhost',
     });
 
     return res.status(200).json({
