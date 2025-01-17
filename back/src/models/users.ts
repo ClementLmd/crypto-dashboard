@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-import { User } from '@shared/types/user';
-import { Address } from '@shared/types/address';
+import { User } from 'crypto-dashboard-shared';
+import { Address } from 'crypto-dashboard-shared';
 export interface UserDocument extends User, Document {
   addresses: Address[];
 }

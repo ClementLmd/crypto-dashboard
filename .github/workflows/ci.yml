@@ -28,6 +28,10 @@ jobs:
         run: pnpm install -g pnpm
       - name: Install dependencies
         run: pnpm install
+      - name: Install shared dependencies
+        run: pnpm install --prefix shared
+      - name: Build shared
+        run: pnpm run build --prefix shared
       - name: Install front-end dependencies
         run: pnpm install --prefix front
       - name: Install back-end dependencies

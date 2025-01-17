@@ -1,4 +1,4 @@
-import { Cryptocurrency } from '@shared/types/cryptocurrency';
+import { Cryptocurrency } from 'crypto-dashboard-shared';
 import { AddressModel } from '../../models/address';
 
 const BIRDEYE_API_URL = 'https://public-api.birdeye.so/defi';

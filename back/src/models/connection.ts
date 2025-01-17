@@ -22,8 +22,18 @@ if (!connectionString) {
 export const connectToDatabase = () => {
   mongoose
     .connect(connectionString, { connectTimeoutMS: 2000 })
-    .then(() => console.log(`Database connected - ${databaseEnvironment}`))
+    .then(() => {
+      if (process.env.NODE_ENV !== 'production') {
+        console.log(`Database connected - ${databaseEnvironment}`);
+      }
+    })
     .catch((error) => console.error(error));
 };
+
+process.on('SIGTERM', async () => {
+  console.log('Closing database connection...');
+  await mongoose.disconnect();
+  process.exit(0);
+});
 
 connectToDatabase();

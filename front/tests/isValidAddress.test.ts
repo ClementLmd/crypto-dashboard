@@ -1,10 +1,10 @@
-import { isValidSolanaAddress } from '@shared/utils/isValidAddress';
+import { isValidSolanaAddress } from 'crypto-dashboard-shared';
 
 describe('isValidSolanaAddress', () => {
   it('should return true for valid Solana addresses', () => {
     const validAddresses = [
       'GsbwXfJraMomNxBcpR3DBNxnqcNtKLQb9ZedrcgT5F8F',
-      // Add more valid addresses
+      '6NvQ7xJZmi48jVdL8nzvEKcgXGwJPBs9aDjHPrnooRL8',
     ];
 
     validAddresses.forEach((address) => {

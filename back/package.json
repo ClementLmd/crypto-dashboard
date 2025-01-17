@@ -26,7 +26,14 @@
     "express": "^4.19.2",
     "mongodb": "6.9",
     "mongoose": "^8.7.1",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "crypto-dashboard-shared": "workspace:*",
+    "mongodb-memory-server": "^10.1.2",
+    "nodemon": "^3.1.4",
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",

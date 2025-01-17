@@ -14,14 +14,16 @@ import {
   FormMessage,
 } from '../../components/ui/form';
 import { Input } from '../../components/ui/input';
-import { addressFormSchema } from '@shared/schema/addressForm.schema';
 import { useAppDispatch } from '../../hooks/hooks';
 import { addAddress, addSolanaAddress } from '../../features/addresses/addresses.thunks';
-import { Blockchain } from '@shared/types/blockchain';
 import { useState } from 'react';
-import { errors } from '@shared/utils/errors';
-import { Address } from '@shared/types/address';
-import { isValidSolanaAddress } from '@shared/utils/isValidAddress';
+import {
+  addressFormSchema,
+  Blockchain,
+  errors,
+  Address,
+  isValidSolanaAddress,
+} from 'crypto-dashboard-shared';
 
 export function AddressForm({ blockchain }: { blockchain: Blockchain }) {
   const dispatch = useAppDispatch();

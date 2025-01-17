@@ -5,8 +5,7 @@ import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { signUp } from '../../features/user/user.thunks';
 import { useAppDispatch } from '../../hooks/hooks';
-import { validateUserPassword } from '@shared/utils/validateUserPassword';
-import { errors } from '@shared/utils/errors';
+import { validateUserPassword, errors } from 'crypto-dashboard-shared';
 
 export function SignUp() {
   const dispatch = useAppDispatch();

@@ -1,5 +1,5 @@
 import { createSolanaRpc, address } from '@solana/web3.js';
-import { AddressContent } from '@shared/types/address';
+import { AddressContent } from 'crypto-dashboard-shared';
 import { getTokenPrice } from '../tokens/getTokenPrice';
 
 interface JupiterTokenInfo {

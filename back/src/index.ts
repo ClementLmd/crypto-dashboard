@@ -1,27 +1,14 @@
 import app from './app';
 import { createServer } from 'http';
 
-const port = 3001;
+// For local development
+if (process.env.NODE_ENV !== 'production') {
+  const port = process.env.PORT || 4000;
+  const server = createServer(app);
 
-const server = createServer(app);
-
-server
-  .listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
-  })
-  .on('error', (err: NodeJS.ErrnoException) => {
-    if (err.code === 'EADDRINUSE') {
-      console.log(`Port ${port} is busy, trying ${port + 1}...`);
-      server.listen(port + 1);
-    } else {
-      console.error('Server error:', err);
-    }
+  server.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
   });
+}
 
-// Handle graceful shutdown
-process.on('SIGTERM', () => {
-  server.close(() => {
-    console.log('Server closed');
-    process.exit(0);
-  });
-});
+export default app;

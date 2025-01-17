@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Address } from '@shared/types/address';
+import { Address } from 'crypto-dashboard-shared';
 import { addAddress, addSolanaAddress, deleteAddress, getUserAddresses } from './addresses.thunks';
 
 interface AddressState {
