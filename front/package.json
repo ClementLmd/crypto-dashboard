@@ -35,7 +35,7 @@
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.24.1",
-    "crypto-dashboard-shared": "file:../shared"
+    "crypto-dashboard-shared": "workspace:*"
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",
