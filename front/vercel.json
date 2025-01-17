@@ -2,6 +2,5 @@
   "version": 2,
   "buildCommand": "pnpm run build",
   "installCommand": "pnpm install",
-  "outputDirectory": "front/.next",
   "framework": "nextjs"
 }

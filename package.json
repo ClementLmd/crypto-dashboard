@@ -5,7 +5,7 @@
   "workspaces": [
     "front",
     "back",
-    "crypto-dashboard-shared"
+    "shared"
   ],
   "scripts": {
     "start": "concurrently \"pnpm run back\" \"pnpm run front\"",

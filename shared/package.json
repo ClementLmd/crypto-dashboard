@@ -8,7 +8,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc"
+    "build": "tsc --outDir dist"
   },
   "dependencies": {
     "@solana/web3.js": "^2.0.0"
