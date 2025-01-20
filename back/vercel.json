@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "cd .. && pnpm install && cd shared && pnpm build && cd ../back && pnpm build",
+  "buildCommand": "pnpm build",
   "builds": [
     {
       "src": "src/app.ts",
