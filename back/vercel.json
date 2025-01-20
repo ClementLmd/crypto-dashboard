@@ -1,9 +1,18 @@
 {
   "version": 2,
+  "buildCommand": "cd .. && pnpm install && cd shared && pnpm build && cd ../back && pnpm build",
   "builds": [
     {
       "src": "src/app.ts",
-      "use": "@vercel/node"
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": [
+          "../shared/src/**",
+          "../shared/package.json",
+          "../pnpm-workspace.yaml",
+          "../package.json"
+        ]
+      }
     }
   ],
   "routes": [

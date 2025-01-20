@@ -4,6 +4,7 @@ import { signUp, signIn } from './user.thunks';
 import { selectIsAuthenticated, selectUser } from './user.selectors';
 import { SigningUpUser } from 'crypto-dashboard-shared';
 import { addressReducer } from '../addresses/addresses.slice';
+import { api } from '../../app/config/api';
 
 describe('User slice', () => {
   const mockUsers: SigningUpUser[] = [
@@ -37,7 +38,7 @@ describe('User slice', () => {
     expect(userAfterAdd).toEqual({ username: newUser.username });
 
     expect(mockFetch).toHaveBeenCalledTimes(1);
-    expect(mockFetch).toHaveBeenCalledWith('http://localhost:3001/users/signup', {
+    expect(mockFetch).toHaveBeenCalledWith(api.auth.signUp, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newUser),

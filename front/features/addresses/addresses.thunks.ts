@@ -1,8 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Address, Blockchain } from 'crypto-dashboard-shared';
+import { api } from '../../app/config/api';
 
 export const addAddress = createAsyncThunk('addresses/addAddress', async (newAddress: Address) => {
-  const response = await fetch('http://localhost:3001/addresses/addAddress', {
+  const response = await fetch(api.addresses.add, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(newAddress),
@@ -19,7 +20,7 @@ export const addAddress = createAsyncThunk('addresses/addAddress', async (newAdd
 export const addSolanaAddress = createAsyncThunk(
   'addresses/addSolanaAddress',
   async (newAddress: Address) => {
-    const response = await fetch('http://localhost:3001/addresses/addAddress/solana', {
+    const response = await fetch(api.addresses.addSolanaAddress, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newAddress),
@@ -37,7 +38,7 @@ export const addSolanaAddress = createAsyncThunk(
 export const deleteAddress = createAsyncThunk(
   'addresses/deleteAddress',
   async (addressToDelete: { address: string; blockchain: Blockchain }) => {
-    const response = await fetch('http://localhost:3001/addresses/deleteAddress', {
+    const response = await fetch(api.addresses.delete, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(addressToDelete),
@@ -52,7 +53,7 @@ export const deleteAddress = createAsyncThunk(
 );
 
 export const getUserAddresses = createAsyncThunk('addresses/getUserAddresses', async () => {
-  const response = await fetch('http://localhost:3001/addresses/getUserAddresses', {
+  const response = await fetch(api.addresses.get, {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
