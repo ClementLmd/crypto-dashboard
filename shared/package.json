@@ -1,13 +1,19 @@
 {
   "name": "crypto-dashboard-shared",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
   "main": "src/index.ts",
   "types": "src/index.ts",
-  "type": "module",
   "files": [
     "src"
   ],
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "types": "./src/index.ts"
+    }
+  },
   "scripts": {
     "build": "tsc --noEmit"
   },
