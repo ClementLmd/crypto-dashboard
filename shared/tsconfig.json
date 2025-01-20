@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "ESNext",
-    "declaration": true,
+    "module": "commonjs",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "composite": true,
-    "rootDir": "./src",
+    "outDir": "./dist",
+    "declaration": true,
     "baseUrl": "."
   },
   "include": ["src/**/*"],
