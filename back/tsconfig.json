@@ -8,12 +8,14 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "outDir": "./dist",
-    "rootDir": "./src",
-    "baseUrl": ".",
+    "rootDir": "../",
     "paths": {
-      "crypto-dashboard-shared": ["../shared/dist"]
-    }
+      "crypto-dashboard-shared": ["../shared/src"]
+    },
+    "typeRoots": ["./node_modules/@types", "../node_modules/@types", "./src/types"],
+    "types": ["express", "node", "jest"]
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "**/*.test.ts"]
+  "include": ["src/**/*.ts", "src/types/**/*.d.ts", "../shared/**/*"],
+  "exclude": ["node_modules", "**/*.test.ts"],
+  "references": [{ "path": "../shared" }]
 }
