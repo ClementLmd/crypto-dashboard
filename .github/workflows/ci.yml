@@ -32,6 +32,8 @@ jobs:
         run: pnpm install --prefix shared
       - name: Build shared
         run: pnpm run build --prefix shared
+        env:
+          API_URL: 'http://localhost:4000'
       - name: Install front-end dependencies
         run: pnpm install --prefix front
       - name: Install back-end dependencies
