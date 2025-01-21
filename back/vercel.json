@@ -1,7 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "pnpm run build:shared && pnpm run build:back",
-  "installCommand": "pnpm install",
+  "buildCommand": "pnpm run build:shared && pnpm run build",
   "builds": [
     {
       "src": "dist/app.js",
