@@ -1,7 +1,12 @@
-import { UserSession } from 'crypto-dashboard-shared';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Request, Response } from 'express';
+import { UserSession, User } from 'crypto-dashboard-shared';
 
-declare module 'express-serve-static-core' {
-  interface Request {
-    session?: UserSession;
+declare global {
+  namespace Express {
+    interface Request {
+      session?: UserSession;
+      user?: User;
+    }
   }
 }
