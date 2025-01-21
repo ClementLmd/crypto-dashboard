@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "buildCommand": "cd shared && pnpm run build && cd .. && pnpm run build",
   "builds": [
     {
       "src": "src/app.ts",

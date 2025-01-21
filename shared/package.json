@@ -11,8 +11,8 @@
     "build": "pnpm run build:cjs && pnpm run build:esm"
   },
   "exports": {
-    "require": "./dist/cjs/src/index.js",
-    "import": "./dist/esm/src/index.js"
+    "require": "./dist/cjs/index.js",
+    "import": "./dist/esm/index.js"
   },
   "dependencies": {
     "@solana/web3.js": "^2.0.0"
