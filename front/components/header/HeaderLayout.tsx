@@ -10,6 +10,7 @@ import { Button } from '../ui/button';
 import { logout } from '../../features/user/user.slice';
 import { useRouter } from 'next/navigation';
 import { selectIsAuthenticated } from '../../features/user/user.selectors';
+import { api } from '../../app/config/api';
 
 export default function HeaderLayout() {
   const dispatch = useAppDispatch();
@@ -35,7 +36,7 @@ export default function HeaderLayout() {
 
   const handleLogout = async () => {
     try {
-      await fetch('http://localhost:3001/auth/logout', {
+      await fetch(api.auth.signOut, {
         method: 'POST',
         credentials: 'include',
       });

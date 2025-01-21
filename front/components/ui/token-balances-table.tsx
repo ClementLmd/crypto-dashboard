@@ -5,7 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '.
 import { Input } from './input';
 import { ChevronDown, ChevronUp, Search } from 'lucide-react';
 import { Button } from './button';
-import { Address } from '@shared/types/address';
+import { Address } from 'crypto-dashboard-shared';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './tooltip';
 
 interface Column {

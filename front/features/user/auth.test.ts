@@ -1,7 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { userReducer } from './user.slice';
 import { checkSession } from './user.thunks';
-import { errors } from '@shared/utils/errors';
+import { errors } from 'crypto-dashboard-shared';
+import { api } from '../../app/config/api';
 
 describe('Auth features', () => {
   const mockUser = { username: 'testuser' };
@@ -28,7 +29,7 @@ describe('Auth features', () => {
     expect(state.user.isAuthenticated).toBe(true);
     expect(mockFetch).toHaveBeenCalledTimes(1);
     expect(mockFetch).toHaveBeenCalledWith(
-      'http://localhost:3001/auth/check',
+      api.auth.checkSession,
       expect.objectContaining({
         credentials: 'include',
       }),

@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { Address } from '@shared/types/address';
+import { Address } from 'crypto-dashboard-shared';
 import { addressReducer } from './addresses.slice';
 import { addAddress, addSolanaAddress, deleteAddress, getUserAddresses } from './addresses.thunks';
 import { selectAddresses } from './addresses.selectors';

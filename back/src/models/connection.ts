@@ -1,12 +1,17 @@
 import mongoose from 'mongoose';
 
-let databaseEnvironment: 'test' | 'production';
+let databaseEnvironment: 'test' | 'production' | 'development';
 const defineConnectionString = () => {
   const testSuffix = process.env.JEST_WORKER_ID ? `_${process.env.JEST_WORKER_ID}` : '';
 
   if (process.env.NODE_ENV === 'test') {
     databaseEnvironment = 'test';
     return `${process.env.CONNECTION_STRING_TEST}${testSuffix}`;
+  }
+
+  if (process.env.NODE_ENV === 'development') {
+    databaseEnvironment = 'development';
+    return process.env.CONNECTION_STRING_DEV;
   }
 
   databaseEnvironment = 'production';
@@ -22,8 +27,18 @@ if (!connectionString) {
 export const connectToDatabase = () => {
   mongoose
     .connect(connectionString, { connectTimeoutMS: 2000 })
-    .then(() => console.log(`Database connected - ${databaseEnvironment}`))
+    .then(() => {
+      if (process.env.NODE_ENV !== 'production') {
+        console.log(`Database connected - ${databaseEnvironment}`);
+      }
+    })
     .catch((error) => console.error(error));
 };
+
+process.on('SIGTERM', async () => {
+  console.log('Closing database connection...');
+  await mongoose.disconnect();
+  process.exit(0);
+});
 
 connectToDatabase();

@@ -1,4 +1,4 @@
-import type { SigningUpUser } from '@shared/types/user';
+import { SigningUpUser } from 'crypto-dashboard-shared';
 import { UserModel } from '../../models/users';
 
 export const signUp = async ({ username, password }: SigningUpUser) => {

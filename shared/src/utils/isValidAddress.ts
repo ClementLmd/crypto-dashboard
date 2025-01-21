@@ -1,4 +1,4 @@
-import { isAddress } from '@solana/web3.js';
+import { isAddress } from "@solana/web3.js";
 
 export function isValidSolanaAddress(address: string): boolean {
   try {

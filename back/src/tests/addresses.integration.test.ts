@@ -2,12 +2,10 @@ import request from 'supertest';
 import app from '../app';
 import mongoose from 'mongoose';
 import { connectToDatabase } from '../models/connection';
-import type { Address } from '@shared/types/address';
-import { errors } from '../../../shared/utils/errors';
+import { Address, errors, isValidSolanaAddress, User } from 'crypto-dashboard-shared';
 import { generateSessionToken } from '../use-cases/session/generateSessionToken';
 import { createSession } from '../use-cases/session/createSession';
 import { UserModel } from '../models/users';
-import { User } from '@shared/types/user';
 import { AddressModel } from '../models/address';
 
 // Mock Solana RPC calls
@@ -40,6 +38,14 @@ jest.mock('@solana/web3.js', () => ({
     }),
   })),
   address: jest.fn((addr) => addr),
+  isAddress: jest.fn((addr) => {
+    // Add validation logic for test addresses
+    const validAddresses = [
+      '6NvQ7xJZmi48jVdL8nzvEKcgXGwJPBs9aDjHPrnooRL8',
+      'CpsUdHzAbmyvqf29AvT8cFEzW9AcyHdSDUi4pPGbykQg'
+    ];
+    return validAddresses.includes(addr);
+  })
 }));
 
 // Mock Jupiter API

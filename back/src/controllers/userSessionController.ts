@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
 import { verifyPassword } from '../utils/password';
 import { getUserById, getUserByUsername } from '../use-cases/user/getUser';
-import { errors } from '../../../shared/utils/errors';
+import { errors } from 'crypto-dashboard-shared';
 import { createSession } from '../use-cases/session/createSession';
 import { generateSessionToken } from '../use-cases/session/generateSessionToken';
 import { invalidateSession } from '../use-cases/session/invalidateSession';
@@ -27,10 +27,10 @@ export const createSessionController = async (req: Request, res: Response) => {
     res.cookie('session', sessionToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
       maxAge: 60 * 60 * 24 * 30 * 1000, // 30 days
       path: '/',
-      domain: 'localhost',
+      domain: process.env.NODE_ENV === 'production' ? process.env.COOKIE_DOMAIN : 'localhost',
     });
 
     return res.status(200).json({

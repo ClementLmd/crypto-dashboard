@@ -1,9 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { api } from '../../app/config/api';
 
 export const signUp = createAsyncThunk(
   'users/signup',
   async (newUser: { username: string; password: string }) => {
-    const response = await fetch('http://localhost:3001/users/signup', {
+    const response = await fetch(api.auth.signUp, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newUser),
@@ -20,7 +21,7 @@ export const signUp = createAsyncThunk(
 export const signIn = createAsyncThunk(
   'users/signin',
   async (signingInUser: { username: string; password: string }) => {
-    const response = await fetch('http://localhost:3001/auth/login', {
+    const response = await fetch(api.auth.signIn, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(signingInUser),
@@ -36,7 +37,7 @@ export const signIn = createAsyncThunk(
 );
 
 export const checkSession = createAsyncThunk('users/checkSession', async () => {
-  const response = await fetch('http://localhost:3001/auth/check', {
+  const response = await fetch(api.auth.checkSession, {
     credentials: 'include',
   });
   const data = await response.json();

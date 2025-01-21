@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { getTokenPrice } from '../use-cases/tokens/getTokenPrice';
-import { errors } from '../../../shared/utils/errors';
+import { errors } from 'crypto-dashboard-shared';
 
 export const getTokenPriceController = async (req: Request, res: Response) => {
   const { address } = req.params;

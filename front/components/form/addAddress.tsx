@@ -1,6 +1,6 @@
 import { AddressForm } from './addressForm';
 import styles from './addAddress.module.css';
-import { Blockchain } from '@shared/types/blockchain';
+import { Blockchain } from 'crypto-dashboard-shared';
 
 export function AddAddress({ blockchain }: { blockchain: Blockchain }) {
   return (
