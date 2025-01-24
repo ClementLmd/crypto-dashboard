@@ -9,9 +9,6 @@
     "forceConsistentCasingInFileNames": true,
     "outDir": "./dist",
     "baseUrl": ".",
-    "paths": {
-      "crypto-dashboard-shared": ["../shared/src/index.ts"]
-    },
     "typeRoots": ["./src/@types", "./node_modules/@types"],
     "types": ["express", "node", "jest"]
   },
