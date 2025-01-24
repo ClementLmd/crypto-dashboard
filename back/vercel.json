@@ -2,7 +2,6 @@
   "version": 2,
   "buildCommand": "pnpm run build",
   "installCommand": "pnpm install",
-  "outputDir": "dist",
   "builds": [
     {
       "src": "src/app.ts",
