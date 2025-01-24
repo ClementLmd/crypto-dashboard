@@ -32,11 +32,6 @@ jobs:
         run: pnpm run build-shared
         env:
           NEXT_PUBLIC_API_URL: 'http://localhost:4000'
-      - name: Run tests
-        run: pnpm test
-        env:
-          CONNECTION_STRING_TEST: ${{ secrets.CONNECTION_STRING_TEST }}
-          NEXT_PUBLIC_API_URL: 'http://localhost:4000' # For frontend tests
       - name: Build front-end
         run: pnpm run build-front
         env:
@@ -45,3 +40,8 @@ jobs:
         run: pnpm run build-back
         env:
           NEXT_PUBLIC_API_URL: 'http://localhost:4000'
+      - name: Run tests
+        run: pnpm test
+        env:
+          CONNECTION_STRING_TEST: ${{ secrets.CONNECTION_STRING_TEST }}
+          NEXT_PUBLIC_API_URL: 'http://localhost:4000' # For frontend tests
