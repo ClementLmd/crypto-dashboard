@@ -1,2 +1,3 @@
 echo 'Pre-commit hook'
+pnpm typecheck
 pnpm test
