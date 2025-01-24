@@ -2,7 +2,6 @@
   "name": "back",
   "version": "1.0.0",
   "main": "src/index.ts",
-  "type": "module",
   "scripts": {
     "start": "ts-node src/index.ts",
     "build": "tsc",
@@ -26,7 +25,6 @@
     "dotenv": "^16.0.1",
     "express": "^4.19.2",
     "mongodb": "6.9",
-    "crypto-dashboard-shared": "workspace:*",
     "mongodb-memory-server": "^10.1.2",
     "mongoose": "^8.7.1",
     "morgan": "^1.10.0",
@@ -60,5 +58,8 @@
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.3"
+  },
+  "peerDependencies": {
+    "crypto-dashboard-shared": "workspace:*"
   }
 }
