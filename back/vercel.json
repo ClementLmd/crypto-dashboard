@@ -1,14 +1,13 @@
 {
   "version": 2,
-  "buildCommand": "cd .. && pnpm run build-shared && cd back && pnpm run build",
-  "installCommand": "cd .. && pnpm install",
+  "buildCommand": "pnpm run build",
+  "installCommand": "pnpm install",
   "builds": [
     {
       "src": "src/app.ts",
       "use": "@vercel/node",
       "config": {
         "includeFiles": [
-          "../shared/src/**",
           "../shared/dist/**",
           "../shared/package.json",
           "../pnpm-workspace.yaml",
