@@ -20,6 +20,7 @@ export default function Home() {
   return (
     <div className={styles.main}>
       <h1>Home page</h1>
+      <p>{error}</p>
       <div className={styles.authMenu}>
         <SignIn />
         <SignUp />
