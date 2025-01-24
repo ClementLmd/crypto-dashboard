@@ -10,6 +10,9 @@
     "outDir": "./dist",
     "baseUrl": ".",
     "typeRoots": ["./src/@types", "./node_modules/@types"],
+    "paths": {
+      "@crypto-dashboard-shared": ["../shared/src/index.ts"]
+    },
     "types": ["express", "node", "jest"]
   },
   "include": ["src/**/*.ts", "../shared/dist/**/*"],
