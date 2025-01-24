@@ -7,7 +7,12 @@
       "src": "src/app.ts",
       "use": "@vercel/node",
       "config": {
-        "includeFiles": ["src/**"]
+        "includeFiles": [
+          "../shared/src/**",
+          "../shared/package.json",
+          "../pnpm-workspace.yaml",
+          "../package.json"
+        ]
       }
     }
   ],

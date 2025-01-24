@@ -2,6 +2,7 @@
   "name": "back",
   "version": "1.0.0",
   "main": "src/index.ts",
+  "type": "module",
   "scripts": {
     "start": "ts-node src/index.ts",
     "build": "tsc",
