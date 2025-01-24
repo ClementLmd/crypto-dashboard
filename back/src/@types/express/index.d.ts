@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Request, Response } from 'express'; //TODO: Remove this
+import { Request, Response } from 'express';
 import { UserSession, User } from 'crypto-dashboard-shared';
 
 declare global {
