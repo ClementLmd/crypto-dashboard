@@ -6,8 +6,9 @@
     "noImplicitAny": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "outDir": "./dist",
+    "outDir": "dist",
     "baseUrl": ".",
     "typeRoots": ["./src/@types", "./node_modules/@types"],
     "paths": {
