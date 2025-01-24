@@ -20,10 +20,10 @@
   "env": {
     "NODE_ENV": "production"
   },
-  "functions": {
-    "src/app.ts": {
-      "memory": 1024,
-      "maxDuration": 10
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/src/app.ts"
     }
-  }
+  ]
 }
