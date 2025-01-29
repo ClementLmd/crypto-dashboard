@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "buildCommand": "turbo run build",
   "installCommand": "pnpm install",
+  "buildCommand": "turbo run build",
   "builds": [
     {
       "src": "src/app.ts",
@@ -18,12 +18,6 @@
   ],
   "env": {
     "NODE_ENV": "production"
-  },
-  "functions": {
-    "src/app.ts": {
-      "memory": 3009,
-      "maxDuration": 30
-    }
   },
   "rewrites": [
     {

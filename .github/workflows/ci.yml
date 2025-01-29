@@ -32,6 +32,8 @@ jobs:
         run: pnpm run build-shared
       - name: Build front-end
         run: pnpm run build-front
+        env:
+          NEXT_PUBLIC_API_URL: 'http://localhost:4000'
       - name: Build back-end
         run: pnpm run build-back
       - name: Run tests
