@@ -15,6 +15,7 @@ jobs:
     environment: dev
     env:
       CONNECTION_STRING_DEV: ${{ secrets.CONNECTION_STRING_DEV }}
+      NODE_ENV: 'test'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
