@@ -23,8 +23,6 @@
     }
   ],
   "env": {
-    "NODE_ENV": "production",
-    "CONNECTION_STRING": "@connection-string",
-    "CONNECTION_STRING_TEST": "@connection-string-test"
+    "NODE_ENV": "production"
   }
 }
