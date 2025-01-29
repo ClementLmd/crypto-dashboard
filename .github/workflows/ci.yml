@@ -39,14 +39,6 @@ jobs:
           NEXT_PUBLIC_API_URL: 'http://localhost:4000'
       - name: Build back-end
         run: pnpm run build-back
-      - name: Debug Environment Variables
-        run: |
-          echo "CONNECTION_STRING_TEST=${CONNECTION_STRING_TEST}"
-          echo "NODE_ENV=${NODE_ENV}"
-          echo "NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}"
-        env:
-          CONNECTION_STRING_TEST: ${{ secrets.CONNECTION_STRING_TEST }}
-          NODE_ENV: 'test'
       - name: Run tests
         run: pnpm test
         env:

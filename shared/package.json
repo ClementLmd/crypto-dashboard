@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc",
     "typecheck": "tsc --noEmit",
-    "clean": "rimraf dist *.js *.d.ts src/*.js src/*.d.ts src/**/*.js src/**/*.d.ts"
+    "clean": "rimraf dist *.js *.d.ts src/**/*.js src/**/*.d.ts"
   },
   "dependencies": {
     "@solana/web3.js": "^2.0.0"
