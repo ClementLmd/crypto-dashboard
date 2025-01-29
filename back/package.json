@@ -9,7 +9,7 @@
     "nodemon": "nodemon ./src/index.ts",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
-    "test": "NODE_ENV=test jest"
+    "test": "NODE_ENV=test jest --no-cache"
   },
   "keywords": [],
   "author": "",
