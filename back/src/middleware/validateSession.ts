@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import { validateSessionToken } from '../use-cases/session/validateSessionToken';
 import { getUserBySessionId } from '../use-cases/session/getUserBySessionId';
-import { errors } from 'crypto-dashboard-shared';
-import { UserSession } from 'crypto-dashboard-shared';
-import { User } from 'crypto-dashboard-shared';
+import { errors } from 'shared';
+import { UserSession } from 'shared';
+import { User } from 'shared';
 
 interface RequestWithAuth extends Request {
   session?: UserSession;

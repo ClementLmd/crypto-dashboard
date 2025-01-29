@@ -19,7 +19,7 @@
       }
     ],
     "paths": {
-      "crypto-dashboard-shared": ["../shared/dist"],
+      "shared": ["../shared/dist"],
       "@/*": ["./src/*"]
     },
     "moduleResolution": "node"

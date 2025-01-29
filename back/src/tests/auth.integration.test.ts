@@ -5,7 +5,7 @@ import { connectToDatabase } from '../models/connection';
 import { UserModel } from '../models/users';
 import { UserSessionModel } from '../models/userSession';
 import { generateSessionToken } from '../use-cases/session/generateSessionToken';
-import { errors } from 'crypto-dashboard-shared';
+import { errors } from 'shared';
 import { createHash } from 'crypto';
 
 describe('Auth integration tests', () => {

@@ -2,7 +2,7 @@ import request from 'supertest';
 import app from '../app';
 import mongoose from 'mongoose';
 import { connectToDatabase } from '../models/connection';
-import { Address, errors, User } from 'crypto-dashboard-shared';
+import { Address, errors, User } from 'shared';
 import { generateSessionToken } from '../use-cases/session/generateSessionToken';
 import { createSession } from '../use-cases/session/createSession';
 import { UserModel } from '../models/users';

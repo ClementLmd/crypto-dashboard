@@ -1,4 +1,4 @@
-import { UserSession, User } from 'crypto-dashboard-shared';
+import { UserSession, User } from 'shared';
 
 declare global {
   namespace Express {

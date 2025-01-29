@@ -1,7 +1,7 @@
 'use client';
 // Route: /addresses
 
-import { Address } from 'crypto-dashboard-shared';
+import { Address } from 'shared';
 import { AddAddress } from '../../components/form/addAddress';
 import AddressesTable from '../../components/ui/addresses-table';
 import styles from './addresses.module.css';

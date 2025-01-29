@@ -26,7 +26,7 @@
     "format:check": "prettier --check .",
     "lint": "turbo run lint",
     "prepare": "husky",
-    "prebuild": "turbo run build --filter=crypto-dashboard-shared"
+    "prebuild": "turbo run build --filter=shared"
   },
   "keywords": [],
   "author": "",
@@ -34,7 +34,7 @@
   "description": "",
   "dependencies": {
     "@solana/web3.js": "^2.0.0",
-    "crypto-dashboard-shared": "workspace:*",
+    "shared": "workspace:*",
     "express": "^4.19.2",
     "zod": "^3.24.1"
   },

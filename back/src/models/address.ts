@@ -1,5 +1,5 @@
 import mongoose, { type Document } from 'mongoose';
-import { Address, AddressContent, blockchains } from 'crypto-dashboard-shared';
+import { Address, AddressContent, blockchains } from 'shared';
 
 export interface AddressDocument extends Address, Document {
   _id: string;

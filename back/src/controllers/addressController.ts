@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Address, errors, isValidSolanaAddress, User } from 'crypto-dashboard-shared';
+import { Address, errors, isValidSolanaAddress, User } from 'shared';
 import { checkBody } from '../utils/checkBody';
 import { addAddress } from '../use-cases/address/addAddress';
 import { deleteAddress } from '../use-cases/address/deleteAddress';

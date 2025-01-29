@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
 import { verifyPassword } from '../utils/password';
 import { getUserById, getUserByUsername } from '../use-cases/user/getUser';
-import { errors } from 'crypto-dashboard-shared';
+import { errors } from 'shared';
 import { createSession } from '../use-cases/session/createSession';
 import { generateSessionToken } from '../use-cases/session/generateSessionToken';
 import { invalidateSession } from '../use-cases/session/invalidateSession';

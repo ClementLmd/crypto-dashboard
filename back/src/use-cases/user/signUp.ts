@@ -1,4 +1,4 @@
-import { SigningUpUser } from 'crypto-dashboard-shared';
+import { SigningUpUser } from 'shared';
 import { UserModel } from '../../models/users';
 
 export const signUp = async ({ username, password }: SigningUpUser) => {

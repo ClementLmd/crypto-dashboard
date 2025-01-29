@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { UserSession } from 'crypto-dashboard-shared';
+import { UserSession } from 'shared';
 
 export interface UserSessionDocument extends UserSession, Document {}
 

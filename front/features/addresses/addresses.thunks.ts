@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Address, Blockchain } from 'crypto-dashboard-shared';
+import { Address, Blockchain } from 'shared';
 import { api } from '../../app/config/api';
 
 export const addAddress = createAsyncThunk('addresses/addAddress', async (newAddress: Address) => {

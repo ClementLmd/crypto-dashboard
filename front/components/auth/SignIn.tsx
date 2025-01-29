@@ -5,7 +5,7 @@ import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { signIn } from '../../features/user/user.thunks';
 import { useAppDispatch } from '../../hooks/hooks';
-import { errors } from 'crypto-dashboard-shared';
+import { errors } from 'shared';
 import { routes } from '../../app/config/routes';
 import { useRouter } from 'next/navigation';
 export function SignIn() {

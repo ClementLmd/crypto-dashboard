@@ -4,7 +4,7 @@ module.exports = {
   testEnvironment: 'node',
   moduleNameMapper: {
     '^@solana/web3.js/dist/types$': '@solana/web3.js',
-    '^@crypto-dashboard-shared$': '<rootDir>/../shared/src/index.js',
+    '^@shared$': '<rootDir>/../shared/src/index.js',
   },
   transform: {
     '^.+\\.tsx?$': [

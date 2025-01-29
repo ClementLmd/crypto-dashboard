@@ -17,13 +17,7 @@ import { Input } from '../../components/ui/input';
 import { useAppDispatch } from '../../hooks/hooks';
 import { addAddress, addSolanaAddress } from '../../features/addresses/addresses.thunks';
 import { useState } from 'react';
-import {
-  addressFormSchema,
-  Blockchain,
-  errors,
-  Address,
-  isValidSolanaAddress,
-} from 'crypto-dashboard-shared';
+import { addressFormSchema, Blockchain, errors, Address, isValidSolanaAddress } from 'shared';
 
 export function AddressForm({ blockchain }: { blockchain: Blockchain }) {
   const dispatch = useAppDispatch();

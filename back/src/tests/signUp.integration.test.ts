@@ -3,7 +3,7 @@ import request from 'supertest';
 import app from '../app';
 import mongoose from 'mongoose';
 import { connectToDatabase } from '../models/connection';
-import { errors } from 'crypto-dashboard-shared';
+import { errors } from 'shared';
 
 describe('User sign up tests', () => {
   const user = { username: 'Joe', password: 'Doedoe1' };

@@ -3,7 +3,7 @@ import { signUp } from '../use-cases/user/signUp';
 import { getAllUsers, getUserById, getUserByUsername } from '../use-cases/user/getUser';
 import { checkBody } from '../utils/checkBody';
 import { hashPassword } from '../utils/password';
-import { errors, SigningUpUser, validateUserPassword } from 'crypto-dashboard-shared';
+import { errors, SigningUpUser, validateUserPassword } from 'shared';
 import { createSession } from '../use-cases/session/createSession';
 import { generateSessionToken } from '../use-cases/session/generateSessionToken';
 

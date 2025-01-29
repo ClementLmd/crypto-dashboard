@@ -1,4 +1,4 @@
-import { Address } from 'crypto-dashboard-shared';
+import { Address } from 'shared';
 import { AddressModel } from '../../models/address';
 
 export const addAddress = async ({

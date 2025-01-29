@@ -1,7 +1,7 @@
-import { Address } from 'crypto-dashboard-shared';
+import { Address } from 'shared';
 import { UserModel } from '../../models/users';
 import { AddressModel } from '../../models/address';
-import { User } from 'crypto-dashboard-shared';
+import { User } from 'shared';
 import { getSolanaTokens } from './getSolanaTokens';
 
 export const getUserAddresses = async (user: User): Promise<Address[]> => {

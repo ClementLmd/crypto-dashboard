@@ -10,7 +10,7 @@
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
-      "crypto-dashboard-shared": ["../shared/src/index.ts"]
+      "shared": ["../shared/src/index.ts"]
     },
     "typeRoots": ["./src/types", "./node_modules/@types"]
   },

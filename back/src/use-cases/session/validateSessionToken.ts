@@ -1,6 +1,6 @@
 import { createHash } from 'crypto';
 import { UserSessionModel } from '../../models/userSession';
-import { UserSession } from 'crypto-dashboard-shared';
+import { UserSession } from 'shared';
 
 export async function validateSessionToken(token: string): Promise<UserSession | null> {
   try {
