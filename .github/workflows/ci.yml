@@ -13,6 +13,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     environment: dev
+    env:
+      CONNECTION_STRING_DEV: ${{ secrets.CONNECTION_STRING_DEV }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -41,4 +43,3 @@ jobs:
         env:
           CONNECTION_STRING_TEST: ${{ secrets.CONNECTION_STRING_TEST }}
           NEXT_PUBLIC_API_URL: 'http://localhost:4000' # For frontend tests
-          NODE_ENV: 'test'

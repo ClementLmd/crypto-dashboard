@@ -22,6 +22,7 @@
     "argon2": "^0.41.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
+    "crypto-dashboard-shared": "workspace:*",
     "dotenv": "^16.0.1",
     "express": "^4.19.2",
     "mongodb": "6.9",
@@ -59,7 +60,5 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.6.3"
   },
-  "peerDependencies": {
-    "crypto-dashboard-shared": "workspace:*"
-  }
+  "peerDependencies": {}
 }

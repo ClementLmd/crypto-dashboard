@@ -19,6 +19,7 @@ const defineConnectionString = () => {
 };
 
 const connectionString = defineConnectionString();
+console.log('connectionString', connectionString);
 
 if (!connectionString) {
   throw new Error('MongoDB connection string is undefined. Check your environment variables.');
