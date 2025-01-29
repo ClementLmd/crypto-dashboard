@@ -1,4 +1,4 @@
-import type { Blockchain } from './blockchain';
+import type { Blockchain } from './blockchain.js';
 
 export interface Address {
   _id?: string;

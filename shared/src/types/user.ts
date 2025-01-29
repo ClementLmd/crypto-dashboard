@@ -1,4 +1,4 @@
-import { Address } from './address';
+import type { Address } from './address.js';
 
 export interface SigningUpUser {
   username: string;
