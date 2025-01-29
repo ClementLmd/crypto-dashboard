@@ -7,27 +7,24 @@
     "back",
     "shared"
   ],
+  "packageManager": "pnpm@9.1.0",
   "scripts": {
-    "start": "concurrently \"pnpm run back\" \"pnpm run front\"",
+    "dev": "turbo run dev",
+    "start": "pnpm run back & pnpm run front",
     "back": "pnpm --prefix back run nodemon",
     "front": "pnpm --prefix front dev",
-    "test": "concurrently \"pnpm run test-front\" \"pnpm run test-back\"",
+    "test": "turbo run test",
     "test-front": "pnpm --prefix front test",
     "test-back": "pnpm --prefix back test",
-    "build": "pnpm run build-shared && concurrently \"pnpm run build-front\" \"pnpm run build-back\"",
+    "build": "turbo run build",
     "build-front": "pnpm --prefix front build",
     "build-back": "pnpm --prefix back build",
     "build-shared": "pnpm --prefix shared build",
-    "clean": "concurrently \"pnpm run clean-front\" \"pnpm run clean-back\" \"pnpm run clean-shared\"",
-    "clean-front": "pnpm --prefix front clean",
-    "clean-back": "pnpm --prefix back clean",
-    "clean-shared": "pnpm --prefix shared clean",
-    "typecheck": "concurrently \"pnpm run typecheck-front\" \"pnpm run typecheck-back\"",
-    "typecheck-front": "pnpm --prefix front typecheck",
-    "typecheck-back": "pnpm --prefix back typecheck",
+    "clean": "turbo run clean",
+    "typecheck": "turbo run typecheck",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "lint": "eslint .",
+    "lint": "turbo run lint",
     "prepare": "husky"
   },
   "keywords": [],
@@ -36,9 +33,9 @@
   "description": "",
   "dependencies": {
     "@solana/web3.js": "^2.0.0",
+    "crypto-dashboard-shared": "workspace:*",
     "express": "^4.19.2",
-    "zod": "^3.24.1",
-    "crypto-dashboard-shared": "workspace:*"
+    "zod": "^3.24.1"
   },
   "husky": {
     "hooks": {
@@ -55,6 +52,7 @@
     "eslint-plugin-unused-imports": "^4.1.4",
     "husky": "^9.1.6",
     "nodemon": "^3.1.4",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "turbo": "^2.3.4"
   }
 }
