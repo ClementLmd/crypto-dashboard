@@ -1,11 +1,11 @@
 {
   "name": "back",
   "version": "1.0.0",
-  "main": "src/index.ts",
+  "main": "src/app.ts",
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "start": "node dist/app.js",
     "build": "tsc",
-    "dev": "ts-node-dev src/index.ts",
+    "dev": "nodemon src/app.ts",
     "nodemon": "nodemon ./src/index.ts",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
