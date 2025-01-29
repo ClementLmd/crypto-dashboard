@@ -19,11 +19,11 @@
       }
     ],
     "paths": {
-      "crypto-dashboard-shared": ["../shared/src"],
+      "crypto-dashboard-shared": ["../shared/dist"],
       "@/*": ["./src/*"]
     },
     "moduleResolution": "node"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "../shared/**/*"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "../shared/dist/**/*"],
   "exclude": ["node_modules"]
 }

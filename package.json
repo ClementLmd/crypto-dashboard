@@ -25,7 +25,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "turbo run lint",
-    "prepare": "husky"
+    "prepare": "husky",
+    "prebuild": "turbo run build --filter=crypto-dashboard-shared"
   },
   "keywords": [],
   "author": "",

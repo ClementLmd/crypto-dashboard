@@ -4,11 +4,11 @@
   "buildCommand": "turbo run build",
   "builds": [
     {
-      "src": "src/app.ts",
+      "src": "dist/app.js",
       "use": "@vercel/node",
       "config": {
         "includeFiles": [
-          "../shared/src/**",
+          "../shared/dist/**",
           "../shared/package.json",
           "../pnpm-workspace.yaml",
           "../package.json"
@@ -16,13 +16,21 @@
       }
     }
   ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "dist/app.js"
+    }
+  ],
   "env": {
-    "NODE_ENV": "production"
+    "NODE_ENV": "production",
+    "CONNECTION_STRING": "@connection-string",
+    "CONNECTION_STRING_TEST": "@connection-string-test"
   },
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/src/app.ts"
+      "destination": "/dist/app.js"
     }
   ]
 }

@@ -8,10 +8,11 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "outDir": "dist",
+    "baseUrl": ".",
     "paths": {
-      "@crypto-dashboard-shared": ["../shared/src/index.ts"]
+      "crypto-dashboard-shared": ["../shared/src/index.ts"]
     }
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "src/@types/**/*.d.ts", "../shared/src/**/*"],
   "exclude": ["node_modules"]
 }

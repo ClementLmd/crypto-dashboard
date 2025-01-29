@@ -1,7 +1,8 @@
 {
   "name": "back",
   "version": "1.0.0",
-  "main": "src/app.ts",
+  "type": "commonjs",
+  "main": "dist/app.js",
   "scripts": {
     "start": "node dist/index.js",
     "build": "tsc",
