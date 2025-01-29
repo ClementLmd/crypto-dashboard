@@ -11,8 +11,9 @@
     "baseUrl": ".",
     "paths": {
       "crypto-dashboard-shared": ["../shared/src/index.ts"]
-    }
+    },
+    "typeRoots": ["./src/types", "./node_modules/@types"]
   },
-  "include": ["src/**/*", "src/@types/**/*.d.ts", "../shared/src/**/*"],
+  "include": ["src/**/*", "src/types/**/*.d.ts"],
   "exclude": ["node_modules"]
 }

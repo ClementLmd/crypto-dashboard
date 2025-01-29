@@ -4,7 +4,7 @@
   "buildCommand": "turbo run build",
   "builds": [
     {
-      "src": "dist/app.js",
+      "src": "dist/index.js",
       "use": "@vercel/node",
       "config": {
         "includeFiles": [
@@ -19,7 +19,7 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "dist/app.js"
+      "dest": "dist/index.js"
     }
   ],
   "env": {
