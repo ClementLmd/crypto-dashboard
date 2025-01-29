@@ -26,11 +26,5 @@
     "NODE_ENV": "production",
     "CONNECTION_STRING": "@connection-string",
     "CONNECTION_STRING_TEST": "@connection-string-test"
-  },
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/dist/app.js"
-    }
-  ]
+  }
 }
