@@ -7,20 +7,25 @@ import { errors, SigningUpUser, validateUserPassword } from 'shared';
 import { createSession } from '../use-cases/session/createSession';
 import { generateSessionToken } from '../use-cases/session/generateSessionToken';
 
-export const signUpController = async (req: Request, res: Response) => {
+export const signUpController = async (req: Request, res: Response): Promise<void> => {
   const { username, password } = req.body;
   try {
-    if (!checkBody(req.body, ['username', 'password']))
-      return res.status(400).json({ error: errors.users.incompleteData });
+    if (!checkBody(req.body, ['username', 'password'])) {
+      res.status(400).json({ error: errors.users.incompleteData });
+      return;
+    }
 
     const isPasswordValid = validateUserPassword(password);
     if (isPasswordValid) {
-      return res.status(400).json({ error: isPasswordValid });
+      res.status(400).json({ error: isPasswordValid });
+      return;
     }
 
     const isUsernameValid = await getUserByUsername(username);
-    if (isUsernameValid !== null)
-      return res.status(400).json({ error: errors.users.duplicatedUsername });
+    if (isUsernameValid !== null) {
+      res.status(400).json({ error: errors.users.duplicatedUsername });
+      return;
+    }
 
     const hashedPassword = await hashPassword(password);
     const userData: SigningUpUser = {
@@ -41,33 +46,33 @@ export const signUpController = async (req: Request, res: Response) => {
       domain: process.env.NODE_ENV === 'production' ? process.env.COOKIE_DOMAIN : 'localhost',
     });
 
-    return res.status(201).json({
+    res.status(201).json({
       user: {
         username: newUser.username,
       },
       authenticated: true,
     });
   } catch {
-    return res.status(500).json({ error: errors.internal });
+    res.status(500).json({ error: errors.internal });
   }
 };
 
-export const getAllUsersController = async (req: Request, res: Response) => {
+export const getAllUsersController = async (req: Request, res: Response): Promise<void> => {
   try {
     const users = await getAllUsers();
     res.status(200).json(users);
   } catch {
-    return res.status(500).json({ error: errors.internal });
+    res.status(500).json({ error: errors.internal });
   }
 };
 
-export const getUserByIdController = async (req: Request, res: Response) => {
+export const getUserByIdController = async (req: Request, res: Response): Promise<void> => {
   try {
     const userId = req.params.id;
     const user = await getUserById(userId);
     res.status(200).json(user);
   } catch {
-    return res.status(500).json({ error: errors.internal });
+    res.status(500).json({ error: errors.internal });
   }
 };
 

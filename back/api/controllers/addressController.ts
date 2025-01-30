@@ -6,14 +6,22 @@ import { deleteAddress } from '../use-cases/address/deleteAddress';
 import { UserModel } from '../models/users';
 import { getUserAddresses } from '../use-cases/address/getUserAddresses';
 
-export const addAddressController = async (req: Request & { user?: User }, res: Response) => {
+export const addAddressController = async (
+  req: Request & { user?: User },
+  res: Response,
+): Promise<void> => {
   const { address, blockchain, addressContent, addressName }: Address = req.body;
 
   try {
-    if (!checkBody(req.body, ['address', 'blockchain']))
-      return res.status(400).json({ error: errors.addresses.incompleteData });
+    if (!checkBody(req.body, ['address', 'blockchain'])) {
+      res.status(400).json({ error: errors.addresses.incompleteData });
+      return;
+    }
 
-    if (!req.user) return res.status(401).json({ error: errors.users.unauthorized });
+    if (!req.user) {
+      res.status(401).json({ error: errors.users.unauthorized });
+      return;
+    }
 
     const addressData: Address = { address, blockchain, addressContent, addressName };
 
@@ -26,26 +34,35 @@ export const addAddressController = async (req: Request & { user?: User }, res: 
       { new: true },
     );
 
-    return res.status(201).json(newAddress);
+    res.status(201).json(newAddress);
   } catch {
-    return res.status(500).json({ error: errors.internal });
+    res.status(500).json({ error: errors.internal });
   }
 };
 
-export const deleteAddressController = async (req: Request & { user?: User }, res: Response) => {
+export const deleteAddressController = async (
+  req: Request & { user?: User },
+  res: Response,
+): Promise<void> => {
   const { address, blockchain }: Address = req.body;
 
   try {
-    if (!checkBody(req.body, ['address', 'blockchain']))
-      return res.status(400).json({ error: errors.addresses.incompleteData });
+    if (!checkBody(req.body, ['address', 'blockchain'])) {
+      res.status(400).json({ error: errors.addresses.incompleteData });
+      return;
+    }
 
-    if (!req.user) return res.status(401).json({ error: errors.users.unauthorized });
+    if (!req.user) {
+      res.status(401).json({ error: errors.users.unauthorized });
+      return;
+    }
 
     const addressToDelete: Address = { address, blockchain };
 
     const deletedAddress = await deleteAddress(addressToDelete);
     if (!deletedAddress?._id) {
-      return res.status(400).json({ error: errors.addresses.failedDelete });
+      res.status(400).json({ error: errors.addresses.failedDelete });
+      return;
     }
 
     // Remove address from user's addresses array
@@ -55,32 +72,45 @@ export const deleteAddressController = async (req: Request & { user?: User }, re
       { new: true },
     );
 
-    return res.status(200).json();
+    res.status(200).json();
   } catch {
-    return res.status(500).json({ error: errors.internal });
+    res.status(500).json({ error: errors.internal });
   }
 };
 
-export const getUserAddressesController = async (req: Request & { user?: User }, res: Response) => {
+export const getUserAddressesController = async (
+  req: Request & { user?: User },
+  res: Response,
+): Promise<void> => {
   try {
-    if (!req.user) return res.status(401).json({ error: errors.users.unauthorized });
+    if (!req.user) {
+      res.status(401).json({ error: errors.users.unauthorized });
+      return;
+    }
 
     const addresses = await getUserAddresses(req.user);
-    return res.status(200).json(addresses);
+    res.status(200).json(addresses);
   } catch {
-    return res.status(500).json({ error: errors.internal });
+    res.status(500).json({ error: errors.internal });
   }
 };
 
-export const addSolanaAddressController = async (req: Request & { user?: User }, res: Response) => {
+export const addSolanaAddressController = async (
+  req: Request & { user?: User },
+  res: Response,
+): Promise<void> => {
   const { address, addressName }: Address = req.body;
 
   try {
     if (!isValidSolanaAddress(address)) {
-      return res.status(400).json({ error: errors.addresses.invalidSolanaAddress });
+      res.status(400).json({ error: errors.addresses.invalidSolanaAddress });
+      return;
     }
 
-    if (!req.user) return res.status(401).json({ error: errors.users.unauthorized });
+    if (!req.user) {
+      res.status(401).json({ error: errors.users.unauthorized });
+      return;
+    }
 
     const addressData: Address = {
       address,
@@ -97,8 +127,8 @@ export const addSolanaAddressController = async (req: Request & { user?: User },
       { new: true },
     );
 
-    return res.status(201).json(newAddress);
+    res.status(201).json(newAddress);
   } catch {
-    return res.status(500).json({ error: errors.internal });
+    res.status(500).json({ error: errors.internal });
   }
 };

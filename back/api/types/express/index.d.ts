@@ -1,6 +1,6 @@
-import { UserSession, User } from 'shared';
+import { User, UserSession } from 'shared';
 
-declare namespace Express {
+declare module 'express-serve-static-core' {
   export interface Request {
     session?: UserSession;
     user?: User;
