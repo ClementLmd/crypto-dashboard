@@ -1,7 +1,6 @@
 {
   "name": "root",
   "version": "1.0.0",
-  "main": "index.js",
   "workspaces": [
     "front",
     "back",
@@ -34,7 +33,6 @@
   "description": "",
   "dependencies": {
     "@solana/web3.js": "^2.0.0",
-    "shared": "workspace:*",
     "express": "^4.19.2",
     "zod": "^3.24.1"
   },
