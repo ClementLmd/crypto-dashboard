@@ -1,10 +1,9 @@
-// comment because of vercel 12 free serverless functions limit
-// import { Router } from 'express';
-// import { getTokenPriceController } from '../controllers/tokenController';
-// import { validateSession } from '../middleware/validateSession';
+import { Router } from 'express';
+import { getTokenPriceController } from '../controllers/tokenController';
+import { validateSession } from '../middleware/validateSession';
 
-// const router = Router();
+const router = Router();
 
-// router.get('/price/:address', validateSession, getTokenPriceController);
+router.get('/price/:address', validateSession, getTokenPriceController);
 
-// export default router;
+export default router;
