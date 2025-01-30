@@ -4,18 +4,21 @@ module.exports = {
   testEnvironment: 'node',
   moduleNameMapper: {
     '^@solana/web3.js/dist/types$': '@solana/web3.js',
-    '^@shared$': '<rootDir>/../shared/src/index.js',
+    '^shared$': '<rootDir>/../shared/dist/index.js',
   },
+  transformIgnorePatterns: ['/node_modules/(?!@oslojs)'],
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'json', 'node'],
+  testPathIgnorePatterns: ['/node_modules/', '/.vercel/'],
+  extensionsToTreatAsEsm: ['.ts'],
+  moduleDirectories: ['node_modules', '<rootDir>/../'],
+  roots: ['<rootDir>/api'],
+  testMatch: ['**/*.test.ts'],
   transform: {
     '^.+\\.tsx?$': [
       'ts-jest',
       {
-        useESM: true,
+        tsconfig: '<rootDir>/tsconfig.json',
       },
     ],
   },
-  transformIgnorePatterns: ['/node_modules/(?!@oslojs)'],
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'json', 'node'],
-  testPathIgnorePatterns: ['/node_modules/'],
-  extensionsToTreatAsEsm: ['.ts'],
 };

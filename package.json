@@ -19,7 +19,7 @@
     "build-front": "pnpm --prefix front build",
     "build-back": "pnpm --prefix back build",
     "build-shared": "pnpm --prefix shared build",
-    "clean": "turbo run clean",
+    "clean": "rimraf **/node_modules **/pnpm-lock.yaml node_modules pnpm-lock.yaml",
     "typecheck": "turbo run typecheck",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
@@ -52,6 +52,7 @@
     "husky": "^9.1.6",
     "nodemon": "^3.1.4",
     "ts-node": "^10.9.2",
-    "turbo": "^2.3.4"
+    "turbo": "^2.3.4",
+    "rimraf": "^5.0.5"
   }
 }

@@ -1,19 +1,19 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "CommonJS",
+    "moduleResolution": "node",
     "esModuleInterop": true,
     "strict": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "outDir": "dist",
+    "outDir": "./dist",
     "baseUrl": ".",
     "paths": {
-      "shared": ["../shared/src/index.ts"]
+      "shared": ["../shared/dist"]
     },
-    "typeRoots": ["api/types", "./node_modules/@types"]
+    "typeRoots": ["./api/types", "./node_modules/@types"]
   },
   "include": ["api/**/*", "src/types/**/*.d.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", ".vercel"]
 }

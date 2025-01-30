@@ -7,15 +7,14 @@
   "scripts": {
     "build": "tsc",
     "typecheck": "tsc --noEmit",
-    "clean": "rimraf dist *.js *.d.ts src/**/*.js src/**/*.d.ts"
+    "clean": "rimraf dist node_modules *.js *.d.ts src/**/*.js src/**/*.d.ts"
   },
   "dependencies": {
     "@solana/web3.js": "^2.0.0"
   },
   "devDependencies": {
     "typescript": "^5.6.3",
-    "@types/node": "^22.2.0",
-    "rimraf": "^5.0.5"
+    "@types/node": "^22.2.0"
   },
   "keywords": [],
   "author": "",
