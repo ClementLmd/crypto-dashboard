@@ -2,12 +2,11 @@
   "name": "back",
   "version": "1.0.0",
   "type": "commonjs",
-  "main": "dist/app.js",
   "scripts": {
     "start": "node dist/index.js",
     "build": "tsc",
-    "dev": "nodemon src/app.ts",
-    "nodemon": "nodemon ./src/index.ts",
+    "dev": "ts-node-dev --respawn --transpile-only api/index.ts",
+    "nodemon": "nodemon ./api/index.ts",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "test": "NODE_ENV=test jest --no-cache"
@@ -59,7 +58,8 @@
     "supertest": "^7.0.0",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
-    "typescript": "^5.6.3"
+    "typescript": "^5.6.3",
+    "ts-node-dev": "^2.0.0"
   },
   "peerDependencies": {}
 }
