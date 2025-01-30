@@ -1,7 +1,8 @@
 {
   "version": 2,
+  "buildCommand": "pnpm --filter shared build && pnpm --filter back build",
+  "outputDirectory": "back/dist",
   "installCommand": "pnpm install",
-  "buildCommand": "turbo run build",
   "builds": [
     {
       "src": "api/index.ts",
