@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "buildCommand": "cd ../shared && pnpm build && cd ../back && pnpm install && pnpm build",
   "builds": [
     {
       "src": "api/index.ts",
