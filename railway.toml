@@ -3,10 +3,13 @@ builder = "DOCKERFILE"
 dockerfilePath = ".railway/Dockerfile"
 
 [deploy]
-startCommand = "sh -c 'cd back && node dist/index.js'"
+startCommand = "sh -c 'cd back && PORT=8080 node dist/index.js'"
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 3
 numReplicas = 1
+
+[deploy.env]
+PORT = "8080"
 
 [nixpacks]
 node_version = "20" 
