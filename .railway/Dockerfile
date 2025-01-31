@@ -22,9 +22,5 @@ RUN pnpm build-shared
 # Build backend
 RUN pnpm --filter back build
 
-# Use environment variables
-ENV NODE_ENV=production
-ENV PORT=3000
-
-# Start the app with environment variables loaded
-CMD ["sh", "-c", "cd back && node dist/index.js"] 
+# Debug and run directly with node
+CMD ["sh", "-c", "printenv && node /app/back/dist/index.js"] 
