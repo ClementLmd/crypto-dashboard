@@ -1,4 +1,4 @@
-import { isValidSolanaAddress } from 'crypto-dashboard-shared';
+import { isValidSolanaAddress } from 'shared';
 
 describe('isValidSolanaAddress', () => {
   it('should return true for valid Solana addresses', () => {

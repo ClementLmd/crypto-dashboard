@@ -13,6 +13,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     environment: dev
+    env:
+      CONNECTION_STRING_TEST: ${{ secrets.CONNECTION_STRING_TEST }}
+      NODE_ENV: 'test'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -28,26 +31,16 @@ jobs:
         run: pnpm install -g pnpm
       - name: Install dependencies
         run: pnpm install
-      - name: Install shared dependencies
-        run: pnpm install --prefix shared
       - name: Build shared
-        run: pnpm run build --prefix shared
+        run: pnpm run build-shared
+      - name: Build front-end
+        run: pnpm run build-front
         env:
           NEXT_PUBLIC_API_URL: 'http://localhost:4000'
-      - name: Install front-end dependencies
-        run: pnpm install --prefix front
-      - name: Install back-end dependencies
-        run: pnpm install --prefix back
+      - name: Build back-end
+        run: pnpm run build-back
       - name: Run tests
         run: pnpm test
         env:
           CONNECTION_STRING_TEST: ${{ secrets.CONNECTION_STRING_TEST }}
           NEXT_PUBLIC_API_URL: 'http://localhost:4000' # For frontend tests
-      - name: Build front-end
-        run: pnpm run build --prefix front
-        env:
-          NEXT_PUBLIC_API_URL: 'http://localhost:4000'
-      - name: Build back-end
-        run: pnpm run build --prefix back
-        env:
-          NEXT_PUBLIC_API_URL: 'http://localhost:4000'

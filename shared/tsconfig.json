@@ -1,15 +1,21 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "commonjs",
+    "lib": ["esNext"],
+    "moduleResolution": "NodeNext",
+    "module": "NodeNext",
     "strict": true,
+    "strictNullChecks": true,
     "esModuleInterop": true,
+    "noImplicitOverride": true,
     "skipLibCheck": true,
-    "composite": true,
-    "outDir": "./dist",
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "dist",
     "declaration": true,
-    "baseUrl": "."
+    "declarationMap": true,
+    "sourceMap": true,
+    "typeRoots": ["./src/types", "./node_modules/@types"]
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "**/*.test.ts"]
+  "exclude": ["node_modules"]
 }

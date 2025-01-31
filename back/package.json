@@ -1,15 +1,16 @@
 {
   "name": "back",
   "version": "1.0.0",
-  "main": "index.js",
+  "type": "commonjs",
+  "main": "dist/index.js",
   "scripts": {
-    "start": "ts-node src/index.ts",
-    "build": "tsc",
-    "dev": "ts-node-dev src/index.ts",
-    "nodemon": "nodemon ./src/index.ts",
+    "start": "node dist/index.js",
+    "build": "tsc && cp package.json dist/",
+    "dev": "ts-node-dev --respawn --transpile-only api/index.ts",
+    "nodemon": "nodemon ./api/index.ts",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
-    "test": "NODE_ENV=test jest"
+    "test": "NODE_ENV=test jest --no-cache"
   },
   "keywords": [],
   "author": "",
@@ -25,11 +26,11 @@
     "dotenv": "^16.0.1",
     "express": "^4.19.2",
     "mongodb": "6.9",
+    "mongodb-memory-server": "^10.1.2",
     "mongoose": "^8.7.1",
     "morgan": "^1.10.0",
-    "crypto-dashboard-shared": "workspace:*",
-    "mongodb-memory-server": "^10.1.2",
     "nodemon": "^3.1.4",
+    "shared": "workspace:*",
     "supertest": "^7.0.0",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
@@ -42,6 +43,7 @@
     "@types/cookie-parser": "^1.4.8",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
+    "@types/express-serve-static-core": "^5.0.6",
     "@types/jest": "^29.5.13",
     "@types/morgan": "^1.9.9",
     "@types/node": "^22.2.0",
@@ -58,6 +60,7 @@
     "supertest": "^7.0.0",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.6.3"
   }
 }

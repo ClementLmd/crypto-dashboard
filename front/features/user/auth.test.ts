@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { userReducer } from './user.slice';
 import { checkSession } from './user.thunks';
-import { errors } from 'crypto-dashboard-shared';
+import { errors } from 'shared';
 import { api } from '../../app/config/api';
 
 describe('Auth features', () => {

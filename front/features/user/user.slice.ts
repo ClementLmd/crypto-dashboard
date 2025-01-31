@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { signUp, signIn, checkSession } from './user.thunks';
-import { ConnectedUser } from 'crypto-dashboard-shared';
+import { ConnectedUser } from 'shared';
 
 interface UserState {
   user: ConnectedUser | null;

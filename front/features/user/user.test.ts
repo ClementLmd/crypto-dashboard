@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { logout, userReducer } from './user.slice';
 import { signUp, signIn } from './user.thunks';
 import { selectIsAuthenticated, selectUser } from './user.selectors';
-import { SigningUpUser } from 'crypto-dashboard-shared';
+import { SigningUpUser } from 'shared';
 import { addressReducer } from '../addresses/addresses.slice';
 import { api } from '../../app/config/api';
 

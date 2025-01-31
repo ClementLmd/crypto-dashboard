@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "esnext"],
+    "target": "ES2022",
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -18,7 +19,7 @@
       }
     ],
     "paths": {
-      "crypto-dashboard-shared": ["../shared/src"],
+      "shared": ["../shared/dist"],
       "@/*": ["./src/*"]
     },
     "moduleResolution": "node"

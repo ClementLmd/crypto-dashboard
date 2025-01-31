@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { Address, AddressContent } from '../types/address';
+import type { Address, AddressContent } from '../types/address';
 
 export const addressContentSchema: z.Schema<AddressContent> = z.object({
   tokenSymbol: z.string(),
