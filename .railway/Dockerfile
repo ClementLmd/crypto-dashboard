@@ -23,4 +23,4 @@ RUN pnpm build-shared
 RUN pnpm --filter back build
 
 # Debug and run directly with node
-CMD ["sh", "-c", "printenv && node /app/back/dist/index.js"] 
+CMD ["sh", "-c", "printenv && NODE_ENV=production && node /app/back/dist/index.js"] 

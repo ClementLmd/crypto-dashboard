@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 let databaseEnvironment: 'test' | 'production' | 'development';
 console.log('process.env.NODE_ENV', process.env.NODE_ENV);
 console.log('process.env.CONNECTION_STRING', process.env.CONNECTION_STRING);
+console.log('process.env.RAILWAY_PRIVATE_DOMAIN', process.env.RAILWAY_PRIVATE_DOMAIN);
 
 const defineConnectionString = () => {
   const testSuffix = process.env.JEST_WORKER_ID ? `_${process.env.JEST_WORKER_ID}` : '';
