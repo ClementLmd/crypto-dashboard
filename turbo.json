@@ -5,6 +5,15 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
     },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "start": {
+      "cache": false,
+      "persistent": true,
+      "dependsOn": ["build"]
+    },
     "test": {
       "dependsOn": ["build"],
       "env": ["NODE_ENV", "CONNECTION_STRING_TEST", "NEXT_PUBLIC_API_URL"]
@@ -17,10 +26,6 @@
     },
     "clean": {
       "outputs": []
-    },
-    "dev": {
-      "cache": false,
-      "persistent": true
     }
   }
 }

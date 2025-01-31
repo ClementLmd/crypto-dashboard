@@ -19,11 +19,11 @@
       }
     ],
     "paths": {
-      "shared": ["../shared/dist"],
+      "shared": ["../shared/src/index.ts"],
       "@/*": ["./src/*"]
     },
     "moduleResolution": "node"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "../shared/dist/**/*"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "../shared/src/**/*"],
   "exclude": ["node_modules"]
 }

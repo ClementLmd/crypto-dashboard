@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 let databaseEnvironment: 'test' | 'production' | 'development';
+
 const defineConnectionString = () => {
   const testSuffix = process.env.JEST_WORKER_ID ? `_${process.env.JEST_WORKER_ID}` : '';
 

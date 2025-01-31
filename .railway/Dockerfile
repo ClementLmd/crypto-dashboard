@@ -20,7 +20,4 @@ COPY . .
 RUN pnpm build-shared
 
 # Build backend
-RUN pnpm --filter back build
-
-# Start the app
-CMD ["pnpm", "turbo", "run", "start", "--filter", "back"] 
+RUN pnpm --filter back build 
