@@ -20,13 +20,4 @@ COPY . .
 RUN pnpm build-shared
 
 # Build backend
-RUN pnpm --filter back build
-
-# Debug environment variables
-CMD ["sh", "-c", "echo 'Railway Variables:' && \
-     echo \"CONNECTION_STRING='$CONNECTION_STRING'\" && \
-     echo \"NODE_ENV='$NODE_ENV'\" && \
-     echo \"FRONTEND_URL='$FRONTEND_URL'\" && \
-     echo \"COOKIE_DOMAIN='$COOKIE_DOMAIN'\" && \
-     echo \"BIRDEYE_API_KEY='$BIRDEYE_API_KEY'\" && \
-     node /app/back/dist/index.js"] 
+RUN pnpm --filter back build 
