@@ -22,5 +22,9 @@ RUN pnpm build-shared
 # Build backend
 RUN pnpm --filter back build
 
-# Start the app
-CMD ["pnpm", "turbo", "run", "start", "--filter", "back"] 
+# Use environment variables
+ENV NODE_ENV=production
+ENV PORT=3000
+
+# Start the app with environment variables loaded
+CMD ["sh", "-c", "cd back && node dist/index.js"] 
