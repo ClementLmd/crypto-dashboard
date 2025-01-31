@@ -22,12 +22,11 @@ RUN pnpm build-shared
 # Build backend
 RUN pnpm --filter back build
 
-# Create env file from environment variables
-RUN echo "NODE_ENV=production" > /app/back/.env
-RUN echo "CONNECTION_STRING=$CONNECTION_STRING" >> /app/back/.env
-RUN echo "FRONTEND_URL=$FRONTEND_URL" >> /app/back/.env
-RUN echo "COOKIE_DOMAIN=$COOKIE_DOMAIN" >> /app/back/.env
-RUN echo "BIRDEYE_API_KEY=$BIRDEYE_API_KEY" >> /app/back/.env
-
-# Debug and run
-CMD ["sh", "-c", "cat /app/back/.env && printenv && node /app/back/dist/index.js"] 
+# Debug environment variables
+CMD ["sh", "-c", "echo 'Railway Variables:' && \
+     echo \"CONNECTION_STRING='$CONNECTION_STRING'\" && \
+     echo \"NODE_ENV='$NODE_ENV'\" && \
+     echo \"FRONTEND_URL='$FRONTEND_URL'\" && \
+     echo \"COOKIE_DOMAIN='$COOKIE_DOMAIN'\" && \
+     echo \"BIRDEYE_API_KEY='$BIRDEYE_API_KEY'\" && \
+     node /app/back/dist/index.js"] 
