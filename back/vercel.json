@@ -1,5 +1,17 @@
 {
   "version": 2,
+  "installCommand": "pnpm install && pnpm -w run build-shared",
+  "buildCommand": "tsc --noEmit false --skipLibCheck true && cp package.json dist/",
+  "outputDirectory": "dist",
+  "rootDirectory": "back",
+  "directoryListing": false,
+  "nodeVersion": "22.x",
+  "builds": [
+    {
+      "src": "api/index.ts",
+      "use": "@vercel/node"
+    }
+  ],
   "routes": [
     {
       "src": "/(.*)",
