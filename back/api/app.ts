@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import './models/connection';
-import express from 'express';
+import express, { Request, Response } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
@@ -26,6 +26,9 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
+app.get('/', (req: Request, res: Response) => {
+  res.send('Hello World');
+});
 app.use('/users', usersRoute);
 app.use('/addresses', addressesRoute);
 app.use('/auth', userSessionRoute);
