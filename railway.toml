@@ -3,7 +3,7 @@ builder = "DOCKERFILE"
 dockerfilePath = ".railway/Dockerfile"
 
 [deploy]
-startCommand = "pnpm start --filter back"
+startCommand = "cd back && node dist/index.js"
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 3
 numReplicas = 1
