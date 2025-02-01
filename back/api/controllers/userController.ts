@@ -10,7 +10,6 @@ import { generateSessionToken } from '../use-cases/session/generateSessionToken'
 export const signUpController = async (req: Request, res: Response): Promise<void> => {
   try {
     const { username, password } = req.body;
-    console.log('Signup attempt for:', username); // Debug log
 
     if (!checkBody(req.body, ['username', 'password'])) {
       res.status(400).json({ error: errors.users.incompleteData });
@@ -35,11 +34,9 @@ export const signUpController = async (req: Request, res: Response): Promise<voi
       password: hashedPassword,
     };
     const newUser = await signUp(userData);
-    console.log('User created:', username); // Debug log
 
     const sessionToken = generateSessionToken();
     await createSession(sessionToken, newUser._id);
-    console.log('Session created for:', username); // Debug log
 
     res.cookie('session', sessionToken, {
       httpOnly: true,
@@ -47,7 +44,6 @@ export const signUpController = async (req: Request, res: Response): Promise<voi
       sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
       maxAge: 60 * 60 * 24 * 30 * 1000, // 30 days
       path: '/',
-      domain: process.env.COOKIE_DOMAIN,
     });
 
     res.status(201).json({
@@ -56,8 +52,7 @@ export const signUpController = async (req: Request, res: Response): Promise<voi
       },
       authenticated: true,
     });
-  } catch (error) {
-    console.error('Signup error:', error); // Error log
+  } catch {
     res.status(500).json({ error: errors.internal });
   }
 };
