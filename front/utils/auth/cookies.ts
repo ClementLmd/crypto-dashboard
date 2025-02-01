@@ -8,6 +8,7 @@ export async function setSessionTokenCookie(token: string, expiresAt: Date): Pro
     secure: process.env.NODE_ENV === 'production',
     expires: expiresAt,
     path: '/',
+    domain: process.env.COOKIE_DOMAIN,
   });
 }
 
@@ -19,5 +20,6 @@ export async function deleteSessionTokenCookie(): Promise<void> {
     secure: process.env.NODE_ENV === 'production',
     maxAge: 0,
     path: '/',
+    domain: process.env.COOKIE_DOMAIN,
   });
 }

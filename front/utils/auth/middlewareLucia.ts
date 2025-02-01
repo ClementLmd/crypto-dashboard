@@ -14,6 +14,7 @@ export async function luciaMiddleware(request: NextRequest): Promise<NextRespons
         sameSite: 'lax',
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
+        domain: process.env.COOKIE_DOMAIN,
       });
     }
     return response;
