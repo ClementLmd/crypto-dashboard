@@ -50,3 +50,4 @@ next-env.d.ts
 
 # Turbo cache
 .turbo
+.turbo/

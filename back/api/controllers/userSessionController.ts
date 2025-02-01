@@ -32,7 +32,7 @@ export const createSessionController = async (req: Request, res: Response): Prom
       sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
       maxAge: 60 * 60 * 24 * 30 * 1000, // 30 days
       path: '/',
-      domain: process.env.NODE_ENV === 'production' ? process.env.COOKIE_DOMAIN : 'localhost',
+      domain: process.env.COOKIE_DOMAIN,
     });
 
     res.status(200).json({
