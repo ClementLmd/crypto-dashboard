@@ -1,20 +1,12 @@
 'use client';
 
 // Route: /dashboard
-import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { getUserAddresses } from '../../features/addresses/addresses.thunks';
-import { selectAddresses } from '../../features/addresses/addresses.selectors';
+import { FetchAddresses } from '../../hooks/fetchAddresses';
 import TokenBalancesTable from '../../components/ui/token-balances-table';
 import styles from './dashboard.module.css';
 
 export default function Dashboard() {
-  const dispatch = useAppDispatch();
-  const addresses = useAppSelector(selectAddresses);
-
-  useEffect(() => {
-    dispatch(getUserAddresses());
-  }, [dispatch]);
+  const addresses = FetchAddresses();
 
   return (
     <div className={styles.main}>

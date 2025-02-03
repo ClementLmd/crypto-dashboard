@@ -5,19 +5,13 @@ import { Address } from 'shared';
 import { AddAddress } from '../../components/form/addAddress';
 import AddressesTable from '../../components/ui/addresses-table';
 import styles from './addresses.module.css';
-import { selectAddresses } from '../../features/addresses/addresses.selectors';
-import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../hooks/hooks';
 import { deleteAddress, getUserAddresses } from '../../features/addresses/addresses.thunks';
-import { useEffect } from 'react';
+import { FetchAddresses } from '../../hooks/fetchAddresses';
 
 export default function AddressesPage() {
   const dispatch = useAppDispatch();
-  const addresses: Address[] = useSelector(selectAddresses);
-
-  useEffect(() => {
-    dispatch(getUserAddresses());
-  }, [dispatch]);
+  const addresses = FetchAddresses();
 
   const columns = [
     { key: 'blockchain', label: 'Blockchain', sortable: true },
@@ -32,8 +26,10 @@ export default function AddressesPage() {
     addressName: address.addressName,
   }));
 
-  const handleDelete = (row: Address) => {
-    dispatch(deleteAddress(row));
+  const handleDelete = async (row: Address) => {
+    await dispatch(deleteAddress(row));
+    // Force refresh after deletion
+    dispatch(getUserAddresses());
   };
 
   return (
