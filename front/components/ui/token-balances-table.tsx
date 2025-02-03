@@ -113,12 +113,12 @@ export default function TokenBalancesTable({
       </div>
 
       {/* Table */}
-      <div className="rounded-lg border shadow-md">
+      <div className="rounded-lg border border-dune-copper shadow-md">
         <Table>
           <TableHeader>
-            <TableRow className="bg-gray-100">
+            <TableRow className="bg-dune-deepBlue">
               {columns.map((column) => (
-                <TableHead key={column.key} className="font-semibold text-gray-700">
+                <TableHead key={column.key} className="font-semibold text-dune-offWhite">
                   <div className="flex items-center space-x-1">
                     {column.label}
                     {column.sortable && (
@@ -129,12 +129,12 @@ export default function TokenBalancesTable({
                       >
                         {sortConfig?.key === column.key ? (
                           sortConfig.direction === 'asc' ? (
-                            <ChevronUp className="h-4 w-4 text-blue-500" />
+                            <ChevronUp className="h-4 w-4 text-dune-copper" />
                           ) : (
-                            <ChevronDown className="h-4 w-4 text-blue-500" />
+                            <ChevronDown className="h-4 w-4 text-dune-copper" />
                           )
                         ) : (
-                          <ChevronDown className="h-4 w-4 text-gray-400" />
+                          <ChevronDown className="h-4 w-4 text-dune-dustyGray" />
                         )}
                       </Button>
                     )}
@@ -147,12 +147,12 @@ export default function TokenBalancesTable({
             {paginatedData.map((token, index) => (
               <TableRow
                 key={`${token.walletAddress}-${token.tokenSymbol}-${index}`}
-                className="hover:bg-gray-100 transition-colors odd:bg-white even:bg-gray-50"
+                className="hover:bg-dune-copper/70 transition-colors odd:bg-dune-copper/30 even:bg-dune-sand"
               >
-                <TableCell className="py-3 px-4 text-sm text-gray-800">
+                <TableCell className="py-3 px-4 text-sm text-dune-charcoal">
                   <TooltipProvider>
                     <Tooltip>
-                      <TooltipTrigger className="hover:text-dune-sand transition-colors">
+                      <TooltipTrigger className="hover:text-dune-copper transition-colors">
                         {`${token.walletAddress.slice(0, 3)}...${token.walletAddress.slice(-3)}`}
                       </TooltipTrigger>
                       <TooltipContent>
@@ -161,16 +161,16 @@ export default function TokenBalancesTable({
                     </Tooltip>
                   </TooltipProvider>
                 </TableCell>
-                <TableCell className="py-3 px-4 text-sm text-gray-800">
+                <TableCell className="py-3 px-4 text-sm text-dune-charcoal">
                   {token.tokenSymbol}
                 </TableCell>
-                <TableCell className="py-3 px-4 text-sm text-gray-800">
+                <TableCell className="py-3 px-4 text-sm text-dune-charcoal">
                   {token.amount.toFixed(2)}
                 </TableCell>
-                <TableCell className="py-3 px-4 text-sm text-gray-800">
+                <TableCell className="py-3 px-4 text-sm text-dune-charcoal">
                   ${token.usdValue.toFixed(2)}
                 </TableCell>
-                <TableCell className="py-3 px-4 text-sm text-gray-800">
+                <TableCell className="py-3 px-4 text-sm text-dune-charcoal">
                   ${token.totalUsdValue.toFixed(2)}
                 </TableCell>
               </TableRow>
@@ -186,7 +186,7 @@ export default function TokenBalancesTable({
           size="sm"
           onClick={() => setCurrentPage((old) => Math.max(old - 1, 1))}
           disabled={currentPage === 1}
-          className="transition-colors hover:bg-gray-200"
+          className="transition-colors hover:bg-dune-offWhite border-dune-copper text-dune-deepBlue"
         >
           &lt;
         </Button>
@@ -199,7 +199,7 @@ export default function TokenBalancesTable({
           size="sm"
           onClick={() => setCurrentPage((old) => Math.min(old + 1, totalPages))}
           disabled={currentPage === totalPages}
-          className="transition-colors hover:bg-gray-200"
+          className="transition-colors hover:bg-dune-offWhite border-dune-copper text-dune-deepBlue"
         >
           &gt;
         </Button>
