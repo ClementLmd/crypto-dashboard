@@ -62,7 +62,13 @@ export default function HeaderLayout() {
         </Link>
       </div>
       <div id="headerLinks">{isBrowser && (isDesktop ? <DesktopNavBar /> : <MobileNavBar />)} </div>
-      {isAuthenticated ? <Button onClick={handleLogout}>Disconnect</Button> : <div></div>}
+      {isAuthenticated ? (
+        <div className={styles.logoutButton}>
+          <Button onClick={handleLogout}>Disconnect</Button>
+        </div>
+      ) : (
+        <div></div>
+      )}
     </div>
   );
 }
