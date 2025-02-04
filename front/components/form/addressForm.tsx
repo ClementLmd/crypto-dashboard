@@ -15,7 +15,11 @@ import {
 } from '../../components/ui/form';
 import { Input } from '../../components/ui/input';
 import { useAppDispatch } from '../../hooks/hooks';
-import { addAddress, addSolanaAddress } from '../../features/addresses/addresses.thunks';
+import {
+  addAddress,
+  addSolanaAddress,
+  getUserAddresses,
+} from '../../features/addresses/addresses.thunks';
 import { useState } from 'react';
 import { addressFormSchema, Blockchain, errors, Address, isValidSolanaAddress } from 'shared';
 
@@ -46,14 +50,15 @@ export function AddressForm({ blockchain }: { blockchain: Blockchain }) {
           setFeedbackMessage(errors.addresses.invalidSolanaAddress);
           return;
         }
-        await dispatch(addSolanaAddress(values));
+        await dispatch(addSolanaAddress(values)).unwrap();
       } else {
-        await dispatch(addAddress(values));
+        await dispatch(addAddress(values)).unwrap();
       }
       setFeedbackMessage('Address added');
+      dispatch(getUserAddresses());
       form.reset(formDefaultAddressValues);
-    } catch {
-      setFeedbackMessage('Address not added');
+    } catch (error) {
+      setFeedbackMessage(error instanceof Error ? error.message : 'An error occurred');
     }
   }
 

@@ -3,13 +3,13 @@ import { signUp, signIn, checkSession } from './user.thunks';
 import { ConnectedUser } from 'shared';
 
 interface UserState {
-  user: ConnectedUser | null;
+  userData: ConnectedUser | null;
   isLoading: boolean;
   isAuthenticated: boolean;
 }
 
 const initialState: UserState = {
-  user: null,
+  userData: null,
   isLoading: false,
   isAuthenticated: false,
 };
@@ -19,7 +19,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      state.user = null;
+      state.userData = null;
       state.isAuthenticated = false;
     },
   },
@@ -30,7 +30,7 @@ export const userSlice = createSlice({
       })
       .addCase(signUp.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.user = action.payload.user;
+        state.userData = action.payload.user;
         state.isAuthenticated = action.payload.authenticated;
       })
       .addCase(signIn.pending, (state) => {
@@ -38,7 +38,7 @@ export const userSlice = createSlice({
       })
       .addCase(signIn.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.user = action.payload.user;
+        state.userData = action.payload.user;
         state.isAuthenticated = action.payload.authenticated;
       })
       .addCase(checkSession.pending, (state) => {
@@ -48,12 +48,12 @@ export const userSlice = createSlice({
         state.isLoading = false;
         state.isAuthenticated = action.payload.authenticated;
         if (action.payload.user) {
-          state.user = action.payload.user;
+          state.userData = action.payload.user;
         }
       })
       .addCase(checkSession.rejected, (state) => {
         state.isLoading = false;
-        state.user = null;
+        state.userData = null;
         state.isAuthenticated = false;
       });
   },

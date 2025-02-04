@@ -5,11 +5,13 @@ import { addAddress, addSolanaAddress, deleteAddress, getUserAddresses } from '.
 interface AddressState {
   addresses: Address[];
   isLoading: boolean;
+  lastFetched: number | null;
 }
 
 const initialState: AddressState = {
   addresses: [],
   isLoading: false,
+  lastFetched: null,
 };
 
 export const addressSlice = createSlice({
@@ -49,6 +51,7 @@ export const addressSlice = createSlice({
       .addCase(getUserAddresses.fulfilled, (state, action) => {
         state.isLoading = false;
         state.addresses = action.payload;
+        state.lastFetched = Date.now();
       });
   },
 });

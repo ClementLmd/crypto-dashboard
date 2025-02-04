@@ -111,14 +111,13 @@ export default function TokenBalancesTable({
           className="max-w-sm"
         />
       </div>
-
       {/* Table */}
-      <div className="rounded-lg border shadow-md">
+      <div className="rounded-lg border border-dune-copper shadow-md">
         <Table>
           <TableHeader>
-            <TableRow className="bg-gray-100">
+            <TableRow className="bg-dune-deepBlue hover:bg-dune-deepBlue">
               {columns.map((column) => (
-                <TableHead key={column.key} className="font-semibold text-gray-700">
+                <TableHead key={column.key} className="font-semibold text-dune-offWhite">
                   <div className="flex items-center space-x-1">
                     {column.label}
                     {column.sortable && (
@@ -129,12 +128,12 @@ export default function TokenBalancesTable({
                       >
                         {sortConfig?.key === column.key ? (
                           sortConfig.direction === 'asc' ? (
-                            <ChevronUp className="h-4 w-4 text-blue-500" />
+                            <ChevronUp className="h-4 w-4 text-dune-copper" />
                           ) : (
-                            <ChevronDown className="h-4 w-4 text-blue-500" />
+                            <ChevronDown className="h-4 w-4 text-dune-copper" />
                           )
                         ) : (
-                          <ChevronDown className="h-4 w-4 text-gray-400" />
+                          <ChevronDown className="h-4 w-4 text-dune-dustyGray" />
                         )}
                       </Button>
                     )}
@@ -144,66 +143,76 @@ export default function TokenBalancesTable({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {paginatedData.map((token, index) => (
-              <TableRow
-                key={`${token.walletAddress}-${token.tokenSymbol}-${index}`}
-                className="hover:bg-gray-100 transition-colors odd:bg-white even:bg-gray-50"
-              >
-                <TableCell className="py-3 px-4 text-sm text-gray-800">
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger className="hover:text-dune-sand transition-colors">
-                        {`${token.walletAddress.slice(0, 3)}...${token.walletAddress.slice(-3)}`}
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>{token.walletAddress}</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                </TableCell>
-                <TableCell className="py-3 px-4 text-sm text-gray-800">
-                  {token.tokenSymbol}
-                </TableCell>
-                <TableCell className="py-3 px-4 text-sm text-gray-800">
-                  {token.amount.toFixed(2)}
-                </TableCell>
-                <TableCell className="py-3 px-4 text-sm text-gray-800">
-                  ${token.usdValue.toFixed(2)}
-                </TableCell>
-                <TableCell className="py-3 px-4 text-sm text-gray-800">
-                  ${token.totalUsdValue.toFixed(2)}
+            {paginatedData.length > 0 ? (
+              paginatedData.map((token, index) => (
+                <TableRow
+                  key={`${token.walletAddress}-${token.tokenSymbol}-${index}`}
+                  className="hover:bg-dune-copper/70 transition-colors odd:bg-dune-copper/30 even:bg-dune-sand"
+                >
+                  <TableCell className="py-3 px-4 text-sm text-dune-charcoal">
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger className="hover:text-dune-copper transition-colors">
+                          {`${token.walletAddress.slice(0, 3)}...${token.walletAddress.slice(-3)}`}
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>{token.walletAddress}</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </TableCell>
+                  <TableCell className="py-3 px-4 text-sm text-dune-charcoal">
+                    {token.tokenSymbol}
+                  </TableCell>
+                  <TableCell className="py-3 px-4 text-sm text-dune-charcoal">
+                    {token.amount.toFixed(2)}
+                  </TableCell>
+                  <TableCell className="py-3 px-4 text-sm text-dune-charcoal">
+                    ${token.usdValue.toFixed(2)}
+                  </TableCell>
+                  <TableCell className="py-3 px-4 text-sm text-dune-charcoal">
+                    ${token.totalUsdValue.toFixed(2)}
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={columns.length} className="h-18 text-center text-dune-deepBlue">
+                  No valid tokens in your addresses
                 </TableCell>
               </TableRow>
-            ))}
+            )}
           </TableBody>
         </Table>
       </div>
-
       {/* Pagination */}
-      <div className="flex flex-row space-x-3 items-center justify-between py-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => setCurrentPage((old) => Math.max(old - 1, 1))}
-          disabled={currentPage === 1}
-          className="transition-colors hover:bg-gray-200"
-        >
-          &lt;
-        </Button>
-        <p className="text-sm text-gray-500">
-          Items {(currentPage - 1) * itemsPerPage + 1} -{' '}
-          {Math.min(currentPage * itemsPerPage, filteredData.length)} (out of {filteredData.length})
-        </p>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => setCurrentPage((old) => Math.min(old + 1, totalPages))}
-          disabled={currentPage === totalPages}
-          className="transition-colors hover:bg-gray-200"
-        >
-          &gt;
-        </Button>
-      </div>
+      {paginatedData.length > 0 && (
+        <div className="flex flex-row space-x-3 items-center justify-between py-4">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setCurrentPage((old) => Math.max(old - 1, 1))}
+            disabled={currentPage === 1}
+            className="transition-colors hover:bg-dune-offWhite border-dune-copper text-dune-deepBlue"
+          >
+            &lt;
+          </Button>
+          <p className="text-sm text-gray-500">
+            Items {(currentPage - 1) * itemsPerPage + 1} -{' '}
+            {Math.min(currentPage * itemsPerPage, filteredData.length)} (out of{' '}
+            {filteredData.length})
+          </p>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setCurrentPage((old) => Math.min(old + 1, totalPages))}
+            disabled={currentPage === totalPages}
+            className="transition-colors hover:bg-dune-offWhite border-dune-copper text-dune-deepBlue"
+          >
+            &gt;
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

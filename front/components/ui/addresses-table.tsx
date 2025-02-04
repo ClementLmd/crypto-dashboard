@@ -97,35 +97,35 @@ export default function AddressesTable({
       </div>
 
       {/* Table */}
-      <div className="rounded-lg border shadow-md">
+      <div className="rounded-lg border border-dune-copper shadow-md">
         <Table>
           <TableHeader>
-            <TableRow className="bg-gray-100">
+            <TableRow className="bg-dune-deepBlue hover:bg-dune-deepBlue">
               {columns.map((column) => (
-                <TableHead key={column.key} className="font-semibold text-gray-700">
+                <TableHead key={column.key} className="font-semibold text-dune-offWhite">
                   <div className="flex items-center space-x-1">
                     {column.label}
                     {column.sortable && (
                       <Button
                         variant="ghost"
                         onClick={() => requestSort(column.key)}
-                        className="ml-1 h-6 w-6 p-0 transition-transform transform"
+                        className="ml-1 h-6 w-6 p-0 transition-transform transform hover:text-dune-copper"
                       >
                         {sortConfig?.key === column.key ? (
                           sortConfig.direction === 'asc' ? (
-                            <ChevronUp className="h-4 w-4 text-blue-500" />
+                            <ChevronUp className="h-4 w-4 text-dune-copper" />
                           ) : (
-                            <ChevronDown className="h-4 w-4 text-blue-500" />
+                            <ChevronDown className="h-4 w-4 text-dune-copper" />
                           )
                         ) : (
-                          <ChevronDown className="h-4 w-4 text-gray-400" />
+                          <ChevronDown className="h-4 w-4 text-dune-dustyGray" />
                         )}
                       </Button>
                     )}
                   </div>
                 </TableHead>
               ))}
-              <TableHead className="font-semibold text-gray-700">Actions</TableHead>
+              <TableHead className="font-semibold text-dune-offWhite">Actions</TableHead>
             </TableRow>
           </TableHeader>
 
@@ -134,14 +134,14 @@ export default function AddressesTable({
             {paginatedData.map((row, rowIndex) => (
               <TableRow
                 key={rowIndex}
-                className="hover:bg-gray-100 transition-colors odd:bg-white even:bg-gray-50"
+                className="hover:bg-dune-copper/70 transition-colors odd:bg-dune-copper/30 even:bg-dune-sand"
               >
                 {columns.map((column) => (
-                  <TableCell key={column.key} className="py-3 px-4 text-sm text-gray-800">
+                  <TableCell key={column.key} className="py-3 px-4 text-sm text-dune-charcoal">
                     {row[column.key]}
                   </TableCell>
                 ))}
-                <TableCell className="py-3 px-4 text-right">
+                <TableCell className="py-3 px-4">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="ghost" className="h-8 w-8 p-0 text-gray-500">
@@ -176,7 +176,7 @@ export default function AddressesTable({
           size="sm"
           onClick={() => setCurrentPage((old) => Math.max(old - 1, 1))}
           disabled={currentPage === 1}
-          className="transition-colors hover:bg-gray-200"
+          className="transition-colors hover:bg-dune-offWhite border-dune-copper text-dune-deepBlue"
         >
           &lt;
         </Button>
@@ -189,7 +189,7 @@ export default function AddressesTable({
           size="sm"
           onClick={() => setCurrentPage((old) => Math.min(old + 1, totalPages))}
           disabled={currentPage === totalPages}
-          className="transition-colors hover:bg-gray-200"
+          className="transition-colors hover:bg-dune-offWhite border-dune-copper text-dune-deepBlue"
         >
           &gt;
         </Button>
