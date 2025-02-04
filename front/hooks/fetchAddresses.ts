@@ -5,18 +5,20 @@ import { selectAddresses, selectLastFetched } from '../features/addresses/addres
 
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes in milliseconds
 
-export const FetchAddresses = (forceRefresh = false) => {
+export const FetchAddresses = () => {
   const dispatch = useAppDispatch();
   const addresses = useAppSelector(selectAddresses);
+  console.log('addresses', addresses);
   const lastFetched = useAppSelector(selectLastFetched);
+  console.log('lastFetched', lastFetched);
 
   useEffect(() => {
-    const shouldFetch = forceRefresh || !lastFetched || Date.now() - lastFetched > CACHE_DURATION;
+    const shouldFetch = !lastFetched || Date.now() - lastFetched > CACHE_DURATION;
 
     if (shouldFetch) {
       dispatch(getUserAddresses());
     }
-  }, [dispatch, lastFetched, forceRefresh]);
+  }, [dispatch, lastFetched]);
 
   return addresses;
 };

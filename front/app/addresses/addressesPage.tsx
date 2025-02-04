@@ -8,10 +8,13 @@ import styles from './addresses.module.css';
 import { useAppDispatch } from '../../hooks/hooks';
 import { deleteAddress, getUserAddresses } from '../../features/addresses/addresses.thunks';
 import { FetchAddresses } from '../../hooks/fetchAddresses';
+import { Button } from '../../components/ui/button';
+import { useState } from 'react';
 
 export default function AddressesPage() {
   const dispatch = useAppDispatch();
   const addresses = FetchAddresses();
+  const [showAddAddress, setShowAddAddress] = useState(false);
 
   const columns = [
     { key: 'blockchain', label: 'Blockchain', sortable: true },
@@ -34,12 +37,21 @@ export default function AddressesPage() {
 
   return (
     <div className={styles.main}>
-      <div className={styles.addAddress}>
-        <AddAddress blockchain="Bitcoin" />
-        <AddAddress blockchain="Ethereum" />
-        <AddAddress blockchain="Solana" />
+      <Button onClick={() => setShowAddAddress(!showAddAddress)} className="mb-4">
+        {showAddAddress ? 'Hide Address Forms' : 'Add Addresses'}
+      </Button>
+
+      {showAddAddress && (
+        <div className={styles.addAddress}>
+          <AddAddress blockchain="Bitcoin" />
+          <AddAddress blockchain="Ethereum" />
+          <AddAddress blockchain="Solana" />
+        </div>
+      )}
+      <h1 className={styles.title}>Your addresses</h1>
+      <div className={styles.addressesTable}>
+        <AddressesTable columns={columns} data={data} itemsPerPage={10} onDelete={handleDelete} />
       </div>
-      <AddressesTable columns={columns} data={data} itemsPerPage={10} onDelete={handleDelete} />
     </div>
   );
 }
