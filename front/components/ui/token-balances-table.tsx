@@ -111,12 +111,11 @@ export default function TokenBalancesTable({
           className="max-w-sm"
         />
       </div>
-
       {/* Table */}
       <div className="rounded-lg border border-dune-copper shadow-md">
         <Table>
           <TableHeader>
-            <TableRow className="bg-dune-deepBlue">
+            <TableRow className="bg-dune-deepBlue hover:bg-dune-deepBlue">
               {columns.map((column) => (
                 <TableHead key={column.key} className="font-semibold text-dune-offWhite">
                   <div className="flex items-center space-x-1">
@@ -144,66 +143,76 @@ export default function TokenBalancesTable({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {paginatedData.map((token, index) => (
-              <TableRow
-                key={`${token.walletAddress}-${token.tokenSymbol}-${index}`}
-                className="hover:bg-dune-copper/70 transition-colors odd:bg-dune-copper/30 even:bg-dune-sand"
-              >
-                <TableCell className="py-3 px-4 text-sm text-dune-charcoal">
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger className="hover:text-dune-copper transition-colors">
-                        {`${token.walletAddress.slice(0, 3)}...${token.walletAddress.slice(-3)}`}
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>{token.walletAddress}</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                </TableCell>
-                <TableCell className="py-3 px-4 text-sm text-dune-charcoal">
-                  {token.tokenSymbol}
-                </TableCell>
-                <TableCell className="py-3 px-4 text-sm text-dune-charcoal">
-                  {token.amount.toFixed(2)}
-                </TableCell>
-                <TableCell className="py-3 px-4 text-sm text-dune-charcoal">
-                  ${token.usdValue.toFixed(2)}
-                </TableCell>
-                <TableCell className="py-3 px-4 text-sm text-dune-charcoal">
-                  ${token.totalUsdValue.toFixed(2)}
+            {paginatedData.length > 0 ? (
+              paginatedData.map((token, index) => (
+                <TableRow
+                  key={`${token.walletAddress}-${token.tokenSymbol}-${index}`}
+                  className="hover:bg-dune-copper/70 transition-colors odd:bg-dune-copper/30 even:bg-dune-sand"
+                >
+                  <TableCell className="py-3 px-4 text-sm text-dune-charcoal">
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger className="hover:text-dune-copper transition-colors">
+                          {`${token.walletAddress.slice(0, 3)}...${token.walletAddress.slice(-3)}`}
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>{token.walletAddress}</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </TableCell>
+                  <TableCell className="py-3 px-4 text-sm text-dune-charcoal">
+                    {token.tokenSymbol}
+                  </TableCell>
+                  <TableCell className="py-3 px-4 text-sm text-dune-charcoal">
+                    {token.amount.toFixed(2)}
+                  </TableCell>
+                  <TableCell className="py-3 px-4 text-sm text-dune-charcoal">
+                    ${token.usdValue.toFixed(2)}
+                  </TableCell>
+                  <TableCell className="py-3 px-4 text-sm text-dune-charcoal">
+                    ${token.totalUsdValue.toFixed(2)}
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={columns.length} className="h-18 text-center text-dune-deepBlue">
+                  No valid tokens in your addresses
                 </TableCell>
               </TableRow>
-            ))}
+            )}
           </TableBody>
         </Table>
       </div>
-
       {/* Pagination */}
-      <div className="flex flex-row space-x-3 items-center justify-between py-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => setCurrentPage((old) => Math.max(old - 1, 1))}
-          disabled={currentPage === 1}
-          className="transition-colors hover:bg-dune-offWhite border-dune-copper text-dune-deepBlue"
-        >
-          &lt;
-        </Button>
-        <p className="text-sm text-gray-500">
-          Items {(currentPage - 1) * itemsPerPage + 1} -{' '}
-          {Math.min(currentPage * itemsPerPage, filteredData.length)} (out of {filteredData.length})
-        </p>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => setCurrentPage((old) => Math.min(old + 1, totalPages))}
-          disabled={currentPage === totalPages}
-          className="transition-colors hover:bg-dune-offWhite border-dune-copper text-dune-deepBlue"
-        >
-          &gt;
-        </Button>
-      </div>
+      {paginatedData.length > 0 && (
+        <div className="flex flex-row space-x-3 items-center justify-between py-4">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setCurrentPage((old) => Math.max(old - 1, 1))}
+            disabled={currentPage === 1}
+            className="transition-colors hover:bg-dune-offWhite border-dune-copper text-dune-deepBlue"
+          >
+            &lt;
+          </Button>
+          <p className="text-sm text-gray-500">
+            Items {(currentPage - 1) * itemsPerPage + 1} -{' '}
+            {Math.min(currentPage * itemsPerPage, filteredData.length)} (out of{' '}
+            {filteredData.length})
+          </p>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setCurrentPage((old) => Math.min(old + 1, totalPages))}
+            disabled={currentPage === totalPages}
+            className="transition-colors hover:bg-dune-offWhite border-dune-copper text-dune-deepBlue"
+          >
+            &gt;
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

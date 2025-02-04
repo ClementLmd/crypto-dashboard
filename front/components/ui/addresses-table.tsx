@@ -100,7 +100,7 @@ export default function AddressesTable({
       <div className="rounded-lg border border-dune-copper shadow-md">
         <Table>
           <TableHeader>
-            <TableRow className="bg-dune-deepBlue   hover:bg-dune-copper/90">
+            <TableRow className="bg-dune-deepBlue hover:bg-dune-deepBlue">
               {columns.map((column) => (
                 <TableHead key={column.key} className="font-semibold text-dune-offWhite">
                   <div className="flex items-center space-x-1">
