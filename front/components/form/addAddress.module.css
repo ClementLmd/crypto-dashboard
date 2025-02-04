@@ -1,7 +1,9 @@
 .container {
+  @apply bg-dune-copper/20 rounded-lg;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: 1rem;
+  padding: 1rem;
 }

@@ -4,6 +4,11 @@
   align-items: center;
 }
 
+.addAddressButton {
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
 .main {
   display: flex;
   flex-direction: column;

@@ -92,14 +92,20 @@ export function AddressForm({ blockchain }: { blockchain: Blockchain }) {
             <FormItem>
               <FormLabel>Address name (optional)</FormLabel>
               <FormControl>
-                <Input placeholder="Main address" {...field} value={field.value || ''} />
+                <Input
+                  placeholder={`Main ${blockchain} address`}
+                  {...field}
+                  value={field.value || ''}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
         {feedbackMessage && <div className="text-sm text-dune-copper">{feedbackMessage}</div>}
-        <Button type="submit">Submit</Button>
+        <div className="flex justify-center">
+          <Button type="submit">Submit</Button>
+        </div>
       </form>
     </Form>
   );
