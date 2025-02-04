@@ -10,7 +10,7 @@ export default function Dashboard() {
 
   return (
     <div className={styles.main}>
-      <h1 className="text-2xl font-bold mb-6">Token Balances</h1>
+      <h1 className={styles.title}>Token Balances</h1>
       <TokenBalancesTable addresses={addresses} />
     </div>
   );

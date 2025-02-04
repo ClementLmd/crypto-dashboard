@@ -4,3 +4,12 @@
   justify-content: flex-start;
   align-items: center;
 }
+
+.title {
+  @apply text-dune-deepBlue;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-family: var(--font-poppins);
+}
