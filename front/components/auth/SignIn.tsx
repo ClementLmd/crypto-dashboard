@@ -8,6 +8,7 @@ import { useAppDispatch } from '../../hooks/hooks';
 import { errors } from 'shared';
 import { routes } from '../../app/config/routes';
 import { useRouter } from 'next/navigation';
+
 export function SignIn() {
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -35,6 +36,7 @@ export function SignIn() {
 
   return (
     <div className={styles.auth}>
+      <h1 className={styles.title}>Sign in</h1>
       <div className={styles.inputContainer}>
         <Input
           type="text"
@@ -62,7 +64,9 @@ export function SignIn() {
         />
       </div>
       {feedbackMessage && <div className={styles.feedback}>{feedbackMessage}</div>}
-      <Button onClick={handleSignIn}>Sign in</Button>
+      <Button onClick={handleSignIn} className={styles.button}>
+        Sign in
+      </Button>
     </div>
   );
 }

@@ -25,7 +25,7 @@ describe('Auth features', () => {
     await store.dispatch(checkSession());
 
     const state = store.getState();
-    expect(state.user.user).toEqual(mockUser);
+    expect(state.user.userData).toEqual(mockUser);
     expect(state.user.isAuthenticated).toBe(true);
     expect(mockFetch).toHaveBeenCalledTimes(1);
     expect(mockFetch).toHaveBeenCalledWith(
@@ -51,7 +51,7 @@ describe('Auth features', () => {
     });
 
     const state = store.getState();
-    expect(state.user.user).toEqual(null);
+    expect(state.user.userData).toEqual(null);
     expect(state.user.isAuthenticated).toBe(false);
     mockFetch.mockRestore();
   });

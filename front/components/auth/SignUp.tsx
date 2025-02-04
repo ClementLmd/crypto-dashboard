@@ -36,6 +36,7 @@ export function SignUp() {
 
   return (
     <div className={styles.auth}>
+      <h1 className={styles.title}>Sign up</h1>
       <div className={styles.inputContainer}>
         <Input
           type="text"
@@ -63,7 +64,9 @@ export function SignUp() {
         />
       </div>
       {feedbackMessage && <div className={styles.feedback}>{feedbackMessage}</div>}
-      <Button onClick={handleSignUp}>Sign up</Button>
+      <Button onClick={handleSignUp} className={styles.button}>
+        Sign up
+      </Button>
     </div>
   );
 }
