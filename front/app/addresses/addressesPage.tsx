@@ -37,7 +37,11 @@ export default function AddressesPage() {
 
   return (
     <div className={styles.main}>
-      <Button onClick={() => setShowAddAddress(!showAddAddress)} className="mb-4">
+      <h1 className={styles.title}>Your addresses</h1>
+      <Button
+        onClick={() => setShowAddAddress(!showAddAddress)}
+        className={styles.addAddressButton}
+      >
         {showAddAddress ? 'Hide Address Forms' : 'Add Addresses'}
       </Button>
 
@@ -48,7 +52,6 @@ export default function AddressesPage() {
           <AddAddress blockchain="Solana" />
         </div>
       )}
-      <h1 className={styles.title}>Your addresses</h1>
       <div className={styles.addressesTable}>
         <AddressesTable columns={columns} data={data} itemsPerPage={10} onDelete={handleDelete} />
       </div>

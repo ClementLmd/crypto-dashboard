@@ -118,14 +118,15 @@ export default function TokenBalancesTable({
             <TableRow className="bg-dune-deepBlue hover:bg-dune-deepBlue">
               {columns.map((column) => (
                 <TableHead key={column.key} className="font-semibold text-dune-offWhite">
-                  <div className="flex items-center space-x-1">
-                    {column.label}
+                  <div
+                    className="flex items-center space-x-1 cursor-pointer transition-transform transform hover:text-dune-copper"
+                    onClick={() => requestSort(column.key)}
+                  >
+                    <span className={sortConfig?.key === column.key ? 'text-dune-copper' : ''}>
+                      {column.label}
+                    </span>
                     {column.sortable && (
-                      <Button
-                        variant="ghost"
-                        onClick={() => requestSort(column.key)}
-                        className="ml-1 h-6 w-6 p-0"
-                      >
+                      <Button variant="ghost" className="ml-1 h-6 w-6 p-0">
                         {sortConfig?.key === column.key ? (
                           sortConfig.direction === 'asc' ? (
                             <ChevronUp className="h-4 w-4 text-dune-copper" />
