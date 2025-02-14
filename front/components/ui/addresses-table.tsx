@@ -14,6 +14,7 @@ import { Button } from './button';
 import { Input } from './input';
 import { ChevronDown, ChevronUp, MoreHorizontal, Search } from 'lucide-react';
 import { Address } from 'shared';
+import styles from './table.module.css';
 
 interface Column {
   key: string;
@@ -97,86 +98,93 @@ export default function AddressesTable({
       </div>
 
       {/* Table */}
-      <div className="rounded-lg border border-dune-copper shadow-md">
-        <Table>
-          <TableHeader>
-            <TableRow className="bg-dune-deepBlue hover:bg-dune-deepBlue">
-              {columns.map((column) => (
-                <TableHead key={column.key} className="font-semibold text-dune-offWhite">
-                  <div
-                    className="flex items-center space-x-1 cursor-pointer transition-transform transform hover:text-dune-copper"
-                    onClick={() => requestSort(column.key)}
-                  >
-                    <span className={sortConfig?.key === column.key ? 'text-dune-copper' : ''}>
-                      {column.label}
-                    </span>
-                    {column.sortable && (
-                      <Button variant="ghost" className="ml-1 h-6 w-6 p-0">
-                        {sortConfig?.key === column.key ? (
-                          sortConfig.direction === 'asc' ? (
-                            <ChevronUp className="h-4 w-4 text-dune-copper" />
-                          ) : (
-                            <ChevronDown className="h-4 w-4 text-dune-copper" />
-                          )
-                        ) : (
-                          <ChevronDown className="h-4 w-4 text-dune-dustyGray" />
-                        )}
-                      </Button>
-                    )}
-                  </div>
-                </TableHead>
-              ))}
-              <TableHead className="font-semibold text-dune-offWhite">Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {paginatedData.length > 0 ? (
-              paginatedData.map((row, rowIndex) => (
-                <TableRow
-                  key={rowIndex}
-                  className="hover:bg-dune-copper/70 transition-colors odd:bg-dune-copper/30 even:bg-dune-sand"
-                >
+      <div className={styles.tableContainer}>
+        <div className={styles.tableWrapper}>
+          <div className="rounded-lg border border-dune-copper shadow-md">
+            <Table>
+              <TableHeader>
+                <TableRow className="bg-dune-deepBlue hover:bg-dune-deepBlue">
                   {columns.map((column) => (
-                    <TableCell key={column.key} className="py-3 px-4 text-sm text-dune-charcoal">
-                      {row[column.key]}
-                    </TableCell>
-                  ))}
-                  <TableCell className="py-3 px-4">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-8 w-8 p-0 text-gray-500">
-                          <MoreHorizontal className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="text-sm">
-                        <DropdownMenuLabel className="text-gray-700">Actions</DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        {onDelete && (
-                          <DropdownMenuItem
-                            onClick={() =>
-                              onDelete({ address: row.address, blockchain: row.blockchain })
-                            }
-                          >
-                            Delete
-                          </DropdownMenuItem>
+                    <TableHead key={column.key} className="font-semibold text-dune-offWhite">
+                      <div
+                        className="flex items-center space-x-1 cursor-pointer transition-transform transform hover:text-dune-copper"
+                        onClick={() => requestSort(column.key)}
+                      >
+                        <span className={sortConfig?.key === column.key ? 'text-dune-copper' : ''}>
+                          {column.label}
+                        </span>
+                        {column.sortable && (
+                          <Button variant="ghost" className="ml-1 h-6 w-6 p-0">
+                            {sortConfig?.key === column.key ? (
+                              sortConfig.direction === 'asc' ? (
+                                <ChevronUp className="h-4 w-4 text-dune-copper" />
+                              ) : (
+                                <ChevronDown className="h-4 w-4 text-dune-copper" />
+                              )
+                            ) : (
+                              <ChevronDown className="h-4 w-4 text-dune-dustyGray" />
+                            )}
+                          </Button>
                         )}
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
+                      </div>
+                    </TableHead>
+                  ))}
+                  <TableHead className="font-semibold text-dune-offWhite">Actions</TableHead>
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length + 1}
-                  className="h-18 text-center text-dune-deepBlue"
-                >
-                  No addresses found
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
+              </TableHeader>
+              <TableBody>
+                {paginatedData.length > 0 ? (
+                  paginatedData.map((row, rowIndex) => (
+                    <TableRow
+                      key={rowIndex}
+                      className="hover:bg-dune-copper/70 transition-colors odd:bg-dune-copper/30 even:bg-dune-sand"
+                    >
+                      {columns.map((column) => (
+                        <TableCell
+                          key={column.key}
+                          className="py-3 px-4 text-sm text-dune-charcoal"
+                        >
+                          {row[column.key]}
+                        </TableCell>
+                      ))}
+                      <TableCell className="py-3 px-4">
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" className="h-8 w-8 p-0 text-gray-500">
+                              <MoreHorizontal className="h-4 w-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end" className="text-sm">
+                            <DropdownMenuLabel className="text-gray-700">Actions</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            {onDelete && (
+                              <DropdownMenuItem
+                                onClick={() =>
+                                  onDelete({ address: row.address, blockchain: row.blockchain })
+                                }
+                              >
+                                Delete
+                              </DropdownMenuItem>
+                            )}
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell
+                      colSpan={columns.length + 1}
+                      className="h-18 text-center text-dune-deepBlue"
+                    >
+                      No addresses found
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
+        </div>
       </div>
 
       {/* Pagination - only show if we have data */}

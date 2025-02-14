@@ -11,7 +11,9 @@ export default function Dashboard() {
   return (
     <div className={styles.main}>
       <h1 className={styles.title}>Token Balances</h1>
-      <TokenBalancesTable addresses={addresses} />
+      <div className={styles.tableContainer}>
+        <TokenBalancesTable addresses={addresses} />
+      </div>
     </div>
   );
 }

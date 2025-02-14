@@ -1,0 +1,14 @@
+.tableContainer {
+  width: 100%;
+}
+
+@media screen and (max-width: 864px) {
+  .tableContainer {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* for smooth scrolling on iOS */
+  }
+
+  .tableWrapper {
+    min-width: 700px; /* minimum width before scrolling starts */
+  }
+}

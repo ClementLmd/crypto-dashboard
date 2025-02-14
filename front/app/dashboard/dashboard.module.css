@@ -13,3 +13,15 @@
   text-align: center;
   font-family: var(--font-poppins);
 }
+
+.tableContainer {
+  width: 100%;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 864px) {
+  .main {
+    width: 100%;
+    margin: 0 auto;
+  }
+}
