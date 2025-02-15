@@ -12,7 +12,8 @@ interface CacheEntry {
 
 const priceCache: Map<string, CacheEntry> = new Map();
 const CACHE_DURATION = 20 * 60 * 1000; // 20 minutes in milliseconds
-const RATE_LIMIT_WINDOW = 1000; // 1 second between API calls
+const CACHE_DURATION_DB = 12 * 60 * 60 * 1000; // 12 hours in milliseconds
+const RATE_LIMIT_WINDOW = 1300; // 1.3 seconds between API calls
 let lastApiCall = 0;
 
 export async function getTokenPrice(address: string): Promise<Cryptocurrency | null> {
@@ -32,7 +33,7 @@ export async function getTokenPrice(address: string): Promise<Cryptocurrency | n
       addressContent: {
         $elemMatch: {
           mintAddress: address,
-          lastUpdated: { $gt: new Date(Date.now() - CACHE_DURATION) },
+          lastUpdated: { $gt: new Date(Date.now() - CACHE_DURATION_DB) },
         },
       },
     });
