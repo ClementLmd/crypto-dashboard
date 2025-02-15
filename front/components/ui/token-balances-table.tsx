@@ -7,6 +7,7 @@ import { ChevronDown, ChevronUp, Search } from 'lucide-react';
 import { Button } from './button';
 import { Address } from 'shared';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './tooltip';
+import styles from './table.module.css';
 
 interface Column {
   key: string;
@@ -111,82 +112,91 @@ export default function TokenBalancesTable({
           className="max-w-sm"
         />
       </div>
+
       {/* Table */}
-      <div className="rounded-lg border border-dune-copper shadow-md">
-        <Table>
-          <TableHeader>
-            <TableRow className="bg-dune-deepBlue hover:bg-dune-deepBlue">
-              {columns.map((column) => (
-                <TableHead key={column.key} className="font-semibold text-dune-offWhite">
-                  <div
-                    className="flex items-center space-x-1 cursor-pointer transition-transform transform hover:text-dune-copper"
-                    onClick={() => requestSort(column.key)}
-                  >
-                    <span className={sortConfig?.key === column.key ? 'text-dune-copper' : ''}>
-                      {column.label}
-                    </span>
-                    {column.sortable && (
-                      <Button variant="ghost" className="ml-1 h-6 w-6 p-0">
-                        {sortConfig?.key === column.key ? (
-                          sortConfig.direction === 'asc' ? (
-                            <ChevronUp className="h-4 w-4 text-dune-copper" />
-                          ) : (
-                            <ChevronDown className="h-4 w-4 text-dune-copper" />
-                          )
-                        ) : (
-                          <ChevronDown className="h-4 w-4 text-dune-dustyGray" />
+      <div className={styles.tableContainer}>
+        <div className={styles.tableWrapper}>
+          <div className="rounded-lg border border-dune-copper shadow-md">
+            <Table>
+              <TableHeader>
+                <TableRow className="bg-dune-deepBlue hover:bg-dune-deepBlue">
+                  {columns.map((column) => (
+                    <TableHead key={column.key} className="font-semibold text-dune-offWhite">
+                      <div
+                        className="flex items-center space-x-1 cursor-pointer transition-transform transform hover:text-dune-copper"
+                        onClick={() => requestSort(column.key)}
+                      >
+                        <span className={sortConfig?.key === column.key ? 'text-dune-copper' : ''}>
+                          {column.label}
+                        </span>
+                        {column.sortable && (
+                          <Button variant="ghost" className="ml-1 h-6 w-6 p-0">
+                            {sortConfig?.key === column.key ? (
+                              sortConfig.direction === 'asc' ? (
+                                <ChevronUp className="h-4 w-4 text-dune-copper" />
+                              ) : (
+                                <ChevronDown className="h-4 w-4 text-dune-copper" />
+                              )
+                            ) : (
+                              <ChevronDown className="h-4 w-4 text-dune-dustyGray" />
+                            )}
+                          </Button>
                         )}
-                      </Button>
-                    )}
-                  </div>
-                </TableHead>
-              ))}
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {paginatedData.length > 0 ? (
-              paginatedData.map((token, index) => (
-                <TableRow
-                  key={`${token.walletAddress}-${token.tokenSymbol}-${index}`}
-                  className="hover:bg-dune-copper/70 transition-colors odd:bg-dune-copper/30 even:bg-dune-sand"
-                >
-                  <TableCell className="py-3 px-4 text-sm text-dune-charcoal">
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger className="hover:text-dune-copper transition-colors">
-                          {`${token.walletAddress.slice(0, 3)}...${token.walletAddress.slice(-3)}`}
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>{token.walletAddress}</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  </TableCell>
-                  <TableCell className="py-3 px-4 text-sm text-dune-charcoal">
-                    {token.tokenSymbol}
-                  </TableCell>
-                  <TableCell className="py-3 px-4 text-sm text-dune-charcoal">
-                    {token.amount.toFixed(2)}
-                  </TableCell>
-                  <TableCell className="py-3 px-4 text-sm text-dune-charcoal">
-                    ${token.usdValue.toFixed(2)}
-                  </TableCell>
-                  <TableCell className="py-3 px-4 text-sm text-dune-charcoal">
-                    ${token.totalUsdValue.toFixed(2)}
-                  </TableCell>
+                      </div>
+                    </TableHead>
+                  ))}
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={columns.length} className="h-18 text-center text-dune-deepBlue">
-                  No valid tokens in your addresses
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
+              </TableHeader>
+              <TableBody>
+                {paginatedData.length > 0 ? (
+                  paginatedData.map((token, index) => (
+                    <TableRow
+                      key={`${token.walletAddress}-${token.tokenSymbol}-${index}`}
+                      className="hover:bg-dune-copper/70 transition-colors odd:bg-dune-copper/30 even:bg-dune-sand"
+                    >
+                      <TableCell className="py-3 px-4 text-sm text-dune-charcoal">
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger className="hover:text-dune-copper transition-colors">
+                              {`${token.walletAddress.slice(0, 3)}...${token.walletAddress.slice(-3)}`}
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>{token.walletAddress}</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      </TableCell>
+                      <TableCell className="py-3 px-4 text-sm text-dune-charcoal">
+                        {token.tokenSymbol}
+                      </TableCell>
+                      <TableCell className="py-3 px-4 text-sm text-dune-charcoal">
+                        {token.amount.toFixed(2)}
+                      </TableCell>
+                      <TableCell className="py-3 px-4 text-sm text-dune-charcoal">
+                        ${token.usdValue.toFixed(2)}
+                      </TableCell>
+                      <TableCell className="py-3 px-4 text-sm text-dune-charcoal">
+                        ${token.totalUsdValue.toFixed(2)}
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell
+                      colSpan={columns.length}
+                      className="h-18 text-center text-dune-deepBlue"
+                    >
+                      No valid tokens in your addresses
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
+        </div>
       </div>
-      {/* Pagination */}
+
+      {/* Pagination - only show if we have data */}
       {paginatedData.length > 0 && (
         <div className="flex flex-row space-x-3 items-center justify-between py-4">
           <Button

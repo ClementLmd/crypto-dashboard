@@ -26,11 +26,12 @@
 
 .addressesTable {
   width: 100%;
-  margin-top: 1rem;
+  margin: 0 auto;
 }
 
-@media screen and (min-width: 865px) {
-  .addressesTable {
-    min-width: 600px;
+@media screen and (max-width: 864px) {
+  .main {
+    width: 100%;
+    margin: 0 auto;
   }
 }

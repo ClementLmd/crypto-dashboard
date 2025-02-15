@@ -25,7 +25,7 @@ export default function HeaderLayout() {
     setIsBrowser(true);
 
     const handleResize = () => {
-      setIsDesktop(window.innerWidth > 865);
+      setIsDesktop(window.innerWidth >= 865);
     };
 
     handleResize();
@@ -49,7 +49,7 @@ export default function HeaderLayout() {
 
   return (
     <div className={styles.body}>
-      <div id="headerLogo">
+      <div className={styles.headerLogo}>
         <Link href={routes.home}>
           <Image
             src="/favicon.ico"
@@ -61,7 +61,9 @@ export default function HeaderLayout() {
           />
         </Link>
       </div>
-      <div id="headerLinks">{isBrowser && (isDesktop ? <DesktopNavBar /> : <MobileNavBar />)} </div>
+      <div className={styles.headerLinks}>
+        {isBrowser && (isDesktop ? <DesktopNavBar /> : <MobileNavBar />)}
+      </div>
       {isAuthenticated ? (
         <div className={styles.logoutButton}>
           <Button onClick={handleLogout}>Disconnect</Button>
