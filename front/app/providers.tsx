@@ -17,10 +17,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   if (isLoading) {
     return (
-      <Loader
-        text="Note: The backend is hosted on Render.com{`'`}s free tier. You may experience delays or
-          need to refresh the page."
-      />
+      <div className="h-screen w-screen flex items-center justify-center fixed top-0 left-0 bg-dune-sand/80">
+        <Loader text="Note: The backend is hosted on Render.com's free tier. You may experience delays or need to refresh the page." />
+      </div>
     );
   }
 
