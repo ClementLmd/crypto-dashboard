@@ -106,7 +106,7 @@ export default function TokenBalancesTable({
       <div className="flex items-center space-x-3">
         <Search className="text-gray-400" />
         <Input
-          placeholder="Search tokens..."
+          placeholder="Search tokens/wallets..."
           value={searchTerm}
           onChange={handleSearchChange}
           className="max-w-sm"

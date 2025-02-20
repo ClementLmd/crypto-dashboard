@@ -1,8 +1,7 @@
-'use client';
-
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { checkSession } from '../features/user/user.thunks';
 import { useEffect, useRef } from 'react';
+import { Loader } from '../components/ui/loader';
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useAppDispatch();
@@ -17,7 +16,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, [dispatch]);
 
   if (isLoading) {
-    return null;
+    return (
+      <Loader
+        text="Note: The backend is hosted on Render.com{`'`}s free tier. You may experience delays or
+          need to refresh the page."
+      />
+    );
   }
 
   return <>{children}</>;

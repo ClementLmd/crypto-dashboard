@@ -1,7 +1,11 @@
 // Route: /reporting
 
-import styles from './reporting.module.css';
+import { Loader } from '../../components/ui/loader';
 
 export default function ReportingPage() {
-  return <div className={styles.main}>Reporting</div>;
+  return (
+    <div className="flex-1 flex items-center justify-center">
+      <Loader text="Page on construction!" />
+    </div>
+  );
 }
