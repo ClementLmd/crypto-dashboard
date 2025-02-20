@@ -26,8 +26,8 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <div className={styles.alert}>
-        Note: The backend is hosted on Render.com{`'`}s free tier. You may experience delays or need
-        to retry when signing in/up.
+        Note: The backend is hosted on Render.com&apos;s free tier. You may experience delays or
+        need to retry when signing in/up.
       </div>
       <div className={styles.authMenu}>
         <SignIn />
