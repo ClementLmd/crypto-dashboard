@@ -17,7 +17,11 @@ const initialState: AddressState = {
 export const addressSlice = createSlice({
   name: 'addresses',
   initialState,
-  reducers: {},
+  reducers: {
+    logoutAddresses: (state) => {
+      state.addresses = [];
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(addAddress.pending, (state) => {
@@ -56,4 +60,5 @@ export const addressSlice = createSlice({
   },
 });
 
+export const { logoutAddresses } = addressSlice.actions;
 export const addressReducer = addressSlice.reducer;

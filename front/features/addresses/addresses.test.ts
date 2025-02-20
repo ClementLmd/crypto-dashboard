@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { Address } from 'shared';
-import { addressReducer } from './addresses.slice';
+import { addressReducer, logoutAddresses } from './addresses.slice';
 import { addAddress, addSolanaAddress, deleteAddress, getUserAddresses } from './addresses.thunks';
 import { selectAddresses } from './addresses.selectors';
 import { userReducer } from '../user/user.slice';
@@ -8,7 +8,7 @@ import { userReducer } from '../user/user.slice';
 describe('Addresses slice', () => {
   const mockAddress: Address = {
     address: 'address-example',
-    blockchain: 'Solana',
+    blockchain: 'Ethereum',
     addressContent: [],
     addressName: 'address 1',
   };
@@ -130,6 +130,24 @@ describe('Addresses slice', () => {
 
     const addressesAfterAdd = selectAddresses(store.getState());
     expect(addressesAfterAdd).toEqual([mockAddress]);
+
+    expect(mockFetch).toHaveBeenCalledTimes(1);
+    mockFetch.mockRestore();
+  });
+  it('should empty the addresses array when logging out', async () => {
+    const mockFetch = jest.spyOn(global, 'fetch').mockResolvedValue({
+      json: async () => mockAddress,
+      status: 201,
+    } as Response);
+
+    const store = createTestStore();
+    await store.dispatch(addAddress(mockAddress));
+    const addressesBeforeLogout = selectAddresses(store.getState());
+    expect(addressesBeforeLogout).toEqual([mockAddress]);
+
+    await store.dispatch(logoutAddresses());
+    const addressesAfterLogout = selectAddresses(store.getState());
+    expect(addressesAfterLogout).toEqual([]);
 
     expect(mockFetch).toHaveBeenCalledTimes(1);
     mockFetch.mockRestore();

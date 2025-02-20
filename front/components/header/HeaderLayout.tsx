@@ -7,10 +7,11 @@ import MobileNavBar from './MobileNavBar';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { Button } from '../ui/button';
-import { logout } from '../../features/user/user.slice';
+import { logoutUser } from '../../features/user/user.slice';
 import { useRouter } from 'next/navigation';
 import { selectIsAuthenticated } from '../../features/user/user.selectors';
 import { api } from '../../app/config/api';
+import { logoutAddresses } from '../../features/addresses/addresses.slice';
 
 export default function HeaderLayout() {
   const dispatch = useAppDispatch();
@@ -40,7 +41,8 @@ export default function HeaderLayout() {
         method: 'POST',
         credentials: 'include',
       });
-      dispatch(logout());
+      dispatch(logoutUser());
+      dispatch(logoutAddresses());
       router.push(routes.home);
     } catch (error) {
       console.error('Logout failed:', error);

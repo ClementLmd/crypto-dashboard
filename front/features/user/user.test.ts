@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { logout, userReducer } from './user.slice';
+import { logoutUser, userReducer } from './user.slice';
 import { signUp, signIn } from './user.thunks';
 import { selectIsAuthenticated, selectUser } from './user.selectors';
 import { SigningUpUser } from 'shared';
@@ -98,7 +98,7 @@ describe('User slice', () => {
     expect(user).toEqual({ username: signedInUser.username });
     expect(isAuthenticated).toBe(true);
 
-    store.dispatch(logout());
+    store.dispatch(logoutUser());
 
     const isAuthenticatedAfterLogout = selectIsAuthenticated(store.getState());
     const userAfterLogout = selectUser(store.getState());

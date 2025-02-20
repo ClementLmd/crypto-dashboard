@@ -6,10 +6,12 @@ import { Input } from '../ui/input';
 import { signUp } from '../../features/user/user.thunks';
 import { useAppDispatch } from '../../hooks/hooks';
 import { validateUserPassword, errors } from 'shared';
+import { routes } from '../../app/config/routes';
+import { useRouter } from 'next/navigation';
 
 export function SignUp() {
   const dispatch = useAppDispatch();
-
+  const router = useRouter();
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
@@ -28,6 +30,8 @@ export function SignUp() {
       setFeedbackMessage('User created successfully!');
       setUsername('');
       setPassword('');
+      router.push(routes.addresses);
+
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       setFeedbackMessage('Sign up error');
