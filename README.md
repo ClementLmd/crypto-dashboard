@@ -134,7 +134,7 @@ FRONTEND_URL=http://localhost:3000
 
 ## 👨‍💻 Author
 
-**Clément Laumond** - [Portfolio](https://portfolio-clement-laumonds-projects.vercel.app/ghreadme)
+**Clément Laumond** - [Portfolio](https://portfolio-clement-laumonds-projects.vercel.app/fr?utm_source=github&utm_medium=readme&utm_campaign=cryptodashboard)
 
 ## 🤝 Contributing
 
